@@ -8,6 +8,7 @@
  * Created: 2014-01-11 js
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
+ *          2014-01-12, js: more development & adding new sample images
  *
  */
 
