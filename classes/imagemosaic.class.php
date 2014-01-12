@@ -82,12 +82,21 @@ class ImageMosaic {
         $rgb_array['green'] = intval($green * 1);
         $rgb_array['blue'] = intval($blue * 1);
 
-        $rgb_final = implode(',', $rgb_array);
+        $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
+        $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
         if ($width != $this->width_final) {
-          $block_rgb = sprintf('background-color:rgb(%s);', $rgb_final);
-          $block_dimensions = sprintf('height: %s; width: %s;', $this->box_size, $this->box_size);
-          $block_style = $block_rgb;
+          $block_dimensions = sprintf('height: %spx; width: %spx;', $this->box_size, $this->box_size);
+
+          if (FALSE) {
+            $block_rgb = sprintf('background-color: %s;', $rgb_final);
+            $block_style = $block_dimensions . $block_rgb;
+          }
+          else {
+            $block_hex = sprintf('background-color: %s;', $hex_final);
+            $block_style = $block_dimensions . $block_hex;
+          }
+
           $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s"></div><!-- .PixelBox -->' . "\r\n", $block_style);
         }
         if ($width == $this->width_final) {
@@ -108,7 +117,7 @@ class ImageMosaic {
   function render_image ($image_processed) {
 
     header('Content-Type: image/jpeg');
- 
+
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
