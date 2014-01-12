@@ -8,6 +8,7 @@
  * Created: 2014-01-11 js
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
+ *          2014-01-12, js: more development & adding new sample images
  *
  */
 
@@ -25,7 +26,10 @@ class ImageMosaic {
 
   private $box_size = 10;
 
-  public function __construct($image, $height_final, $width_final, $box_size) {
+  public function __construct() {
+  } // __construct
+
+  public function set_image($image, $height_final, $width_final, $box_size) {
     $this->image = $image;
     $this->height_final = $height_final;
     $this->width_final = $width_final;
@@ -34,6 +38,11 @@ class ImageMosaic {
 
   // Output the image straight to the browser.
   function resample_image () {
+
+    // Check if the image actually exists.
+    if (empty(realpath($this->image))) {
+      return;
+    }
 
     // Get the source image.
     $image_source = imagecreatefromjpeg($this->image);
@@ -53,7 +62,7 @@ class ImageMosaic {
   } // resample_image
 
   // Output the image straight to the browser.
-  function generate_blocks ($image_processed) {
+  function generate_blocks ($image_processed, $flip_rows) {
 
     $pixel_blocks = array();
 
@@ -73,16 +82,26 @@ class ImageMosaic {
         $rgb_array['green'] = intval($green * 1);
         $rgb_array['blue'] = intval($blue * 1);
 
-        $rgb_final = implode(',', $rgb_array);
+        $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
+        $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
         if ($width != $this->width_final) {
-          $block_rgb = sprintf('background-color:rgb(%s);', $rgb_final);
-          $block_style = "float: left; display: inline; position: relative; height: ". $this->box_size ."px; width: ". $this->box_size ."px; margin: 0; padding: 0; border: 0;" . $block_rgb;
-          $pixel_blocks_row[] = sprintf('<div style="%s"></div>' . "\r\n", $block_style);
+          $block_dimensions = sprintf('height: %spx; width: %spx;', $this->box_size, $this->box_size);
+
+          if (FALSE) {
+            $block_rgb = sprintf('background-color: %s;', $rgb_final);
+            $block_style = $block_dimensions . $block_rgb;
+          }
+          else {
+            $block_hex = sprintf('background-color: %s;', $hex_final);
+            $block_style = $block_dimensions . $block_hex;
+          }
+
+          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s"></div><!-- .PixelBox -->' . "\r\n", $block_style);
         }
         if ($width == $this->width_final) {
           // $final_row = array_reverse($pixel_blocks_row);
-          $final_row = $pixel_blocks_row;
+          $final_row = $flip_rows ? array_reverse($pixel_blocks_row) : $pixel_blocks_row;
           $pixel_blocks[] = implode('', $final_row);
         }
 
@@ -98,15 +117,23 @@ class ImageMosaic {
   function render_image ($image_processed) {
 
     header('Content-Type: image/jpeg');
+
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
 
   // Output the image straight to the browser.
   function render_blocks ($pixel_blocks) {
-    echo '<div style="background-color: black; width: ' . $this->width_final * $this->box_size . 'px;">';
-    echo implode('', $pixel_blocks);
-    echo '</div>';
+
+    $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->box_size);
+
+    $ret = sprintf('<div class="PixelBoxConatiner" style="%s">', $block_container_dimensions)
+         . implode('', $pixel_blocks)
+         .'</div><!-- .PixelBoxConatiner -->'
+         ;
+
+    return $ret;
+
   } // renderImage
 
 } // ImageMosaic
