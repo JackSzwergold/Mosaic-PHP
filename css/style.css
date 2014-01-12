@@ -144,3 +144,11 @@ ul, li
 	height: 10px;
 	width: 10px;
 }
+
+.PixelBoxConatiner
+{
+	float: left;
+	position: relative;
+	display: inline;
+	background-color: black;
+}

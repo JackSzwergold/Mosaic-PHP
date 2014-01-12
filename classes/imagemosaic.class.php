@@ -87,7 +87,7 @@ class ImageMosaic {
           $block_rgb = sprintf('background-color:rgb(%s);', $rgb_final);
           $block_dimensions = sprintf('height: %s; width: %s;', $this->box_size, $this->box_size);
           $block_style = $block_rgb;
-          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s"></div>' . "\r\n", $block_style);
+          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s"></div><!-- .PixelBox -->' . "\r\n", $block_style);
         }
         if ($width == $this->width_final) {
           // $final_row = array_reverse($pixel_blocks_row);
@@ -107,6 +107,7 @@ class ImageMosaic {
   function render_image ($image_processed) {
 
     header('Content-Type: image/jpeg');
+ 
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
@@ -114,9 +115,11 @@ class ImageMosaic {
   // Output the image straight to the browser.
   function render_blocks ($pixel_blocks) {
 
-    $ret = '<div style="float: left; position: relative; display: inline; background-color: black; width: ' . $this->width_final * $this->box_size . 'px;">'
+    $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->box_size);
+
+    $ret = sprintf('<div class="PixelBoxConatiner" style="%s">', $block_container_dimensions)
          . implode('', $pixel_blocks)
-         .'</div>'
+         .'</div><!-- .PixelBoxConatiner -->'
          ;
 
     return $ret;
