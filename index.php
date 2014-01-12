@@ -20,7 +20,7 @@ require_once('classes/imagemosaic.class.php');
 // Init the "geocodingClass()" class.
 
 $images = array();
-$images[] = 'images/micro_earth.jpg';
+$images[] = 'images/chuck_berry_chess_box_set.jpg';
 $images[] = 'images/roxy_music_country_life.jpg';
 $images[] = 'images/black_sabbath_volume_4.jpg';
 $images[] = 'images/gogos_beauty_and_the_beat.jpg';
