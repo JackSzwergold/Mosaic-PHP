@@ -19,22 +19,38 @@ require_once('classes/imagemosaic.class.php');
 //**************************************************************************************//
 // Init the "geocodingClass()" class.
 
-$image = 'images/micro_earth.jpg';
-$image = 'images/roxy_music_country_life.jpg';
+$images = array();
+$images[] = 'images/micro_earth.jpg';
+$images[] = 'images/roxy_music_country_life.jpg';
+$images[] = 'images/black_sabbath_volume_4.jpg';
+$images[] = 'images/gogos_beauty_and_the_beat.jpg';
+$images[] = 'images/led_zeppelin_houses_of_the_holy.jpg';
+$images[] = 'images/la_luz_damp_face.jpg';
 
-$ImageMosaicClass = new ImageMosaic($image, 46, 46, 10);
-$image_processed = $ImageMosaicClass->resample_image();
+$images_processed = array();
 
+$ImageMosaicClass = new ImageMosaic();
+
+foreach ($images as $image) {
+  $ImageMosaicClass->set_image($image, 46, 46, 10);
+  $images_processed[] = $ImageMosaicClass->resample_image();
+}
 
 //**************************************************************************************//
 // Output the data.
 
-if (FALSE) {
-  $ImageMosaicClass->render_image($image_processed);
+$artworks = array();
+foreach ($images_processed as $image_processed) {
+  if (FALSE) {
+    $ImageMosaicClass->render_image($image_processed);
+  }
+  else {
+    $pixel_blocks = $ImageMosaicClass->generate_blocks($image_processed);
+    $artworks[] = $ImageMosaicClass->render_blocks($pixel_blocks);
+
+  }
 }
-else {
-  $pixel_blocks = $ImageMosaicClass->generate_blocks($image_processed);
-  $ImageMosaicClass->render_blocks($pixel_blocks);
-}
+shuffle($artworks);
+echo implode('', $artworks);
 
 ?>

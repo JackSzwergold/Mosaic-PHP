@@ -25,7 +25,10 @@ class ImageMosaic {
 
   private $box_size = 10;
 
-  public function __construct($image, $height_final, $width_final, $box_size) {
+  public function __construct() {
+  } // __construct
+
+  public function set_image($image, $height_final, $width_final, $box_size) {
     $this->image = $image;
     $this->height_final = $height_final;
     $this->width_final = $width_final;
@@ -104,9 +107,14 @@ class ImageMosaic {
 
   // Output the image straight to the browser.
   function render_blocks ($pixel_blocks) {
-    echo '<div style="background-color: black; width: ' . $this->width_final * $this->box_size . 'px;">';
-    echo implode('', $pixel_blocks);
-    echo '</div>';
+
+    $ret = '<div style="float: left; position: relative; display: inline; background-color: black; width: ' . $this->width_final * $this->box_size . 'px;">'
+         . implode('', $pixel_blocks)
+         .'</div>'
+         ;
+
+    return $ret;
+
   } // renderImage
 
 } // ImageMosaic
