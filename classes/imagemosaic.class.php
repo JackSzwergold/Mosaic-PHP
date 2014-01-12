@@ -38,6 +38,11 @@ class ImageMosaic {
   // Output the image straight to the browser.
   function resample_image () {
 
+    // Check if the image actually exists.
+    if (empty(realpath($this->image))) {
+      return;
+    }
+
     // Get the source image.
     $image_source = imagecreatefromjpeg($this->image);
 
@@ -56,7 +61,7 @@ class ImageMosaic {
   } // resample_image
 
   // Output the image straight to the browser.
-  function generate_blocks ($image_processed) {
+  function generate_blocks ($image_processed, $flip_rows) {
 
     $pixel_blocks = array();
 
@@ -86,7 +91,7 @@ class ImageMosaic {
         }
         if ($width == $this->width_final) {
           // $final_row = array_reverse($pixel_blocks_row);
-          $final_row = $pixel_blocks_row;
+          $final_row = $flip_rows ? array_reverse($pixel_blocks_row) : $pixel_blocks_row;
           $pixel_blocks[] = implode('', $final_row);
         }
 

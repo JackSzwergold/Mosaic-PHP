@@ -8,6 +8,7 @@
  * Created: 2014-01-11 js
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
+ *          2014-01-12, js: more development & adding new sample images
  *
  */
 
@@ -49,9 +50,8 @@ foreach ($images_processed as $image_processed) {
     $ImageMosaicClass->render_image($image_processed);
   }
   else {
-    $pixel_blocks = $ImageMosaicClass->generate_blocks($image_processed);
+    $pixel_blocks = $ImageMosaicClass->generate_blocks($image_processed, FALSE);
     $artworks[] = $ImageMosaicClass->render_blocks($pixel_blocks);
-
   }
 }
 shuffle($artworks);
