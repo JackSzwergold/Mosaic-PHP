@@ -26,6 +26,9 @@ $images[] = 'images/black_sabbath_volume_4.jpg';
 $images[] = 'images/gogos_beauty_and_the_beat.jpg';
 $images[] = 'images/led_zeppelin_houses_of_the_holy.jpg';
 $images[] = 'images/la_luz_damp_face.jpg';
+$images[] = 'images/rush_moving_pictures.jpg';
+$images[] = 'images/rolling_stones_let_it_bleed.jpg';
+$images[] = 'images/the_b52s.jpg';
 
 $images_processed = array();
 
