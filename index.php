@@ -54,7 +54,12 @@ foreach ($images_processed as $image_processed) {
 shuffle($artworks);
 $covers = array();
 foreach($artworks as $artwork) {
-  $covers[] = sprintf('<li>%s</li>', $artwork);
+  $covers[] = '<li>'
+            . '<div class="Padding">'
+            . $artwork
+            . '</div><!-- .Padding -->'
+            . '</li>'
+            ;
 }
 $final_covers = implode('', $covers);
 
@@ -78,7 +83,14 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 
    . '<body>'
 
+   . '<div class="Wrapper">'
+   . '<div class="Padding">'
+   . '<div class="rootPage">'
+
    . '<div class="Content">'
+   . '<div class="Padding">'
+
+   . '<div class="Core">'
    . '<div class="Padding">'
 
    . '<div class="Grid">'
@@ -92,7 +104,14 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '</div><!-- .Grid -->'
 
    . '</div><!-- .Padding -->'
+   . '</div><!-- .Core -->'
+
+   . '</div><!-- .Padding -->'
    . '</div><!-- .Content -->'
+
+   . '</div><!-- .rootPage -->'
+   . '</div><!-- .Padding -->'
+   . '</div><!-- .Wrapper -->'
 
    . '</body>'
    . '</html>'

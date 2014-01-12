@@ -80,8 +80,9 @@ class ImageMosaic {
 
         if ($width != $this->width_final) {
           $block_rgb = sprintf('background-color:rgb(%s);', $rgb_final);
-          $block_style = "float: left; display: inline; position: relative; height: ". $this->box_size ."px; width: ". $this->box_size ."px; margin: 0; padding: 0; border: 0;" . $block_rgb;
-          $pixel_blocks_row[] = sprintf('<div style="%s"></div>' . "\r\n", $block_style);
+          $block_dimensions = sprintf('height: %s; width: %s;', $this->box_size, $this->box_size);
+          $block_style = $block_rgb;
+          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s"></div>' . "\r\n", $block_style);
         }
         if ($width == $this->width_final) {
           // $final_row = array_reverse($pixel_blocks_row);

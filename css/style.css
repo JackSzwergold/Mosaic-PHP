@@ -44,7 +44,7 @@ ul, li
 /**************************************************************************************************/
 .Wrapper
 {
-	width: 100%;
+	width: 714px;
 	height: 100%;
 	margin: 0 auto 0 auto;
 	clear: both;
@@ -53,7 +53,7 @@ ul, li
 
 .Wrapper .Padding
 {
-	padding: 0 7px 0 7px;
+	padding: 0 0 0 0;
 	clear: both;
 }
 
@@ -75,7 +75,6 @@ ul, li
 {
 	padding: 0;
 	margin: 0;
-	background-color: #000;
 }
 
 /**************************************************************************************************/
@@ -111,8 +110,15 @@ ul, li
 .Core p a:active, .Core p a:hover { border-color: #666; }
 
 /**************************************************************************************************/
-.Core .Grid .Padding { padding: 15px 0 0 0; }
-.Core .Grid ul li .Padding { padding: 0 7px 15px 0; }
+.Core .Grid .Padding { padding: 6px 3px 0 3px; }
+
+.Core .Grid ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+.Core .Grid ul li .Padding { padding: 0 3px 6px 3px; }
 
 .Core .Grid ul li table
 {
@@ -122,8 +128,19 @@ ul, li
 }
 
 .Core .Grid ul li td { vertical-align: bottom; }
-.popupPage .Core .Grid ul li { clear: both; }
-.popupPage .Core .Grid ul li .Padding { padding: 0 0 10px 0; }
 
 /**************************************************************************************************/
 .Core .Text .Padding { padding: 15px 0 15px 0; }
+
+/**************************************************************************************************/
+.PixelBox
+{
+	float: left;
+	display: inline;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	height: 10px;
+	width: 10px;
+}
