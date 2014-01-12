@@ -32,12 +32,13 @@ $images_processed = array();
 $ImageMosaicClass = new ImageMosaic();
 
 foreach ($images as $image) {
-  $ImageMosaicClass->set_image($image, 46, 46, 10);
+  // $ImageMosaicClass->set_image($image, 46, 46, 10);
+  $ImageMosaicClass->set_image($image, 23, 23, 10);
   $images_processed[] = $ImageMosaicClass->resample_image();
 }
 
 //**************************************************************************************//
-// Output the data.
+// Shuffle the covers.
 
 $artworks = array();
 foreach ($images_processed as $image_processed) {
@@ -51,6 +52,50 @@ foreach ($images_processed as $image_processed) {
   }
 }
 shuffle($artworks);
-echo implode('', $artworks);
+$covers = array();
+foreach($artworks as $artwork) {
+  $covers[] = sprintf('<li>%s</li>', $artwork);
+}
+$final_covers = implode('', $covers);
+
+//**************************************************************************************//
+// Output the data.
+
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
+   . '<html xmlns="http://www.w3.org/1999/xhtml">'
+   . '<html lang="en">'
+   . '<head>'
+
+   . '<meta charset="utf-8" />'
+   . '<title></title>'
+   . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
+   . '<meta name="description" content="" />'
+   . '<meta name="copyright" content="" />'
+   . '<meta name="robots" content="index,follow" />'
+   . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
+
+   . '</head>'
+
+   . '<body>'
+
+   . '<div class="Content">'
+   . '<div class="Padding">'
+
+   . '<div class="Grid">'
+   . '<div class="Padding">'
+
+   . '<ul>'
+   . $final_covers
+   . '</ul>'
+
+   . '</div><!-- .Padding -->'
+   . '</div><!-- .Grid -->'
+
+   . '</div><!-- .Padding -->'
+   . '</div><!-- .Content -->'
+
+   . '</body>'
+   . '</html>'
+   ;
 
 ?>
