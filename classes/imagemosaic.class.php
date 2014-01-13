@@ -97,9 +97,7 @@ class ImageMosaic {
             $block_style = $block_dimensions . $block_hex;
           }
 
-          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s">' . "\r\n", $block_style)
-                              . '<div class="PixelBoxOverlay" style="%s">' . "\r\n"
-                              . '</div><!-- .PixelBoxOverlay -->' . "\r\n"
+          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s">', $block_style)
                               . '</div><!-- .PixelBox -->' . "\r\n"
                               ;
         }
@@ -131,9 +129,9 @@ class ImageMosaic {
 
     $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->box_size);
 
-    $ret = sprintf('<div class="PixelBoxConatiner" style="%s">', $block_container_dimensions)
+    $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $pixel_blocks)
-         .'</div><!-- .PixelBoxConatiner -->'
+         .'</div><!-- .PixelBoxConatiner -->' . "\r\n"
          ;
 
     return $ret;
