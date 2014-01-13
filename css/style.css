@@ -125,7 +125,8 @@ ul, li
 	border: 0;
 	height: 10px;
 	width: 10px;
-	background-image: url('dot.png');
+	/* background-image: url('dot.png'); */
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAOxJREFUeNqMkE2KhDAQhVNRQWl14Qm8jPfzLKIILsRTqGvFhT+0jrQixEm6qtuezWw6UOElfLxXVaCUYt8cnS6Cy7KEruu467pc0zQ2DIMMw1AWRaGEEG+wrmuoqspAyN733TzPk03TdPi+/7AsS5DXC2zblnueZ0spbwAg13VleZ7f0I1t2/aDyC8nkOIQMlHKeZ7vaZre4ziWTdOY+M//etR1neEHW5aFRVHEkiR56X/D9H0vx3E8KA7dvAsip41S6AE0cRAEgI0bWZbZFHeZHFgPLKEI+uzRcRzgnGsojatIw2d98O3CnwIMAIJbh/23MNUcAAAAAElFTkSuQmCC');
 	background-position: center center;
 	background-repeat: no-repeat;
 }
