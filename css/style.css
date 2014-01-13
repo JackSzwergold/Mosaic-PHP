@@ -44,7 +44,6 @@ ul, li
 /**************************************************************************************************/
 .Wrapper
 {
-	width: 714px;
 	height: 100%;
 	margin: 0 auto 0 auto;
 	clear: both;
@@ -56,6 +55,9 @@ ul, li
 	padding: 0 0 0 0;
 	clear: both;
 }
+
+.smallView .Wrapper { width: 714px; }
+.largeView .Wrapper { width: 472px; }
 
 /**************************************************************************************************/
 .Content { width: 100%; }
