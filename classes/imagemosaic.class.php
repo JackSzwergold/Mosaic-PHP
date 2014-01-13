@@ -19,7 +19,7 @@ class ImageMosaic {
 
   private $DEBUG_MODE = FALSE;
 
-  private $image = FALSE;
+  private $image_file = FALSE;
 
   private $height_final = 46;
   private $width_final = 46;
@@ -29,8 +29,8 @@ class ImageMosaic {
   public function __construct() {
   } // __construct
 
-  public function preprocess_image($image, $width_final, $height_final, $block_size) {
-    $this->image = $image;
+  public function preprocess_image($image_file, $width_final, $height_final, $block_size) {
+    $this->image_file = $image_file;
     $this->width_final = $width_final;
     $this->height_final = $height_final;
     $this->block_size = $block_size;
@@ -40,12 +40,12 @@ class ImageMosaic {
   function resample_image () {
 
     // Check if the image actually exists.
-    if (empty(realpath($this->image))) {
+    if (empty(realpath($this->image_file))) {
       return;
     }
 
     // Get the source image.
-    $image_source = imagecreatefromjpeg($this->image);
+    $image_source = imagecreatefromjpeg($this->image_file);
 
     // Set the canvas for the processed image.
     $image_processed = imagecreatetruecolor($this->width_final, $this->height_final);
@@ -62,7 +62,7 @@ class ImageMosaic {
   } // resample_image
 
   // Output the image straight to the browser.
-  function generate_blocks ($image_processed, $flip_rows) {
+  function generate_blocks ($image_file, $image_processed, $flip_rows) {
 
     $pixel_blocks = array();
 
@@ -110,6 +110,13 @@ class ImageMosaic {
       } // $width loop.
 
     } // $height loop.
+
+    // Cache the pixel blocks to a JSON file.
+    $filepath_parts = pathinfo($image_file);
+    $json_filename = 'cache/' . $filepath_parts['filename'] . '.json';
+    $file_handle = fopen($json_filename, 'w');
+    fwrite($file_handle, json_encode($pixel_blocks));
+    fclose($file_handle);
 
     return $pixel_blocks;
 

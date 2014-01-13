@@ -20,16 +20,16 @@ require_once('classes/imagemosaic.class.php');
 //**************************************************************************************//
 // Set an array of images.
 
-$images = array();
-$images[] = 'images/chuck_berry_chess_box_set.jpg';
-$images[] = 'images/roxy_music_country_life.jpg';
-$images[] = 'images/black_sabbath_volume_4.jpg';
-$images[] = 'images/gogos_beauty_and_the_beat.jpg';
-$images[] = 'images/led_zeppelin_houses_of_the_holy.jpg';
-$images[] = 'images/la_luz_damp_face.jpg';
-$images[] = 'images/rush_moving_pictures.jpg';
-$images[] = 'images/rolling_stones_let_it_bleed.jpg';
-$images[] = 'images/the_b52s.jpg';
+$image_files = array();
+$image_files[] = 'images/chuck_berry_chess_box_set.jpg';
+$image_files[] = 'images/roxy_music_country_life.jpg';
+$image_files[] = 'images/black_sabbath_volume_4.jpg';
+$image_files[] = 'images/gogos_beauty_and_the_beat.jpg';
+$image_files[] = 'images/led_zeppelin_houses_of_the_holy.jpg';
+$image_files[] = 'images/la_luz_damp_face.jpg';
+$image_files[] = 'images/rush_moving_pictures.jpg';
+$image_files[] = 'images/rolling_stones_let_it_bleed.jpg';
+$image_files[] = 'images/the_b52s.jpg';
 
 $images_processed = array();
 
@@ -56,35 +56,35 @@ $mode = 'small';
 //**************************************************************************************//
 // Roll through the images.
 
-foreach ($images as $image) {
-  $ImageMosaicClass->preprocess_image($image, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
-  $images_processed[] = $ImageMosaicClass->resample_image();
+foreach ($image_files as $image_file) {
+  $ImageMosaicClass->preprocess_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
+  $images_processed[$image_file] = $ImageMosaicClass->resample_image();
 }
 
 //**************************************************************************************//
 // Shuffle the images.
 
 $artworks = array();
-foreach ($images_processed as $image_processed) {
+foreach ($images_processed as $image_file => $image_processed) {
   if (FALSE) {
     $ImageMosaicClass->render_image($image_processed);
   }
   else {
-    $pixel_blocks = $ImageMosaicClass->generate_blocks($image_processed, FALSE);
+    $pixel_blocks = $ImageMosaicClass->generate_blocks($image_file, $image_processed, FALSE);
     $artworks[] = $ImageMosaicClass->render_blocks($pixel_blocks);
   }
 }
 shuffle($artworks);
-$images = array();
+$image_files = array();
 foreach($artworks as $artwork) {
-  $images[] = '<li>'
+  $image_files[] = '<li>'
             . '<div class="Padding">'
             . $artwork
             . '</div><!-- .Padding -->'
             . '</li>'
             ;
 }
-$final_images = implode('', $images);
+$final_images = implode('', $image_files);
 
 //**************************************************************************************//
 // Set the content in the wrapper area.
