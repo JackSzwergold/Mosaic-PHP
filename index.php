@@ -18,7 +18,7 @@
 require_once('classes/imagemosaic.class.php');
 
 //**************************************************************************************//
-// Init the "geocodingClass()" class.
+// Set an array of images.
 
 $images = array();
 $images[] = 'images/chuck_berry_chess_box_set.jpg';
@@ -35,14 +35,34 @@ $images_processed = array();
 
 $ImageMosaicClass = new ImageMosaic();
 
+//**************************************************************************************//
+// Set an array of mode options.
+
+$mode_options = array();
+
+$mode_options['small']['width'] = 23;
+$mode_options['small']['height'] = 23;
+$mode_options['small']['block_size'] = 10;
+
+$mode_options['large']['width'] = 46;
+$mode_options['large']['height'] = 46;
+$mode_options['large']['block_size'] = 10;
+
+//**************************************************************************************//
+// Set the mode.
+
+$mode = 'small';
+
+//**************************************************************************************//
+// Roll through the images.
+
 foreach ($images as $image) {
-  // $ImageMosaicClass->set_image($image, 46, 46, 10);
-  $ImageMosaicClass->set_image($image, 23, 23, 10);
+  $ImageMosaicClass->preprocess_image($image, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
   $images_processed[] = $ImageMosaicClass->resample_image();
 }
 
 //**************************************************************************************//
-// Shuffle the covers.
+// Shuffle the images.
 
 $artworks = array();
 foreach ($images_processed as $image_processed) {
@@ -55,19 +75,67 @@ foreach ($images_processed as $image_processed) {
   }
 }
 shuffle($artworks);
-$covers = array();
+$images = array();
 foreach($artworks as $artwork) {
-  $covers[] = '<li>'
+  $images[] = '<li>'
             . '<div class="Padding">'
             . $artwork
             . '</div><!-- .Padding -->'
             . '</li>'
             ;
 }
-$final_covers = implode('', $covers);
+$final_images = implode('', $images);
 
 //**************************************************************************************//
-// Output the data.
+// Set the content in the wrapper area.
+
+$wrapper = '<div class="Wrapper">'
+         . '<div class="Padding">'
+
+         . '<div class="Content">'
+         . '<div class="Padding">'
+
+         . '<div class="Section">'
+         . '<div class="Padding">'
+         . '<div class="Middle">'
+
+         . '<div class="Core">'
+         . '<div class="Padding">'
+
+         . '<div class="Grid">'
+         . '<div class="Padding">'
+
+         . '<ul>'
+         . $final_images
+         . '</ul>'
+
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Grid -->'
+
+         . '</div><!-- .Middle -->'
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Section -->'
+
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Core -->'
+
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Content -->'
+
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Wrapper -->'
+         ;
+
+//**************************************************************************************//
+// Set the view wrapper.
+
+$body = sprintf('<div class="%sView">', $mode)
+      . $wrapper
+      . sprintf('</div><!-- .%sView -->', $mode)
+      ;
+
+//**************************************************************************************//
+// Return the output.
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
    . '<html xmlns="http://www.w3.org/1999/xhtml">'
@@ -81,47 +149,8 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
 
    . '</head>'
-
    . '<body>'
-
-   . '<div class="Wrapper">'
-   . '<div class="Padding">'
-   . '<div class="rootPage">'
-
-   . '<div class="Content">'
-   . '<div class="Padding">'
-
-   . '<div class="Section">'
-   . '<div class="Padding">'
-   . '<div class="Middle">'
-
-   . '<div class="Core">'
-   . '<div class="Padding">'
-
-   . '<div class="Grid">'
-   . '<div class="Padding">'
-
-   . '<ul>'
-   . $final_covers
-   . '</ul>'
-
-   . '</div><!-- .Padding -->'
-   . '</div><!-- .Grid -->'
-
-   . '</div><!-- .Middle -->'
-   . '</div><!-- .Padding -->'
-   . '</div><!-- .Section -->'
-
-   . '</div><!-- .Padding -->'
-   . '</div><!-- .Core -->'
-
-   . '</div><!-- .Padding -->'
-   . '</div><!-- .Content -->'
-
-   . '</div><!-- .rootPage -->'
-   . '</div><!-- .Padding -->'
-   . '</div><!-- .Wrapper -->'
-
+   . $body
    . '</body>'
    . '</html>'
    ;

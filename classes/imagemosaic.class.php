@@ -24,17 +24,17 @@ class ImageMosaic {
   private $height_final = 46;
   private $width_final = 46;
 
-  private $box_size = 10;
+  private $block_size = 10;
 
   public function __construct() {
   } // __construct
 
-  public function set_image($image, $height_final, $width_final, $box_size) {
+  public function preprocess_image($image, $width_final, $height_final, $block_size) {
     $this->image = $image;
-    $this->height_final = $height_final;
     $this->width_final = $width_final;
-    $this->box_size = $box_size;
-  } // __construct
+    $this->height_final = $height_final;
+    $this->block_size = $block_size;
+  } // preprocess_image
 
   // Output the image straight to the browser.
   function resample_image () {
@@ -86,7 +86,7 @@ class ImageMosaic {
         $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
         if ($width != $this->width_final) {
-          $block_dimensions = sprintf('height: %spx; width: %spx;', $this->box_size, $this->box_size);
+          $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
 
           if (FALSE) {
             $block_rgb = sprintf('background-color: %s;', $rgb_final);
@@ -116,18 +116,9 @@ class ImageMosaic {
   } // generate_blocks
 
   // Output the image straight to the browser.
-  function render_image ($image_processed) {
-
-    header('Content-Type: image/jpeg');
-
-    imagejpeg($image_processed, null, 60);
-
-  } // renderImage
-
-  // Output the image straight to the browser.
   function render_blocks ($pixel_blocks) {
 
-    $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->box_size);
+    $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->block_size);
 
     $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $pixel_blocks)
@@ -135,6 +126,15 @@ class ImageMosaic {
          ;
 
     return $ret;
+
+  } // render_blocks
+
+  // Output the image straight to the browser.
+  function render_image ($image_processed) {
+
+    header('Content-Type: image/jpeg');
+
+    imagejpeg($image_processed, null, 60);
 
   } // renderImage
 
