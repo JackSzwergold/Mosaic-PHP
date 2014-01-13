@@ -26,6 +26,8 @@ class ImageMosaic {
 
   private $block_size = 10;
 
+  private $cache_path = 'cache/';
+
   public function __construct() {
   } // __construct
 
@@ -64,8 +66,16 @@ class ImageMosaic {
   // Output the image straight to the browser.
   function generate_blocks ($image_file, $image_processed, $flip_rows) {
 
+    $filepath_parts = pathinfo($image_file);
+    $json_filename = $this->cache_path . $filepath_parts['filename'] . '.json';
+
     $pixel_blocks = array();
 
+    // Check if the image actually exists.
+    if (!empty(realpath($json_filename))) {
+      $pixel_blocks = json_decode(file_get_contents($json_filename));
+    }
+    else {
     for ($height = 0; $height < $this->height_final; $height++) {
 
       $pixel_blocks_row = array();
@@ -112,11 +122,14 @@ class ImageMosaic {
     } // $height loop.
 
     // Cache the pixel blocks to a JSON file.
-    $filepath_parts = pathinfo($image_file);
-    $json_filename = 'cache/' . $filepath_parts['filename'] . '.json';
+    if (!is_dir($this->cache_path)) {
+      mkdir($this->cache_path, 0755);
+    }
+
     $file_handle = fopen($json_filename, 'w');
     fwrite($file_handle, json_encode($pixel_blocks));
     fclose($file_handle);
+    }
 
     return $pixel_blocks;
 
