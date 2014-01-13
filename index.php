@@ -57,7 +57,7 @@ $mode = 'small';
 // Roll through the images.
 
 foreach ($image_files as $image_file) {
-  $ImageMosaicClass->preprocess_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
+  $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
   $images_processed[$image_file] = $ImageMosaicClass->resample_image();
 }
 
@@ -66,23 +66,18 @@ foreach ($image_files as $image_file) {
 
 $artworks = array();
 foreach ($images_processed as $image_file => $image_processed) {
-  if (FALSE) {
-    $ImageMosaicClass->render_image($image_processed);
-  }
-  else {
-    $pixel_blocks = $ImageMosaicClass->generate_blocks($image_file, $image_processed, FALSE);
-    $artworks[] = $ImageMosaicClass->render_blocks($pixel_blocks);
-  }
+  $pixel_blocks = $ImageMosaicClass->generate_blocks($image_file, $image_processed, FALSE);
+  $artworks[$image_file] = $ImageMosaicClass->render_blocks($pixel_blocks);
 }
 shuffle($artworks);
 $image_files = array();
-foreach($artworks as $artwork) {
-  $image_files[] = '<li>'
-            . '<div class="Padding">'
-            . $artwork
-            . '</div><!-- .Padding -->'
-            . '</li>'
-            ;
+foreach($artworks as $image_file => $artwork) {
+  $image_files[$image_file] = '<li>'
+                            . '<div class="Padding">'
+                            . $artwork
+                            . '</div><!-- .Padding -->'
+                            . '</li>'
+                            ;
 }
 $final_images = implode('', $image_files);
 

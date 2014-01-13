@@ -31,14 +31,19 @@ class ImageMosaic {
   public function __construct() {
   } // __construct
 
-  public function preprocess_image($image_file, $width_final, $height_final, $block_size) {
+  public function set_image($image_file, $width_final, $height_final, $block_size) {
     $this->image_file = $image_file;
     $this->width_final = $width_final;
     $this->height_final = $height_final;
     $this->block_size = $block_size;
-  } // preprocess_image
+  } // set_image
 
-  // Output the image straight to the browser.
+  // Process the image.
+  function process_image () {
+
+  } // process_image
+
+  // Resample the image.
   function resample_image () {
 
     // Check if the image actually exists.
@@ -63,7 +68,7 @@ class ImageMosaic {
 
   } // resample_image
 
-  // Output the image straight to the browser.
+  // Generate the CSS blocks.
   function generate_blocks ($image_file, $image_processed, $flip_rows) {
 
     $filepath_parts = pathinfo($image_file);
