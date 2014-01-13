@@ -58,18 +58,22 @@ $mode = 'small';
 
 foreach ($image_files as $image_file) {
   $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
-  $images_processed[$image_file] = $ImageMosaicClass->resample_image();
+  $artworks[$image_file] = $ImageMosaicClass->process_image();
 }
+
+//**************************************************************************************//
+// Filter out the empty images.
+
+$artworks = array_filter($artworks);
 
 //**************************************************************************************//
 // Shuffle the images.
 
-$artworks = array();
-foreach ($images_processed as $image_file => $image_processed) {
-  $pixel_blocks = $ImageMosaicClass->generate_blocks($image_file, $image_processed, FALSE);
-  $artworks[$image_file] = $ImageMosaicClass->render_blocks($pixel_blocks);
-}
 shuffle($artworks);
+
+//**************************************************************************************//
+// Place the images in <li> tags.
+
 $image_files = array();
 foreach($artworks as $image_file => $artwork) {
   $image_files[$image_file] = '<li>'

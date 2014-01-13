@@ -31,25 +31,65 @@ class ImageMosaic {
   public function __construct() {
   } // __construct
 
+
   public function set_image($image_file, $width_final, $height_final, $block_size) {
+
     $this->image_file = $image_file;
     $this->width_final = $width_final;
     $this->height_final = $height_final;
     $this->block_size = $block_size;
+
   } // set_image
+
 
   // Process the image.
   function process_image () {
-
-  } // process_image
-
-  // Resample the image.
-  function resample_image () {
 
     // Check if the image actually exists.
     if (empty(realpath($this->image_file))) {
       return;
     }
+
+    // Process the JSON filename.
+    $filepath_parts = pathinfo($this->image_file);
+
+    $json_filename_array = array();
+    $json_filename_array[] = $filepath_parts['filename'];
+    $json_filename_array[] = $this->width_final;
+    $json_filename_array[] = $this->height_final;
+    $json_filename_array[] = $this->block_size;
+
+    $json_filename = $this->cache_path . implode('-', $json_filename_array) . '.json';
+
+    // Check if the image actually exists.
+    if (!empty(realpath($json_filename))) {
+      $pixel_blocks = json_decode(file_get_contents($json_filename));
+      $ret = $this->render_pixel_box_container($pixel_blocks);
+    }
+    else {
+      $image_processed = $this->resample_image();
+      $pixel_blocks = $this->generate_pixel_boxes($this->image_file, $image_processed, FALSE);
+
+      // If the cache directory doesn’t exist, create it.
+      if (!is_dir($this->cache_path)) {
+        mkdir($this->cache_path, 0755);
+      }
+
+      // Cache the pixel blocks to a JSON file.
+      $file_handle = fopen($json_filename, 'w');
+      fwrite($file_handle, json_encode($pixel_blocks));
+      fclose($file_handle);
+    }
+
+    $ret = !empty($pixel_blocks) ? $this->render_pixel_box_container($pixel_blocks) : '';
+
+    return $ret;
+
+  } // process_image
+
+
+  // Resample the image.
+  function resample_image () {
 
     // Get the source image.
     $image_source = imagecreatefromjpeg($this->image_file);
@@ -68,19 +108,12 @@ class ImageMosaic {
 
   } // resample_image
 
-  // Generate the CSS blocks.
-  function generate_blocks ($image_file, $image_processed, $flip_rows) {
 
-    $filepath_parts = pathinfo($image_file);
-    $json_filename = $this->cache_path . $filepath_parts['filename'] . '.json';
+  // Generate the pixel boxes.
+  function generate_pixel_boxes ($image_file, $image_processed, $flip_rows) {
 
     $pixel_blocks = array();
 
-    // Check if the image actually exists.
-    if (!empty(realpath($json_filename))) {
-      $pixel_blocks = json_decode(file_get_contents($json_filename));
-    }
-    else {
     for ($height = 0; $height < $this->height_final; $height++) {
 
       $pixel_blocks_row = array();
@@ -126,22 +159,13 @@ class ImageMosaic {
 
     } // $height loop.
 
-    // Cache the pixel blocks to a JSON file.
-    if (!is_dir($this->cache_path)) {
-      mkdir($this->cache_path, 0755);
-    }
-
-    $file_handle = fopen($json_filename, 'w');
-    fwrite($file_handle, json_encode($pixel_blocks));
-    fclose($file_handle);
-    }
-
     return $pixel_blocks;
 
-  } // generate_blocks
+  } // generate_pixel_boxes
 
-  // Output the image straight to the browser.
-  function render_blocks ($pixel_blocks) {
+
+  // Render the pixel boxes into a container.
+  function render_pixel_box_container ($pixel_blocks) {
 
     $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->block_size);
 
@@ -152,9 +176,10 @@ class ImageMosaic {
 
     return $ret;
 
-  } // render_blocks
+  } // render_pixel_box_container
 
-  // Output the image straight to the browser.
+
+  // Rendethe image straight to the browser.
   function render_image ($image_processed) {
 
     header('Content-Type: image/jpeg');
@@ -162,6 +187,7 @@ class ImageMosaic {
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
+
 
 } // ImageMosaic
 
