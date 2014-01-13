@@ -58,6 +58,17 @@ ul, li
 }
 
 /**************************************************************************************************/
+.Nameplate, .Nameplate .Full { width: 600px; }
+.Nameplate { margin: 15px 0 0 0; }
+.Nameplate .Padding { padding: 0; }
+
+/**************************************************************************************************/
+.Nav p { font-size: 100%; }
+.Nav select { margin: -1px 0 0 0; }
+.Nav ul li { margin: 0 15px 0 0; }
+.Nav ul li.select_label { margin: 0 3px 0 0; }
+
+/**************************************************************************************************/
 .Content { width: 100%; }
 
 .Content .Padding
@@ -108,6 +119,15 @@ ul, li
 }
 
 .Core .Grid ul li .Padding { padding: 0 3px 6px 3px; }
+
+.Core .Grid ul li table
+{
+	height: 205px;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.Core .Grid ul li td { vertical-align: bottom; }
 
 /**************************************************************************************************/
 .Core .Text .Padding { padding: 15px 0 15px 0; }

@@ -91,6 +91,10 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '<div class="Content">'
    . '<div class="Padding">'
 
+   . '<div class="Section">'
+   . '<div class="Padding">'
+   . '<div class="Middle">'
+
    . '<div class="Core">'
    . '<div class="Padding">'
 
@@ -103,6 +107,10 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 
    . '</div><!-- .Padding -->'
    . '</div><!-- .Grid -->'
+
+   . '</div><!-- .Middle -->'
+   . '</div><!-- .Padding -->'
+   . '</div><!-- .Section -->'
 
    . '</div><!-- .Padding -->'
    . '</div><!-- .Core -->'
