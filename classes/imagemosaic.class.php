@@ -138,11 +138,11 @@ class ImageMosaic {
 
           if (FALSE) {
             $block_rgb = sprintf('background-color: %s;', $rgb_final);
-            $block_style = $block_dimensions . $block_rgb;
+            $block_style = $block_dimensions . ' ' . $block_rgb;
           }
           else {
             $block_hex = sprintf('background-color: %s;', $hex_final);
-            $block_style = $block_dimensions . $block_hex;
+            $block_style = $block_dimensions . ' ' . $block_hex;
           }
 
           $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s">', $block_style)
