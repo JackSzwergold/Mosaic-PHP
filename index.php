@@ -22,18 +22,42 @@ require_once('classes/imagemosaic.class.php');
 
 $mode_options = array();
 
+$mode_options['micro']['width'] = 6;
+$mode_options['micro']['height'] = 6;
+$mode_options['micro']['block_size'] = 10;
+$mode_options['micro']['how_many'] = 14;
+
+$mode_options['tiny']['width'] = 12;
+$mode_options['tiny']['height'] = 12;
+$mode_options['tiny']['block_size'] = 10;
+$mode_options['tiny']['how_many'] = 16;
+
 $mode_options['small']['width'] = 23;
 $mode_options['small']['height'] = 23;
 $mode_options['small']['block_size'] = 10;
+$mode_options['small']['how_many'] = 9;
 
 $mode_options['large']['width'] = 46;
 $mode_options['large']['height'] = 46;
 $mode_options['large']['block_size'] = 10;
+$mode_options['large']['how_many'] = 2;
+
+$mode_options['mega']['width'] = 72;
+$mode_options['mega']['height'] = 72;
+$mode_options['mega']['block_size'] = 10;
+$mode_options['mega']['how_many'] = 1;
 
 //**************************************************************************************//
 // Set the mode.
 
-$mode = 'small';
+if (FALSE) {
+  $mode_keys = array_keys($mode_options);
+  shuffle($mode_keys);
+  $mode = $mode_keys[0];
+}
+else {
+  $mode = 'micro';
+}
 
 //**************************************************************************************//
 // Set the image directory.
@@ -66,7 +90,7 @@ shuffle($raw_image_files);
 //**************************************************************************************//
 // Slice off a sybset of the image files.
 
-$image_files = array_slice($raw_image_files, 0, 9);
+$image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
 
 //**************************************************************************************//
 // Init the image mosaic class and roll through the images.
