@@ -18,24 +18,6 @@
 require_once('classes/imagemosaic.class.php');
 
 //**************************************************************************************//
-// Set an array of images.
-
-$image_files = array();
-$image_files[] = 'images/chuck_berry_chess_box_set.jpg';
-$image_files[] = 'images/roxy_music_country_life.jpg';
-$image_files[] = 'images/black_sabbath_volume_4.jpg';
-$image_files[] = 'images/gogos_beauty_and_the_beat.jpg';
-$image_files[] = 'images/led_zeppelin_houses_of_the_holy.jpg';
-$image_files[] = 'images/la_luz_damp_face.jpg';
-$image_files[] = 'images/rush_moving_pictures.jpg';
-$image_files[] = 'images/rolling_stones_let_it_bleed.jpg';
-$image_files[] = 'images/the_b52s.jpg';
-
-$images_processed = array();
-
-$ImageMosaicClass = new ImageMosaic();
-
-//**************************************************************************************//
 // Set an array of mode options.
 
 $mode_options = array();
@@ -54,7 +36,42 @@ $mode_options['large']['block_size'] = 10;
 $mode = 'small';
 
 //**************************************************************************************//
-// Roll through the images.
+// Set the image directory.
+
+$image_dir = 'images/';
+
+//**************************************************************************************//
+// Check if there is an image directory. If not? Exit.
+
+if (!is_dir($image_dir)) {
+  die();
+}
+
+//**************************************************************************************//
+// Process the images in the directory.
+
+$skip_files = array('..', '.', '.DS_Store');
+$image_files = scandir($image_dir);
+$image_files = array_diff($image_files, $skip_files);
+
+foreach ($image_files as $image_file_key => $image_file_value) { 
+  $raw_image_files[$image_file_key] = $image_dir . $image_file_value;
+}
+
+//**************************************************************************************//
+// Shuffle the image files.
+
+shuffle($raw_image_files);
+
+//**************************************************************************************//
+// Slice off a sybset of the image files.
+
+$image_files = array_slice($raw_image_files, 0, 9);
+
+//**************************************************************************************//
+// Init the image mosaic class and roll through the images.
+
+$ImageMosaicClass = new ImageMosaic();
 
 foreach ($image_files as $image_file) {
   $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
@@ -65,11 +82,6 @@ foreach ($image_files as $image_file) {
 // Filter out the empty images.
 
 $artworks = array_filter($artworks);
-
-//**************************************************************************************//
-// Shuffle the images.
-
-shuffle($artworks);
 
 //**************************************************************************************//
 // Place the images in <li> tags.
