@@ -77,7 +77,7 @@ class ImageMosaic {
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
-      fwrite($file_handle, json_encode($pixel_blocks));
+      fwrite($file_handle, json_encode((object) $pixel_blocks, JSON_PRETTY_PRINT));
       fclose($file_handle);
     }
 
@@ -152,7 +152,7 @@ class ImageMosaic {
         if ($width == $this->width_final) {
           // $final_row = array_reverse($pixel_blocks_row);
           $final_row = $flip_rows ? array_reverse($pixel_blocks_row) : $pixel_blocks_row;
-          $pixel_blocks[] = implode('', $final_row);
+          $pixel_blocks[] = $final_row;
         }
 
       } // $width loop.
@@ -167,10 +167,15 @@ class ImageMosaic {
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($pixel_blocks) {
 
+    $rows = array();
+    foreach ($pixel_blocks as $pixel_block_row_key => $pixel_block_row_value) {
+      $rows[] = implode('', $pixel_block_row_value);
+    }
+
     $block_container_dimensions = sprintf('width: %spx;', $this->width_final * $this->block_size);
 
     $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
-         . implode('', $pixel_blocks)
+         . implode('', $rows)
          .'</div><!-- .PixelBoxConatiner -->' . "\r\n"
          ;
 

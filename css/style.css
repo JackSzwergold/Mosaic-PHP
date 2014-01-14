@@ -56,8 +56,11 @@ ul, li
 	clear: both;
 }
 
+.microView .Wrapper { width: 468px; }
+.tinyView .Wrapper { width: 510px; }
 .smallView .Wrapper { width: 714px; }
 .largeView .Wrapper { width: 472px; }
+.megaView .Wrapper { width: 732px; }
 
 /**************************************************************************************************/
 .Content { width: 100%; }
