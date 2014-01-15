@@ -9,6 +9,7 @@
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
  *          2014-01-12, js: more development & adding new sample images
+ *          2014-01-14, js: moving onto creating actual pixelated images.
  *
  */
 
@@ -26,7 +27,9 @@ class ImageMosaic {
 
   private $block_size = 10;
 
-  private $cache_path = 'cache/';
+  private $cache_path = array('json' => 'cache_data/', 'gif' => 'cache_media/', 'jpeg' => 'cache_media/', 'png' => 'cache_media/');
+  private $image_types = array('gif', 'jpeg', 'png');
+  private $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
 
   public function __construct() {
   } // __construct
@@ -42,6 +45,25 @@ class ImageMosaic {
   } // set_image
 
 
+  // Process the filename.
+  function create_filename ($filename = '', $extension = '') {
+
+    // Process the filename.
+    $filepath_parts = pathinfo($filename);
+
+    $ret_array = array();
+    $ret_array[] = $filepath_parts['filename'];
+    $ret_array[] = $this->width_final;
+    $ret_array[] = $this->height_final;
+    $ret_array[] = $this->block_size;
+
+    $ret = $this->cache_path[$extension] . implode('-', $ret_array) . '.' . $extension;
+
+    return $ret;
+
+  } // create_filename
+
+
   // Process the image.
   function process_image () {
 
@@ -51,15 +73,7 @@ class ImageMosaic {
     }
 
     // Process the JSON filename.
-    $filepath_parts = pathinfo($this->image_file);
-
-    $json_filename_array = array();
-    $json_filename_array[] = $filepath_parts['filename'];
-    $json_filename_array[] = $this->width_final;
-    $json_filename_array[] = $this->height_final;
-    $json_filename_array[] = $this->block_size;
-
-    $json_filename = $this->cache_path . implode('-', $json_filename_array) . '.json';
+    $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image actually exists.
     if (!empty(realpath($json_filename))) {
@@ -71,8 +85,8 @@ class ImageMosaic {
       $pixel_blocks = $this->generate_pixel_boxes($this->image_file, $image_processed, FALSE);
 
       // If the cache directory doesn’t exist, create it.
-      if (!is_dir($this->cache_path)) {
-        mkdir($this->cache_path, 0755);
+      if (!is_dir($this->cache_path['json'])) {
+        mkdir($this->cache_path['json'], 0755);
       }
 
       // Cache the pixel blocks to a JSON file.
@@ -104,9 +118,69 @@ class ImageMosaic {
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_final, $this->height_final, $this->width_o, $this->height_o);
 
+    $this->pixelate_image($image_processed);
+
+    // Get rid of the image to free up memory.
+    imagedestroy($image_source);
+
     return $image_processed;
 
   } // resample_image
+
+
+  // Pixelate the image.
+  function pixelate_image ($image_source) {
+
+    $pixelate_x = 10;
+    $pixelate_y = 10;
+
+    // Calculate the final width & final height
+    $width_final = $this->width_final * $this->block_size;
+    $height_final = $this->width_final * $this->block_size;
+
+    // Set the canvas for the processed image.
+    $image_processed = imagecreatetruecolor($width_final, $height_final);
+
+    // Process the image via 'imagecopyresampled'
+    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_final, $height_final, $this->width_final, $this->height_final);
+
+   // Generate the image pixels.
+   for ($height_y = 0; $height_y < $height_final; $height_y += $pixelate_y + 1) {
+      for ($width_x = 0; $width_x < $width_final; $width_x += $pixelate_x + 1) {
+        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_processed, $width_x, $height_y));
+        $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
+        imagefilledrectangle($image_processed, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, $color);
+      }  // height loop.
+    }  // height loop.
+
+    // Save the images.
+    $image_filenames = array();
+    foreach ($this->image_types as $image_type) {
+
+      // If the cache directory doesn’t exist, create it.
+      if (!is_dir($this->cache_path[$image_type])) {
+        mkdir($this->cache_path[$image_type], 0755);
+      }
+
+      // Process the filename.
+      $filename = $this->create_filename($this->image_file, $image_type);
+
+      // Generate the image files.
+      if ($image_type == 'gif' && empty(realpath($filename))) {
+        imagegif($image_processed, $filename, $this->image_quality['gif']);
+      }
+      else if ($image_type == 'jpeg' && empty(realpath($filename))) {
+        imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
+      }
+      else if ($image_type == 'png' && empty(realpath($filename))) {
+        imagepng($image_processed, $filename, $this->image_quality['png']);
+      }
+    }
+
+    // Get rid of the image to free up memory.
+    imagedestroy($image_processed);
+
+  } // pixelate_image
 
 
   // Generate the pixel boxes.
@@ -117,7 +191,7 @@ class ImageMosaic {
     for ($height = 0; $height < $this->height_final; $height++) {
 
       $pixel_blocks_row = array();
-      for ($width = 0;$width <= $this->width_final; $width++) {
+      for ($width = 0; $width <= $this->width_final; $width++) {
 
         $rgb = imagecolorat($image_processed, $width, $height);
         $red = ($rgb >> 16) & 0xFF;
@@ -158,6 +232,9 @@ class ImageMosaic {
       } // $width loop.
 
     } // $height loop.
+
+    // Get rid of the image to free up memory.
+    imagedestroy($image_processed);
 
     return $pixel_blocks;
 

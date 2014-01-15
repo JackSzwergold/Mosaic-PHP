@@ -56,7 +56,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'mega';
+  $mode = 'small';
 }
 
 //**************************************************************************************//
@@ -78,7 +78,7 @@ $skip_files = array('..', '.', '.DS_Store');
 $image_files = scandir($image_dir);
 $image_files = array_diff($image_files, $skip_files);
 
-foreach ($image_files as $image_file_key => $image_file_value) { 
+foreach ($image_files as $image_file_key => $image_file_value) {
   $raw_image_files[$image_file_key] = $image_dir . $image_file_value;
 }
 
