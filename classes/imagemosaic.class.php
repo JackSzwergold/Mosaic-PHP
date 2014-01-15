@@ -26,6 +26,7 @@ class ImageMosaic {
   private $width_final = 46;
 
   private $block_size = 10;
+  private $overlay_tile = 'css/brick.png';
 
   private $cache_path = array('json' => 'cache_data/', 'gif' => 'cache_media/', 'jpeg' => 'cache_media/', 'png' => 'cache_media/');
   private $image_types = array('gif', 'jpeg', 'png');
@@ -150,8 +151,15 @@ class ImageMosaic {
         $rgb = imagecolorsforindex($image_processed, imagecolorat($image_processed, $width_x, $height_y));
         $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
         imagefilledrectangle($image_processed, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, $color);
+
       }  // height loop.
     }  // height loop.
+
+    // Place an overlay on the image.
+    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
+    imagealphablending($image_processed, true);
+    imagesettile($image_processed, $tiled_overlay);
+    imagefilledrectangle($image_processed, 0, 0, $width_final, $height_final, IMG_COLOR_TILED);
 
     // Save the images.
     $image_filenames = array();
