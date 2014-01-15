@@ -141,23 +141,38 @@ class ImageMosaic {
 
     // Set the canvas for the processed image.
     $image_processed = imagecreatetruecolor($width_final, $height_final);
+    imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
+    imagealphablending($image_processed, true);
+    imagesavealpha($image_processed, true);
 
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_final, $height_final, $this->width_final, $this->height_final);
 
-   // Set the titled overlay element.
-   $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-   imagealphablending($image_processed, true);
+    // Set the titled overlay element.
+    $tiled_overlay = imagecreatetruecolor(10,10);
+    imagealphablending($tiled_overlay, true);
+    imagesavealpha($tiled_overlay, true);
 
-   // Generate the image pixels.
-   for ($height_y = 0; $height_y < $height_final; $height_y += $pixelate_y + 1) {
+    imagefilledrectangle($tiled_overlay, 0, 0, 10, 10, IMG_COLOR_TILED);
+    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
+
+    // imagealphablending($tiled_overlay_raw, true);
+    // imagesavealpha($tiled_overlay_raw, true);
+    // imagecopy($tiled_overlay, $tiled_overlay_raw, 0, 0, 0, 0, 10, 10);
+
+    imagealphablending($image_processed, true);
+    imagesavealpha($image_processed, true);
+
+    // Generate the image pixels.
+    for ($height_y = 0; $height_y < $height_final; $height_y += $pixelate_y + 1) {
       for ($width_x = 0; $width_x < $width_final; $width_x += $pixelate_x + 1) {
         $rgb = imagecolorsforindex($image_processed, imagecolorat($image_processed, $width_x, $height_y));
         $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
         imagefilledrectangle($image_processed, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, $color);
 
         if (TRUE) {
-          imagecopymerge($image_processed, $tiled_overlay, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, 10, 10, 100);
+          // imagecopy($image_processed, $tiled_overlay, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, 10, 10);
+          imagecopymerge($image_processed, $tiled_overlay, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, 10, 10, 30);
           // imagecopymerge($image_processed, 0, 0, 0, 0, 10, 10, 75);
         }
 
