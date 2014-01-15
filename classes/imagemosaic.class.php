@@ -77,7 +77,7 @@ class ImageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image actually exists.
-    if (!empty(realpath($json_filename))) {
+    if (FALSE && !empty(realpath($json_filename))) {
       $pixel_blocks = json_decode(file_get_contents($json_filename));
       $ret = $this->render_pixel_box_container($pixel_blocks);
     }
@@ -145,6 +145,10 @@ class ImageMosaic {
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_final, $height_final, $this->width_final, $this->height_final);
 
+   // Set the titled overlay element.
+   $tiled_overlay = imagecreatefrompng($this->overlay_tile);
+   imagealphablending($image_processed, true);
+
    // Generate the image pixels.
    for ($height_y = 0; $height_y < $height_final; $height_y += $pixelate_y + 1) {
       for ($width_x = 0; $width_x < $width_final; $width_x += $pixelate_x + 1) {
@@ -152,14 +156,22 @@ class ImageMosaic {
         $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
         imagefilledrectangle($image_processed, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, $color);
 
-      }  // height loop.
+        if (TRUE) {
+          imagecopymerge($image_processed, $tiled_overlay, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, 10, 10, 100);
+          // imagecopymerge($image_processed, 0, 0, 0, 0, 10, 10, 75);
+        }
+
+      }  // width loop.
     }  // height loop.
 
     // Place an overlay on the image.
-    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-    imagealphablending($image_processed, true);
-    imagesettile($image_processed, $tiled_overlay);
-    imagefilledrectangle($image_processed, 0, 0, $width_final, $height_final, IMG_COLOR_TILED);
+    if (FALSE) {
+      imagealphablending($image_processed, true);
+      imagesettile($image_processed, $tiled_overlay);
+      imagefilledrectangle($image_processed, 0, 0, $width_final, $height_final, IMG_COLOR_TILED);
+    }
+
+    imagedestroy($tiled_overlay);
 
     // Save the images.
     $image_filenames = array();
