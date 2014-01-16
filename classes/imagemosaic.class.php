@@ -22,8 +22,8 @@ class ImageMosaic {
 
   private $image_file = FALSE;
 
-  private $height_resample = 46;
-  private $width_resample = 46;
+  private $height_resampled = 46;
+  private $width_resampled = 46;
 
   private $block_size = 10;
   private $overlay_tile = 'css/brick.png';
@@ -36,11 +36,16 @@ class ImageMosaic {
   } // __construct
 
 
-  public function set_image($image_file, $width_resample, $height_resample, $block_size) {
+  public function debug_mode($DEBUG_MODE) {
+    $this->DEBUG_MODE = $DEBUG_MODE;
+  } // debug_mode
+
+
+  public function set_image($image_file, $width_resampled, $height_resampled, $block_size) {
 
     $this->image_file = $image_file;
-    $this->width_resample = $width_resample;
-    $this->height_resample = $height_resample;
+    $this->width_resampled = $width_resampled;
+    $this->height_resampled = $height_resampled;
     $this->block_size = $block_size;
 
   } // set_image
@@ -54,8 +59,8 @@ class ImageMosaic {
 
     $ret_array = array();
     $ret_array[] = $filepath_parts['filename'];
-    $ret_array[] = $this->width_resample;
-    $ret_array[] = $this->height_resample;
+    $ret_array[] = $this->width_resampled;
+    $ret_array[] = $this->height_resampled;
     $ret_array[] = $this->block_size;
 
     $ret = $this->cache_path[$extension] . implode('-', $ret_array) . '.' . $extension;
@@ -77,7 +82,7 @@ class ImageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image actually exists.
-    if (FALSE && !empty(realpath($json_filename))) {
+    if (!$this->DEBUG_MODE && !empty(realpath($json_filename))) {
       $pixel_blocks = json_decode(file_get_contents($json_filename));
       $ret = $this->render_pixel_box_container($pixel_blocks);
     }
@@ -110,14 +115,14 @@ class ImageMosaic {
     $image_source = imagecreatefromjpeg($this->image_file);
 
     // Set the canvas for the processed image.
-    $image_processed = imagecreatetruecolor($this->width_resample, $this->height_resample);
+    $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
 
     // Get the image dimensions.
     $this->width_source = imagesx($image_source);
     $this->height_source = imagesy($image_source);
 
     // Process the image via 'imagecopyresampled'
-    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resample, $this->height_resample, $this->width_source, $this->height_source);
+    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);
 
     $this->pixelate_image($image_processed);
 
@@ -132,65 +137,35 @@ class ImageMosaic {
   // Pixelate the image.
   function pixelate_image ($image_source) {
 
-    $pixelate_x = 10;
-    $pixelate_y = 10;
+    $pixelate_x = $this->block_size;
+    $pixelate_y = $this->block_size;
 
     // Calculate the final width & final height
-    $width_pixelate = $this->width_resample * $this->block_size;
-    $height_pixelate = $this->height_resample * $this->block_size;
+    $width_pixelate = $this->width_resampled * $pixelate_x;
+    $height_pixelate = $this->height_resampled * $pixelate_y;
 
-    // Set the canvas for the processed image.
+    // Set the canvas for the processed image & resample the source image.
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
     imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
-    imagealphablending($image_processed, true);
-    imagesavealpha($image_processed, true);
+    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_pixelate, $height_pixelate, $this->width_resampled, $this->height_resampled);
 
-    // Process the image via 'imagecopyresampled'
-    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_pixelate, $height_pixelate, $this->width_resample, $this->height_resample);
-
-    // Set the titled overlay element.
-    $tiled_overlay = imagecreatetruecolor($pixelate_x, $pixelate_y);
-    imagealphablending($tiled_overlay, true);
-    imagesavealpha($tiled_overlay, true);
-
-    imagefilledrectangle($tiled_overlay, 0, 0, $pixelate_x, $pixelate_y, IMG_COLOR_TILED);
-    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-
-    // imagealphablending($tiled_overlay_raw, true);
-    // imagesavealpha($tiled_overlay_raw, true);
-    // imagecopy($tiled_overlay, $tiled_overlay_raw, 0, 0, 0, 0, $pixelate_x, $pixelate_y);
-
-    imagealphablending($image_processed, true);
-    imagesavealpha($image_processed, true);
-
-
-    // Generate the image pixels.
-    for ($height_y = 0; $height_y <= $height_pixelate; $height_y += $pixelate_y + 1) {
-      for ($width_x = 0; $width_x <= $width_pixelate; $width_x += $pixelate_x + 1) {
-
-        $box_x = ($width_x + $pixelate_x);
-        $box_y = ($height_y + $pixelate_y);
-
-        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_processed, $width_x, $height_y));
+    // Loop through the origina image, get a color and then create a new box/rectangle based on that box.
+    $box_x = $box_y = 0;
+    for ($height_y = 0; $height_y <= $this->height_resampled; $height_y += 1) {
+      $box_y = ($height_y * $pixelate_y);
+      for ($width_x = 0; $width_x <= $this->width_resampled; $width_x += 1) {
+        $box_x = ($width_x * $pixelate_x);
+        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $width_x, $height_y));
         $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
-        imagefilledrectangle($image_processed, $width_x, $height_y, $box_x, $box_y, $color);
-
-        if (FALSE) {
-          // imagecopy($image_processed, $tiled_overlay, $width_x, $height_y, $width_x + $pixelate_x, $height_y + $pixelate_y, 10, 10);
-          imagecopymerge($image_processed, $tiled_overlay, $width_x, $height_y, $box_x, $box_y, $pixelate_x, $pixelate_y, 30);
-          // imagecopymerge($image_processed, 0, 0, 0, 0, 10, 10, 75);
-        }
-
+        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $pixelate_x), ($box_y + $pixelate_y), $color);
       }  // width loop.
     }  // height loop.
 
-    // Place an overlay on the image.
-    if (FALSE) {
-      imagealphablending($image_processed, true);
-      imagesettile($image_processed, $tiled_overlay);
-      imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
-    }
-
+    // Place a tiled overlay on the image.
+    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
+    imagealphablending($image_processed, true);
+    imagesettile($image_processed, $tiled_overlay);
+    imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
     imagedestroy($tiled_overlay);
 
     // Save the images.
@@ -202,10 +177,8 @@ class ImageMosaic {
         mkdir($this->cache_path[$image_type], 0755);
       }
 
-      // Process the filename.
+      // Process the filename & generate the image files.
       $filename = $this->create_filename($this->image_file, $image_type);
-
-      // Generate the image files.
       if ($image_type == 'gif' && empty(realpath($filename))) {
         imagegif($image_processed, $filename, $this->image_quality['gif']);
       }
@@ -214,13 +187,14 @@ class ImageMosaic {
       }
       else if ($image_type == 'png' && empty(realpath($filename))) {
         imagepng($image_processed, $filename, $this->image_quality['png']);
-        
+
       }
     }
-    
-    imagepng($image_processed, 'test.png', $this->image_quality['png']);
 
-    // Get rid of the image to free up memory.
+    if ($this->DEBUG_MODE) {
+      imagepng($image_processed, 'zzz_debug.png', $this->image_quality['png']);
+    }
+
     imagedestroy($image_processed);
 
   } // pixelate_image
@@ -231,10 +205,10 @@ class ImageMosaic {
 
     $pixel_blocks = array();
 
-    for ($height = 0; $height < $this->height_resample; $height++) {
+    for ($height = 0; $height < $this->height_resampled; $height++) {
 
       $pixel_blocks_row = array();
-      for ($width = 0; $width <= $this->width_resample; $width++) {
+      for ($width = 0; $width <= $this->width_resampled; $width++) {
 
         $rgb = imagecolorat($image_processed, $width, $height);
         $red = ($rgb >> 16) & 0xFF;
@@ -250,7 +224,7 @@ class ImageMosaic {
         $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
         $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
-        if ($width != $this->width_resample) {
+        if ($width != $this->width_resampled) {
           $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
 
           if (FALSE) {
@@ -266,7 +240,7 @@ class ImageMosaic {
                               . '</div><!-- .PixelBox -->' . "\r\n"
                               ;
         }
-        if ($width == $this->width_resample) {
+        if ($width == $this->width_resampled) {
           // $final_row = array_reverse($pixel_blocks_row);
           $final_row = $flip_rows ? array_reverse($pixel_blocks_row) : $pixel_blocks_row;
           $pixel_blocks[] = $final_row;
@@ -292,7 +266,7 @@ class ImageMosaic {
       $rows[] = implode('', $pixel_block_row_value);
     }
 
-    $block_container_dimensions = sprintf('width: %spx;', $this->width_resample * $this->block_size);
+    $block_container_dimensions = sprintf('width: %spx;', $this->width_resampled * $this->block_size);
 
     $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $rows)
