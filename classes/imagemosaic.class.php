@@ -96,25 +96,35 @@ class ImageMosaic {
 
     // Check if the image json actually exists.
     if (!$this->DEBUG_MODE && !empty(realpath($json_filename))) {
-      $pixel_blocks = json_decode(file_get_contents($json_filename));
-      $ret = $this->render_pixel_box_container($pixel_blocks);
+      $blocks = json_decode(file_get_contents($json_filename));
+      $ret = $this->render_pixel_box_container($blocks);
     }
     else {
       $image_processed = $this->resample_image();
-      $pixel_blocks = $this->generate_pixels($this->image_file, $image_processed, FALSE);
+      $pixels = $this->generate_pixels($this->image_file, $image_processed, FALSE);
 
-      // If the cache directory doesn’t exist, create it.
-      if (!is_dir($this->cache_path['json'])) {
-        mkdir($this->cache_path['json'], 0755);
+      $blocks = array();
+      foreach ($pixels as $pixel_row) {
+        foreach ($pixel_row as $pixel) {
+          $blocks[] = $this->generate_pixel_boxes($pixel);
+        }
       }
 
-      // Cache the pixel blocks to a JSON file.
-      $file_handle = fopen($json_filename, 'w');
-      fwrite($file_handle, json_encode((object) $pixel_blocks, JSON_PRETTY_PRINT));
-      fclose($file_handle);
+      if (TRUE) {
+        // If the cache directory doesn’t exist, create it.
+        if (!is_dir($this->cache_path['json'])) {
+          mkdir($this->cache_path['json'], 0755);
+         }
+
+        // Cache the pixel blocks to a JSON file.
+        $file_handle = fopen($json_filename, 'w');
+        fwrite($file_handle, json_encode((object) $pixels, JSON_PRETTY_PRINT));
+        fclose($file_handle);
+      }
+
     }
 
-    $ret = !empty($pixel_blocks) ? $this->render_pixel_box_container($pixel_blocks) : '';
+    $ret = !empty($blocks) ? $this->render_pixel_box_container($blocks) : '';
 
     return $ret;
 
@@ -221,7 +231,7 @@ class ImageMosaic {
   // Generate the pixel boxes.
   function generate_pixel_boxes ($rgb_array) {
 
-    $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
+    // $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
     $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
@@ -272,7 +282,7 @@ class ImageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = $this->generate_pixel_boxes($rgb_array);
+          $rows[] = $rgb_array;
         }
 
         if ($width == $this->width_resampled) {
@@ -292,17 +302,12 @@ class ImageMosaic {
 
 
   // Render the pixel boxes into a container.
-  function render_pixel_box_container ($pixel_blocks) {
-
-    $rows = array();
-    foreach ($pixel_blocks as $pixel_block_row_key => $pixel_block_row_value) {
-      $rows[] = implode('', $pixel_block_row_value);
-    }
+  function render_pixel_box_container ($blocks) {
 
     $block_container_dimensions = sprintf('width: %spx;', $this->width_resampled * $this->block_size);
 
     $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
-         . implode('', $rows)
+         . implode('', $blocks)
          .'</div><!-- .PixelBoxConatiner -->' . "\r\n"
          ;
 
