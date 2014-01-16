@@ -274,9 +274,9 @@ class ImageMosaic {
         if ($width != $this->width_resampled) {
           $rows[] = $this->generate_pixel_boxes($rgb_array);
         }
+
         if ($width == $this->width_resampled) {
-          $final_row = $this->flip_horizontal ? array_reverse($rows) : $rows;
-          $ret[] = $final_row;
+          $ret[] = $rows;
         }
 
       } // $width loop.
