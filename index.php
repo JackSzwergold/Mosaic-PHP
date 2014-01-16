@@ -25,7 +25,7 @@ $mode_options = array();
 $mode_options['micro']['width'] = 6;
 $mode_options['micro']['height'] = 6;
 $mode_options['micro']['block_size'] = 10;
-$mode_options['micro']['how_many'] = 20;
+$mode_options['micro']['how_many'] = 25;
 
 $mode_options['tiny']['width'] = 12;
 $mode_options['tiny']['height'] = 12;
