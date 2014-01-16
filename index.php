@@ -56,7 +56,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'mega';
+  $mode = 'small';
 }
 
 //**************************************************************************************//
@@ -99,7 +99,8 @@ $ImageMosaicClass = new ImageMosaic();
 
 foreach ($image_files as $image_file) {
   $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
-  $artworks[$image_file] = $ImageMosaicClass->debug_mode(FALSE);
+  $ImageMosaicClass->debug_mode(FALSE);
+  $ImageMosaicClass->flip_horizontal(FALSE);
   $artworks[$image_file] = $ImageMosaicClass->process_image();
 }
 
