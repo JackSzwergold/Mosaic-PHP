@@ -10,6 +10,7 @@
  *          2014-01-11, js: development & cleanup
  *          2014-01-12, js: more development & adding new sample images
  *          2014-01-14, js: moving onto creating actual pixelated images.
+ *          2014-01-16, js: More improvements including actual image generation.
  *
  */
 
@@ -28,6 +29,8 @@ class ImageMosaic {
   private $block_size = 10;
   private $overlay_tile = 'css/brick.png';
 
+  private $flip_horizontal = FALSE;
+
   private $cache_path = array('json' => 'cache_data/', 'gif' => 'cache_media/', 'jpeg' => 'cache_media/', 'png' => 'cache_media/');
   private $image_types = array('gif', 'jpeg', 'png');
   private $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
@@ -37,8 +40,17 @@ class ImageMosaic {
 
 
   public function debug_mode($DEBUG_MODE) {
+
     $this->DEBUG_MODE = $DEBUG_MODE;
+
   } // debug_mode
+
+
+  public function flip_horizontal($flip_horizontal) {
+
+    $this->flip_horizontal = $flip_horizontal;
+
+  } // flip_horizontal
 
 
   public function set_image($image_file, $width_resampled, $height_resampled, $block_size) {
@@ -81,14 +93,14 @@ class ImageMosaic {
     // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
-    // Check if the image actually exists.
+    // Check if the image json actually exists.
     if (!$this->DEBUG_MODE && !empty(realpath($json_filename))) {
       $pixel_blocks = json_decode(file_get_contents($json_filename));
       $ret = $this->render_pixel_box_container($pixel_blocks);
     }
     else {
       $image_processed = $this->resample_image();
-      $pixel_blocks = $this->generate_pixel_boxes($this->image_file, $image_processed, FALSE);
+      $pixel_blocks = $this->generate_pixels($this->image_file, $image_processed, FALSE);
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
@@ -162,6 +174,11 @@ class ImageMosaic {
     }  // height loop.
 
     // Place a tiled overlay on the image.
+    if ($this->flip_horizontal) {
+      imageflip($image_processed, IMG_FLIP_HORIZONTAL);
+    }
+
+    // Place a tiled overlay on the image.
     $tiled_overlay = imagecreatefrompng($this->overlay_tile);
     imagealphablending($image_processed, true);
     imagesettile($image_processed, $tiled_overlay);
@@ -201,13 +218,36 @@ class ImageMosaic {
 
 
   // Generate the pixel boxes.
-  function generate_pixel_boxes ($image_file, $image_processed, $flip_rows) {
+  function generate_pixel_boxes ($rgb_final, $hex_final) {
 
-    $pixel_blocks = array();
+    $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
+
+    if (FALSE) {
+      $block_rgb = sprintf('background-color: %s;', $rgb_final);
+      $block_style = $block_dimensions . ' ' . $block_rgb;
+    }
+    else {
+      $block_hex = sprintf('background-color: %s;', $hex_final);
+      $block_style = $block_dimensions . ' ' . $block_hex;
+    }
+
+    $ret = sprintf('<div class="PixelBox" style="%s">', $block_style)
+         . '</div><!-- .PixelBox -->' . "\r\n"
+         ;
+
+    return $ret;
+
+  } // generate_pixel_boxes
+
+
+  // Generate the pixels.
+  function generate_pixels ($image_file, $image_processed) {
+
+    $ret = array();
 
     for ($height = 0; $height < $this->height_resampled; $height++) {
 
-      $pixel_blocks_row = array();
+      $rows = array();
       for ($width = 0; $width <= $this->width_resampled; $width++) {
 
         $rgb = imagecolorat($image_processed, $width, $height);
@@ -225,25 +265,11 @@ class ImageMosaic {
         $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
         if ($width != $this->width_resampled) {
-          $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
-
-          if (FALSE) {
-            $block_rgb = sprintf('background-color: %s;', $rgb_final);
-            $block_style = $block_dimensions . ' ' . $block_rgb;
-          }
-          else {
-            $block_hex = sprintf('background-color: %s;', $hex_final);
-            $block_style = $block_dimensions . ' ' . $block_hex;
-          }
-
-          $pixel_blocks_row[] = sprintf('<div class="PixelBox" style="%s">', $block_style)
-                              . '</div><!-- .PixelBox -->' . "\r\n"
-                              ;
+          $rows[] = $this->generate_pixel_boxes($rgb_final, $hex_final);
         }
         if ($width == $this->width_resampled) {
-          // $final_row = array_reverse($pixel_blocks_row);
-          $final_row = $flip_rows ? array_reverse($pixel_blocks_row) : $pixel_blocks_row;
-          $pixel_blocks[] = $final_row;
+          $final_row = $this->flip_horizontal ? array_reverse($rows) : $rows;
+          $ret[] = $final_row;
         }
 
       } // $width loop.
@@ -253,9 +279,9 @@ class ImageMosaic {
     // Get rid of the image to free up memory.
     imagedestroy($image_processed);
 
-    return $pixel_blocks;
+    return $ret;
 
-  } // generate_pixel_boxes
+  } // generate_pixels
 
 
   // Render the pixel boxes into a container.
