@@ -46,6 +46,7 @@ ul, li
 {
 	height: 100%;
 	margin: 0 auto 0 auto;
+	padding: 0;
 	clear: both;
 	text-align: left;
 }

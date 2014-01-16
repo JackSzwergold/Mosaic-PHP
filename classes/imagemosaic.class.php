@@ -11,6 +11,7 @@
  *          2014-01-12, js: more development & adding new sample images
  *          2014-01-14, js: moving onto creating actual pixelated images.
  *          2014-01-16, js: More improvements including actual image generation.
+ *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
  *
  */
 
@@ -218,7 +219,10 @@ class ImageMosaic {
 
 
   // Generate the pixel boxes.
-  function generate_pixel_boxes ($rgb_final, $hex_final) {
+  function generate_pixel_boxes ($rgb_array) {
+
+    $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
+    $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
 
@@ -250,22 +254,25 @@ class ImageMosaic {
       $rows = array();
       for ($width = 0; $width <= $this->width_resampled; $width++) {
 
-        $rgb = imagecolorat($image_processed, $width, $height);
-        $red = ($rgb >> 16) & 0xFF;
-        $green = ($rgb >> 8) & 0xFF;
-        $blue = $rgb & 0xFF;
-        $clear_class = '';
+        $color_index = imagecolorat($image_processed, $width, $height);
 
-        $rgb_array = array();
-        $rgb_array['red'] = intval($red * 1);
-        $rgb_array['green'] = intval($green * 1);
-        $rgb_array['blue'] = intval($blue * 1);
+        if (FALSE) {
+          $rgb_array = array();
 
-        $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
-        $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
+          $red = ($color_index >> 16) & 0xFF;
+          $green = ($color_index >> 8) & 0xFF;
+          $blue = $color_index & 0xFF;
+
+          $rgb_array['red'] = intval($red);
+          $rgb_array['green'] = intval($green);
+          $rgb_array['blue'] = intval($blue);
+        }
+        else {
+          $rgb_array = imagecolorsforindex($image_processed, $color_index);
+        }
 
         if ($width != $this->width_resampled) {
-          $rows[] = $this->generate_pixel_boxes($rgb_final, $hex_final);
+          $rows[] = $this->generate_pixel_boxes($rgb_array);
         }
         if ($width == $this->width_resampled) {
           $final_row = $this->flip_horizontal ? array_reverse($rows) : $rows;
