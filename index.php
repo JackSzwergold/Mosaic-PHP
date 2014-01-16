@@ -9,6 +9,7 @@
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
  *          2014-01-12, js: more development & adding new sample images
+ *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
  *
  */
 
@@ -99,7 +100,7 @@ $ImageMosaicClass = new ImageMosaic();
 
 foreach ($image_files as $image_file) {
   $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
-  $ImageMosaicClass->debug_mode(FALSE);
+  $ImageMosaicClass->debug_mode(TRUE);
   $ImageMosaicClass->flip_horizontal(FALSE);
   $artworks[$image_file] = $ImageMosaicClass->process_image();
 }
