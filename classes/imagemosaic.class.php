@@ -64,7 +64,7 @@ class ImageMosaic {
   } // set_image
 
 
-  // Process the filename.
+  // Create the filename.
   function create_filename ($filename = '', $extension = '') {
 
     // Process the filename.
@@ -95,28 +95,27 @@ class ImageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
-    if (!$this->DEBUG_MODE && !empty(realpath($json_filename))) {
-      $blocks = json_decode(file_get_contents($json_filename));
+    $pixel_array = $this->cache_manager($json_filename);
+
+    // If the pixels array is empty, then we need to generate & cache the data.
+    if (!$this->DEBUG_MODE && empty($pixel_array)) {
+      $image_processed = $this->resample_image();
+      $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
+      $this->cache_manager($json_filename, $pixel_array);
+    }
+
+    // Process the pixel_array
+    $blocks = array();
+    foreach ($pixel_array as $pixel_row) {
+      foreach ($pixel_row as $pixel) {
+        $blocks[] = $this->generate_pixel_boxes($pixel);
+      }
+    }
+
+    $ret = '';
+    if (!empty($blocks)) {
       $ret = $this->render_pixel_box_container($blocks);
     }
-    else {
-      $image_processed = $this->resample_image();
-      $pixels = $this->generate_pixels($this->image_file, $image_processed, FALSE);
-
-      $blocks = array();
-      foreach ($pixels as $pixel_row) {
-        foreach ($pixel_row as $pixel) {
-          $blocks[] = $this->generate_pixel_boxes($pixel);
-        }
-      }
-
-      if (TRUE) {
-        $this->cache_manager($pixels);
-      }
-
-    }
-
-    $ret = !empty($blocks) ? $this->render_pixel_box_container($blocks) : '';
 
     return $ret;
 
@@ -124,20 +123,28 @@ class ImageMosaic {
 
 
   // Manage caching.
-  function cache_manager ($data) {
+  function cache_manager ($json_filename, $pixel_array = null) {
 
-    // Process the JSON filename.
-    $json_filename = $this->create_filename($this->image_file, 'json');
+    if (!empty($pixel_array)) {
 
-    // If the cache directory doesn’t exist, create it.
-    if (!is_dir($this->cache_path['json'])) {
-      mkdir($this->cache_path['json'], 0755);
+      // If the cache directory doesn’t exist, create it.
+      if (!is_dir($this->cache_path['json'])) {
+        mkdir($this->cache_path['json'], 0755);
+      }
+
+      // Cache the pixel blocks to a JSON file.
+      $file_handle = fopen($json_filename, 'w');
+      fwrite($file_handle, json_encode((object) $pixel_array, JSON_PRETTY_PRINT));
+      fclose($file_handle);
+
+      return FALSE;
+
+    }
+    else if (!empty(realpath($json_filename))) {
+      return json_decode(file_get_contents($json_filename), TRUE);
     }
 
-    // Cache the pixel blocks to a JSON file.
-    $file_handle = fopen($json_filename, 'w');
-    fwrite($file_handle, json_encode((object) $data, JSON_PRETTY_PRINT));
-    fclose($file_handle);
+    return FALSE;
 
   } // process_image
 
