@@ -405,9 +405,9 @@ class ImageMosaic {
 
     $block_container_dimensions = sprintf('width: %spx; height: %spx;', $css_width, $css_height);
 
-    $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
+    $ret = sprintf('<div class="PixelBoxContainer" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $blocks)
-         .'</div><!-- .PixelBoxConatiner -->' . "\r\n"
+         .'</div><!-- .PixelBoxContainer -->' . "\r\n"
          ;
 
     return $ret;
