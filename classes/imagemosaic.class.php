@@ -100,6 +100,7 @@ class ImageMosaic {
     // If the pixels array is empty, then we need to generate & cache the data.
     if (!$this->DEBUG_MODE && empty($pixel_array)) {
       $image_processed = $this->resample_image();
+      $this->pixelate_image($image_processed);
       $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
       $this->cache_manager($json_filename, $pixel_array);
     }
@@ -164,8 +165,6 @@ class ImageMosaic {
 
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);
-
-    $this->pixelate_image($image_processed);
 
     // Get rid of the image to free up memory.
     imagedestroy($image_source);
