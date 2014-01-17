@@ -27,7 +27,9 @@ class ImageMosaic {
   private $height_resampled = 46;
   private $width_resampled = 46;
 
-  private $block_size = 10;
+  private $block_size_x = 10;
+  private $block_size_y = 10;
+
   private $overlay_tile = 'css/brick.png';
 
   private $flip_horizontal = FALSE;
@@ -59,7 +61,8 @@ class ImageMosaic {
     $this->image_file = $image_file;
     $this->width_resampled = $width_resampled;
     $this->height_resampled = $height_resampled;
-    $this->block_size = $block_size;
+    $this->block_size_x = $block_size;
+    $this->block_size_y = $block_size;
 
   } // set_image
 
@@ -74,7 +77,11 @@ class ImageMosaic {
     $ret_array[] = $filepath_parts['filename'];
     $ret_array[] = $this->width_resampled;
     $ret_array[] = $this->height_resampled;
-    $ret_array[] = $this->block_size;
+    $ret_array[] = $this->block_size_x;
+    $ret_array[] = $this->block_size_y;
+    $ret_array[] = $this->flip_horizontal ? 'h_flip' : '';
+
+    $ret_array = array_filter($ret_array);
 
     $ret = $this->cache_path[$extension] . implode('-', $ret_array) . '.' . $extension;
 
@@ -100,14 +107,18 @@ class ImageMosaic {
     // If the pixels array is empty, then we need to generate & cache the data.
     if (!$this->DEBUG_MODE && empty($pixel_array)) {
       $image_processed = $this->resample_image();
-      $this->pixelate_image($image_processed);
       $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
       $this->cache_manager($json_filename, $pixel_array);
+      // $this->pixelate_image($image_processed);
+      $this->pixelate_image_json($image_processed);
     }
 
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_array as $pixel_row) {
+      if ($this->flip_horizontal) {
+        $pixel_row = array_reverse($pixel_row);
+      }
       foreach ($pixel_row as $pixel) {
         $blocks[] = $this->generate_pixel_boxes($pixel);
       }
@@ -175,31 +186,31 @@ class ImageMosaic {
 
 
   // Pixelate the image via JSON data.
-  function pixelate_image_via_json ($image_source) {
+  function pixelate_image_json ($image_source) {
 
-    $pixelate_x = $this->block_size;
-    $pixelate_y = $this->block_size;
+    // Process the JSON filename.
+    $json_filename = $this->create_filename($this->image_file, 'json');
+
+    $pixel_array = $this->cache_manager($json_filename);
 
     // Calculate the final width & final height
-    $width_pixelate = $this->width_resampled * $pixelate_x;
-    $height_pixelate = $this->height_resampled * $pixelate_y;
+    $width_pixelate = $this->width_resampled * $this->block_size_x;
+    $height_pixelate = $this->height_resampled * $this->block_size_y;
 
     // Set the canvas for the processed image & resample the source image.
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
     imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
-    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_pixelate, $height_pixelate, $this->width_resampled, $this->height_resampled);
 
-    // Loop through the origina image, get a color and then create a new box/rectangle based on that box.
-    $box_x = $box_y = 0;
-    for ($height_y = 0; $height_y <= $this->height_resampled; $height_y += 1) {
-      $box_y = ($height_y * $pixelate_y);
-      for ($width_x = 0; $width_x <= $this->width_resampled; $width_x += 1) {
-        $box_x = ($width_x * $pixelate_x);
-        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $width_x, $height_y));
-        $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
-        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $pixelate_x), ($box_y + $pixelate_y), $color);
-      }  // width loop.
-    }  // height loop.
+    // Process the pixel_array
+    $blocks = array();
+    foreach ($pixel_array as $position_y => $pixel_row) {
+      $box_y = ($position_y * $this->block_size_y);
+      foreach ($pixel_row as  $position_x => $pixel) {
+        $box_x = ($position_x * $this->block_size_x);
+        $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
+        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+      }
+    }
 
     // Place a tiled overlay on the image.
     if ($this->flip_horizontal) {
@@ -242,18 +253,15 @@ class ImageMosaic {
 
     imagedestroy($image_processed);
 
-  } // pixelate_image_via_json
+  } // pixelate_image_json
 
 
   // Pixelate the image.
   function pixelate_image ($image_source) {
 
-    $pixelate_x = $this->block_size;
-    $pixelate_y = $this->block_size;
-
     // Calculate the final width & final height
-    $width_pixelate = $this->width_resampled * $pixelate_x;
-    $height_pixelate = $this->height_resampled * $pixelate_y;
+    $width_pixelate = $this->width_resampled * $this->block_size_x;
+    $height_pixelate = $this->height_resampled * $this->block_size_y;
 
     // Set the canvas for the processed image & resample the source image.
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
@@ -262,13 +270,13 @@ class ImageMosaic {
 
     // Loop through the origina image, get a color and then create a new box/rectangle based on that box.
     $box_x = $box_y = 0;
-    for ($height_y = 0; $height_y <= $this->height_resampled; $height_y += 1) {
-      $box_y = ($height_y * $pixelate_y);
-      for ($width_x = 0; $width_x <= $this->width_resampled; $width_x += 1) {
-        $box_x = ($width_x * $pixelate_x);
-        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $width_x, $height_y));
+    for ($position_y = 0; $position_y <= $this->height_resampled; $position_y += 1) {
+      $box_y = ($position_y * $this->block_size_y);
+      for ($position_x = 0; $position_x <= $this->width_resampled; $position_x += 1) {
+        $box_x = ($position_x * $this->block_size_x);
+        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $position_x, $position_y));
         $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
-        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $pixelate_x), ($box_y + $pixelate_y), $color);
+        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
       }  // width loop.
     }  // height loop.
 
@@ -322,7 +330,7 @@ class ImageMosaic {
     // $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
     $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
 
-    $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size, $this->block_size);
+    $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
     if (FALSE) {
       $block_rgb = sprintf('background-color: %s;', $rgb_final);
@@ -392,7 +400,10 @@ class ImageMosaic {
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($blocks) {
 
-    $block_container_dimensions = sprintf('width: %spx;', $this->width_resampled * $this->block_size);
+   $css_width = $this->width_resampled * $this->block_size_x;
+   $css_height = $this->height_resampled * $this->block_size_y;
+
+    $block_container_dimensions = sprintf('width: %spx; height: %spx;', $css_width, $css_height);
 
     $ret = sprintf('<div class="PixelBoxConatiner" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $blocks)
