@@ -111,15 +111,7 @@ class ImageMosaic {
       }
 
       if (TRUE) {
-        // If the cache directory doesn’t exist, create it.
-        if (!is_dir($this->cache_path['json'])) {
-          mkdir($this->cache_path['json'], 0755);
-         }
-
-        // Cache the pixel blocks to a JSON file.
-        $file_handle = fopen($json_filename, 'w');
-        fwrite($file_handle, json_encode((object) $pixels, JSON_PRETTY_PRINT));
-        fclose($file_handle);
+        $this->cache_manager($pixels);
       }
 
     }
@@ -127,6 +119,25 @@ class ImageMosaic {
     $ret = !empty($blocks) ? $this->render_pixel_box_container($blocks) : '';
 
     return $ret;
+
+  } // process_image
+
+
+  // Manage caching.
+  function cache_manager ($data) {
+
+    // Process the JSON filename.
+    $json_filename = $this->create_filename($this->image_file, 'json');
+
+    // If the cache directory doesn’t exist, create it.
+    if (!is_dir($this->cache_path['json'])) {
+      mkdir($this->cache_path['json'], 0755);
+    }
+
+    // Cache the pixel blocks to a JSON file.
+    $file_handle = fopen($json_filename, 'w');
+    fwrite($file_handle, json_encode((object) $data, JSON_PRETTY_PRINT));
+    fclose($file_handle);
 
   } // process_image
 
