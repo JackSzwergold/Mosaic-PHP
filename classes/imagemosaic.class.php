@@ -174,6 +174,77 @@ class ImageMosaic {
   } // resample_image
 
 
+  // Pixelate the image via JSON data.
+  function pixelate_image_via_json ($image_source) {
+
+    $pixelate_x = $this->block_size;
+    $pixelate_y = $this->block_size;
+
+    // Calculate the final width & final height
+    $width_pixelate = $this->width_resampled * $pixelate_x;
+    $height_pixelate = $this->height_resampled * $pixelate_y;
+
+    // Set the canvas for the processed image & resample the source image.
+    $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
+    imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
+    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_pixelate, $height_pixelate, $this->width_resampled, $this->height_resampled);
+
+    // Loop through the origina image, get a color and then create a new box/rectangle based on that box.
+    $box_x = $box_y = 0;
+    for ($height_y = 0; $height_y <= $this->height_resampled; $height_y += 1) {
+      $box_y = ($height_y * $pixelate_y);
+      for ($width_x = 0; $width_x <= $this->width_resampled; $width_x += 1) {
+        $box_x = ($width_x * $pixelate_x);
+        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $width_x, $height_y));
+        $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
+        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $pixelate_x), ($box_y + $pixelate_y), $color);
+      }  // width loop.
+    }  // height loop.
+
+    // Place a tiled overlay on the image.
+    if ($this->flip_horizontal) {
+      imageflip($image_processed, IMG_FLIP_HORIZONTAL);
+    }
+
+    // Place a tiled overlay on the image.
+    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
+    imagealphablending($image_processed, true);
+    imagesettile($image_processed, $tiled_overlay);
+    imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
+    imagedestroy($tiled_overlay);
+
+    // Save the images.
+    $image_filenames = array();
+    foreach ($this->image_types as $image_type) {
+
+      // If the cache directory doesn’t exist, create it.
+      if (!is_dir($this->cache_path[$image_type])) {
+        mkdir($this->cache_path[$image_type], 0755);
+      }
+
+      // Process the filename & generate the image files.
+      $filename = $this->create_filename($this->image_file, $image_type);
+      if ($image_type == 'gif' && empty(realpath($filename))) {
+        imagegif($image_processed, $filename, $this->image_quality['gif']);
+      }
+      else if ($image_type == 'jpeg' && empty(realpath($filename))) {
+        imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
+      }
+      else if ($image_type == 'png' && empty(realpath($filename))) {
+        imagepng($image_processed, $filename, $this->image_quality['png']);
+
+      }
+    }
+
+    if ($this->DEBUG_MODE) {
+      imagepng($image_processed, 'zzz_debug.png', $this->image_quality['png']);
+    }
+
+    imagedestroy($image_processed);
+
+  } // pixelate_image_via_json
+
+
   // Pixelate the image.
   function pixelate_image ($image_source) {
 
