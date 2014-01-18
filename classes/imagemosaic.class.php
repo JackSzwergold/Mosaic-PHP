@@ -76,7 +76,7 @@ class ImageMosaic {
     $ret_array = array();
     $ret_array[] = $filepath_parts['filename'];
     $ret_array[] = $this->width_resampled;
-    $ret_array[] = $this->height_resampled;
+    // $ret_array[] = $this->height_resampled; // Hack to debug ratio rendering issues.
     $ret_array[] = $this->block_size_x;
     $ret_array[] = $this->block_size_y;
     $ret_array[] = $this->flip_horizontal ? 'h_flip' : '';
@@ -167,29 +167,49 @@ class ImageMosaic {
     // Get the source image.
     $image_source = imagecreatefromjpeg($this->image_file);
 
-    // Set the canvas for the processed image.
-    $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
-
     // Get the image dimensions.
     $this->width_source = imagesx($image_source);
     $this->height_source = imagesy($image_source);
 
     // Calculate the dimensions ratio.
-    $height_ratio = $width_ratio = 1;
+    $ratio = 1;
     if ($this->width_source > $this->height_source) {
-      $height_ratio = $this->height_source / $this->width_source;
+      $format = 'landscape';
     }
     else if ($this->width_source < $this->height_source) {
-      $width_ratio = $this->width_source / $this->height_source;
+      $format = 'portrait';
     }
-    $width_resampled = floor($this->width_resampled * $width_ratio);
-    $height_resampled = floor($this->height_resampled * $height_ratio);
-    
+    else {
+      $format = 'square';
+    }
+
+    if ($format == 'landscape') {
+      $ratio = $this->height_source / $this->width_source;
+      $ratio_grow = $this->width_source / $this->height_source;
+    }
+    else if ($format == 'portrait') {
+      $ratio = $this->width_source / $this->height_source;
+      $ratio_grow = $this->height_source / $this->width_source;
+    }
+
+    if ($format == 'landscape') {
+      $width_resampled = floor($this->width_resampled * 1);
+      $height_resampled = floor($this->height_resampled * $ratio);
+    }
+    else if ($format == 'portrait') {
+      $width_resampled = floor($this->width_resampled * 1);
+      $height_resampled = floor($this->height_resampled * $ratio_grow);
+    }
+    else {
+      $width_resampled = floor($this->width_resampled * $ratio);
+      $height_resampled = floor($this->height_resampled * $ratio);
+    }
+
     $this->width_resampled = $width_resampled;
     $this->height_resampled = $height_resampled;
-    
-echo $width_resampled . ' x ' . $height_resampled;
-echo '<br />';
+
+    // Set the canvas for the processed image.
+    $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
 
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);

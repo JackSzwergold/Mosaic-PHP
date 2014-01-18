@@ -57,7 +57,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'mega';
+  $mode = 'large';
 }
 
 //**************************************************************************************//
@@ -99,10 +99,10 @@ shuffle($raw_image_files);
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
 
 $image_files = array();
-//$image_files[] = 'images/wrinkle_dogs.jpg';
-//$image_files[] = 'images/comfort.jpg';
-//$image_files[] = 'images/rocks.jpg';
-//$image_files[] = 'images/night_skiiing.jpg';
+// $image_files[] = 'images/wrinkle_dogs.jpg';
+// $image_files[] = 'images/comfort.jpg';
+// $image_files[] = 'images/rocks.jpg';
+// $image_files[] = 'images/night_skiiing.jpg';
 $image_files[] = 'images/sunlight.jpg';
 
 //**************************************************************************************//
