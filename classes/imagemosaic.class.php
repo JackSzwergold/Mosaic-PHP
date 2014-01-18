@@ -174,7 +174,16 @@ class ImageMosaic {
     $this->width_source = imagesx($image_source);
     $this->height_source = imagesy($image_source);
 
-echo $this->width_source  . ' | ' . $this->height_source;
+    // Calculate the dimensions ratio.
+    $height_ratio = $width_ratio = 1;
+    if ($this->width_source > $this->height_source) {
+      $height_ratio = $this->height_source / $this->width_source;
+    }
+    else if ($this->height_source > $this->width_source) {
+      $width_ratio = $this->width_source / $this->height_source;
+    }
+    $this->width_resampled = $this->width_resampled * $width_ratio;
+    $this->height_resampled = $this->height_resampled * $height_ratio;
 
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);

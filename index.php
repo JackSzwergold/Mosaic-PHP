@@ -98,7 +98,7 @@ shuffle($raw_image_files);
 
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
 
-$image_files = array('images/wrinkle_dogs.jpg');
+// $image_files = array('images/wrinkle_dogs.jpg');
 
 //**************************************************************************************//
 // Init the image mosaic class and roll through the images.
