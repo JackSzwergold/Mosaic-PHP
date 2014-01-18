@@ -227,6 +227,11 @@ class ImageMosaic {
   // Resample the image.
   function resample_image ($image_source = null) {
 
+    // Check if the image resource actually exists.
+    if (empty($image_source)) {
+      return;
+    }
+
     // Set the canvas for the processed image.
     $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
 
