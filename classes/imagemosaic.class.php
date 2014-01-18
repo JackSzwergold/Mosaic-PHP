@@ -110,7 +110,7 @@ class ImageMosaic {
       $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
       $this->cache_manager($json_filename, $pixel_array);
       // $this->pixelate_image($image_processed);
-      $this->pixelate_image_json($image_processed);
+      $this->pixelate_image_json();
     }
 
     // Process the pixel_array
@@ -179,11 +179,17 @@ class ImageMosaic {
     if ($this->width_source > $this->height_source) {
       $height_ratio = $this->height_source / $this->width_source;
     }
-    else if ($this->height_source > $this->width_source) {
+    else if ($this->width_source < $this->height_source) {
       $width_ratio = $this->width_source / $this->height_source;
     }
-    $this->width_resampled = $this->width_resampled * $width_ratio;
-    $this->height_resampled = $this->height_resampled * $height_ratio;
+    $width_resampled = floor($this->width_resampled * $width_ratio);
+    $height_resampled = floor($this->height_resampled * $height_ratio);
+    
+    $this->width_resampled = $width_resampled;
+    $this->height_resampled = $height_resampled;
+    
+echo $width_resampled . ' x ' . $height_resampled;
+echo '<br />';
 
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);
@@ -197,12 +203,18 @@ class ImageMosaic {
 
 
   // Pixelate the image via JSON data.
-  function pixelate_image_json ($image_source) {
+  function pixelate_image_json () {
 
     // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
+    // Load the JSON.
     $pixel_array = $this->cache_manager($json_filename);
+
+    // If the pixel array is empty, bail out of this function.
+    if (empty($pixel_array)) {
+      return;
+    }
 
     // Calculate the final width & final height
     $width_pixelate = $this->width_resampled * $this->block_size_x;
