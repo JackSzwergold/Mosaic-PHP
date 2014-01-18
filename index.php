@@ -9,7 +9,10 @@
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
  *          2014-01-12, js: more development & adding new sample images
+ *          2014-01-14, js: moving onto creating actual pixelated images.
+ *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
+ *          2014-01-18, js: adjustments to allow for additional image orientations.
  *
  */
 
@@ -57,7 +60,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'large';
+  $mode = 'mega';
 }
 
 //**************************************************************************************//
