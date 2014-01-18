@@ -80,7 +80,7 @@ class ImageMosaic {
     $ret_array[] = $this->width_resampled;
     $ret_array[] = $this->height_resampled; // Hack to debug ratio rendering issues.
     $ret_array[] = $this->block_size_x;
-    $ret_array[] = $this->block_size_y;
+    // $ret_array[] = $this->block_size_y;
     $ret_array[] = $this->flip_horizontal ? 'h_flip' : '';
 
     $ret_array = array_filter($ret_array);
@@ -100,11 +100,7 @@ class ImageMosaic {
       return;
     }
 
-    // Ingest the source image for rendering.
-    $image_source = imagecreatefromjpeg($this->image_file);
 
-    // Calculate the image ratio.
-    $this->calculate_ratio($image_source);
 
    // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
@@ -113,12 +109,29 @@ class ImageMosaic {
     $pixel_array = $this->cache_manager($json_filename);
 
     // If the pixels array is empty, then we need to generate & cache the data.
-    if (!$this->DEBUG_MODE || empty($pixel_array)) {
+    if ($this->DEBUG_MODE || empty($pixel_array)) {
+
+      // Ingest the source image for rendering.
+      $image_source = imagecreatefromjpeg($this->image_file);
+
+      // Calculate the image ratio.
+      $this->calculate_ratio($image_source);
+
+      // Resample the image.
       $image_processed = $this->resample_image($image_source);
+
+      // Generate the pixels.
       $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
+
+      // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_array);
+
+      // Here only for reference. Pixelate the image by reloading.
       // $this->pixelate_image($image_processed);
+
+      // Pixelate the image via the JSON data.
       $this->pixelate_image_json();
+
     }
 
     // Process the pixel_array
