@@ -94,7 +94,7 @@ foreach ($image_files as $image_file_key => $image_file_value) {
 //**************************************************************************************//
 // Testing images with a non-square aspect ratio.
 
-if (FALSE) {
+if (TRUE) {
   $raw_image_files = array();
   $raw_image_files[] = 'images/wrinkle_dogs.jpg';
   $raw_image_files[] = 'images/comfort.jpg';

@@ -262,8 +262,12 @@ class ImageMosaic {
     $height_pixelate = $this->height_resampled * $this->block_size_y;
 
     // Set the canvas for the processed image & resample the source image.
+
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
+    $background_color = imagecolorallocate($image_processed, 20, 20, 20);
+    // imagefill($image_processed, 0, 0, $background_color);
     imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
+    // imageantialias($image_processed, TRUE);
 
     // Process the pixel_array
     $blocks = array();
@@ -273,6 +277,7 @@ class ImageMosaic {
         $box_x = ($position_x * $this->block_size_x);
         $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
         imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+        // imagefilledellipse($image_processed, $box_x + ($this->block_size_x/2), $box_y + ($this->block_size_y/2), $this->block_size_x, $this->block_size_y, $color);
       }
     }
 
@@ -281,12 +286,21 @@ class ImageMosaic {
       imageflip($image_processed, IMG_FLIP_HORIZONTAL);
     }
 
-    // Place a tiled overlay on the image.
-    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-    imagealphablending($image_processed, true);
-    imagesettile($image_processed, $tiled_overlay);
-    imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
-    imagedestroy($tiled_overlay);
+    // Apply a gaussian blur.
+    if (FALSE) {
+      $blur_matrix = array(array(1.0, 2.0, 1.0), array(2.0, 4.0, 2.0), array(1.0, 2.0, 1.0));
+      // $blur_matrix = array(array(1,2,1), array(2,1,2), array(1,2,1));
+      imageconvolution($image_processed, $blur_matrix, 16, 0);
+    }
+
+    if (TRUE) {
+      // Place a tiled overlay on the image.
+      $tiled_overlay = imagecreatefrompng($this->overlay_tile);
+      imagealphablending($image_processed, true);
+      imagesettile($image_processed, $tiled_overlay);
+      imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
+      imagedestroy($tiled_overlay);
+    }
 
     // Save the images.
     $image_filenames = array();
