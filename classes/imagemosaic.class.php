@@ -78,9 +78,9 @@ class ImageMosaic {
     $ret_array = array();
     $ret_array[] = $filepath_parts['filename'];
     $ret_array[] = $this->width_resampled;
-    $ret_array[] = $this->height_resampled; // Hack to debug ratio rendering issues.
+    // $ret_array[] = $this->height_resampled; // Hack to debug ratio rendering issues.
     $ret_array[] = $this->block_size_x;
-    // $ret_array[] = $this->block_size_y;
+    $ret_array[] = $this->block_size_y;
     $ret_array[] = $this->flip_horizontal ? 'h_flip' : '';
 
     $ret_array = array_filter($ret_array);
@@ -100,9 +100,7 @@ class ImageMosaic {
       return;
     }
 
-
-
-   // Process the JSON filename.
+    // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
@@ -130,7 +128,7 @@ class ImageMosaic {
       // $this->pixelate_image($image_processed);
 
       // Pixelate the image via the JSON data.
-      $this->pixelate_image_json();
+      $this->pixelate_image_json($json_filename);
 
     }
 
@@ -244,10 +242,7 @@ class ImageMosaic {
 
 
   // Pixelate the image via JSON data.
-  function pixelate_image_json () {
-
-    // Process the JSON filename.
-    $json_filename = $this->create_filename($this->image_file, 'json');
+  function pixelate_image_json ($json_filename) {
 
     // Load the JSON.
     $pixel_array = $this->cache_manager($json_filename);
@@ -307,7 +302,6 @@ class ImageMosaic {
       }
       else if ($image_type == 'png' && empty(realpath($filename))) {
         imagepng($image_processed, $filename, $this->image_quality['png']);
-
       }
     }
 
