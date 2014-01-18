@@ -60,7 +60,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'mega';
+  $mode = 'small';
 }
 
 //**************************************************************************************//
@@ -92,6 +92,18 @@ foreach ($image_files as $image_file_key => $image_file_value) {
 }
 
 //**************************************************************************************//
+// Testing images with a non-square aspect ratio.
+
+if (FALSE) {
+  $raw_image_files = array();
+  $raw_image_files[] = 'images/wrinkle_dogs.jpg';
+  $raw_image_files[] = 'images/comfort.jpg';
+  $raw_image_files[] = 'images/rocks.jpg';
+  $raw_image_files[] = 'images/night_skiiing.jpg';
+  $raw_image_files[] = 'images/sunlight.jpg';
+}
+
+//**************************************************************************************//
 // Shuffle the image files.
 
 shuffle($raw_image_files);
@@ -100,13 +112,6 @@ shuffle($raw_image_files);
 // Slice off a sybset of the image files.
 
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
-
-$image_files = array();
-// $image_files[] = 'images/wrinkle_dogs.jpg';
-// $image_files[] = 'images/comfort.jpg';
-// $image_files[] = 'images/rocks.jpg';
-// $image_files[] = 'images/night_skiiing.jpg';
-$image_files[] = 'images/sunlight.jpg';
 
 //**************************************************************************************//
 // Init the image mosaic class and roll through the images.
