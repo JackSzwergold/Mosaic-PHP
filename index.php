@@ -9,7 +9,10 @@
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
  *          2014-01-12, js: more development & adding new sample images
+ *          2014-01-14, js: moving onto creating actual pixelated images.
+ *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
+ *          2014-01-18, js: adjustments to allow for additional image orientations.
  *
  */
 
@@ -97,6 +100,13 @@ shuffle($raw_image_files);
 // Slice off a sybset of the image files.
 
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
+
+$image_files = array();
+// $image_files[] = 'images/wrinkle_dogs.jpg';
+// $image_files[] = 'images/comfort.jpg';
+// $image_files[] = 'images/rocks.jpg';
+// $image_files[] = 'images/night_skiiing.jpg';
+$image_files[] = 'images/sunlight.jpg';
 
 //**************************************************************************************//
 // Init the image mosaic class and roll through the images.

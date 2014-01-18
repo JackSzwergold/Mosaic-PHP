@@ -12,6 +12,7 @@
  *          2014-01-14, js: moving onto creating actual pixelated images.
  *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
+ *          2014-01-18, js: adjustments to allow for additional image orientations.
  *
  */
 
@@ -33,6 +34,7 @@ class ImageMosaic {
   private $overlay_tile = 'css/brick.png';
 
   private $flip_horizontal = FALSE;
+  private $orientation = 'square';
 
   private $cache_path = array('json' => 'cache_data/', 'gif' => 'cache_media/', 'jpeg' => 'cache_media/', 'png' => 'cache_media/');
   private $image_types = array('gif', 'jpeg', 'png');
@@ -76,7 +78,7 @@ class ImageMosaic {
     $ret_array = array();
     $ret_array[] = $filepath_parts['filename'];
     $ret_array[] = $this->width_resampled;
-    $ret_array[] = $this->height_resampled;
+    $ret_array[] = $this->height_resampled; // Hack to debug ratio rendering issues.
     $ret_array[] = $this->block_size_x;
     $ret_array[] = $this->block_size_y;
     $ret_array[] = $this->flip_horizontal ? 'h_flip' : '';
@@ -98,19 +100,25 @@ class ImageMosaic {
       return;
     }
 
-    // Process the JSON filename.
+    // Ingest the source image for rendering.
+    $image_source = imagecreatefromjpeg($this->image_file);
+
+    // Calculate the image ratio.
+    $this->calculate_ratio($image_source);
+
+   // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
     $pixel_array = $this->cache_manager($json_filename);
 
     // If the pixels array is empty, then we need to generate & cache the data.
-    if (!$this->DEBUG_MODE && empty($pixel_array)) {
-      $image_processed = $this->resample_image();
+    if (!$this->DEBUG_MODE || empty($pixel_array)) {
+      $image_processed = $this->resample_image($image_source);
       $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
       $this->cache_manager($json_filename, $pixel_array);
       // $this->pixelate_image($image_processed);
-      $this->pixelate_image_json($image_processed);
+      $this->pixelate_image_json();
     }
 
     // Process the pixel_array
@@ -161,18 +169,55 @@ class ImageMosaic {
   } // process_image
 
 
-  // Resample the image.
-  function resample_image () {
-
-    // Get the source image.
-    $image_source = imagecreatefromjpeg($this->image_file);
-
-    // Set the canvas for the processed image.
-    $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
+  // Calculate the image ratio.
+  function calculate_ratio ($image_source) {
 
     // Get the image dimensions.
     $this->width_source = imagesx($image_source);
     $this->height_source = imagesy($image_source);
+
+    // Determine the orientation.
+    $ratio = 1;
+    if ($this->width_source > $this->height_source) {
+      $this->orientation = 'landscape';
+    }
+    else if ($this->width_source < $this->height_source) {
+      $this->orientation = 'portrait';
+    }
+    else {
+      $this->orientation = 'square';
+    }
+
+    if ($this->orientation == 'landscape') {
+      $ratio = $this->height_source / $this->width_source;
+      $ratio_grow = $this->width_source / $this->height_source;
+    }
+    else if ($this->orientation == 'portrait') {
+      $ratio = $this->width_source / $this->height_source;
+      $ratio_grow = $this->height_source / $this->width_source;
+    }
+
+    if ($this->orientation == 'landscape') {
+      $this->width_resampled = floor($this->width_resampled * 1);
+      $this->height_resampled = floor($this->height_resampled * $ratio);
+    }
+    else if ($this->orientation == 'portrait') {
+      $this->width_resampled = floor($this->width_resampled * 1);
+      $this->height_resampled = floor($this->height_resampled * $ratio_grow);
+    }
+    else {
+      $this->width_resampled = floor($this->width_resampled * $ratio);
+      $this->height_resampled = floor($this->height_resampled * $ratio);
+    }
+
+  } // calculate_ratio
+
+
+  // Resample the image.
+  function resample_image ($image_source = null) {
+
+    // Set the canvas for the processed image.
+    $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
 
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);
@@ -186,12 +231,18 @@ class ImageMosaic {
 
 
   // Pixelate the image via JSON data.
-  function pixelate_image_json ($image_source) {
+  function pixelate_image_json () {
 
     // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
+    // Load the JSON.
     $pixel_array = $this->cache_manager($json_filename);
+
+    // If the pixel array is empty, bail out of this function.
+    if (empty($pixel_array)) {
+      return;
+    }
 
     // Calculate the final width & final height
     $width_pixelate = $this->width_resampled * $this->block_size_x;
