@@ -1,17 +1,15 @@
 <?
 
 /**
- * ProcessImage (a PHP class to handle images via ImageMagic & GD)
- * Copyright (c) 2008-2013 Jack Szwergold. All rights reserved.
+ * ProcessImage (a PHP class to process images via ImageMagic & GD)
+ * Copyright (c) 2008-2014 Jack Szwergold. All rights reserved.
  *
- * w: http://www.runwork.com
- * e: me@runwork.com
+ * Programming: Jack Szwergold <JackSzwergold@gmail.com>
  *
- * Version: 2010-10-24
- *
- * Changes: 2008-10-12 js: last revisions with Scriptaculous/Prototype
- *          2010-10-24 js: cleanups and adjsuted for jQuery
- *          2013-01-26 js: revisiting for new use.
+ * Created: 2010-10-24, js
+ * Version: 2008-10-12, js: last revisions with Scriptaculous/Prototype
+ *          2010-10-24, js: cleanups and adjsuted for jQuery
+ *          2013-01-26, js: revisiting for new use.
  *
  */
 
