@@ -2,7 +2,7 @@
 
 /**
  * ProcessImage (a PHP class to handle images via ImageMagic & GD)
- * Copyright (c) 2008-2010 Jack Szwergold. All rights reserved.
+ * Copyright (c) 2008-2013 Jack Szwergold. All rights reserved.
  *
  * w: http://www.runwork.com
  * e: me@runwork.com

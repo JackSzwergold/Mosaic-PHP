@@ -44,7 +44,7 @@ $mode_options['small']['how_many'] = 9;
 $mode_options['large']['width'] = 46;
 $mode_options['large']['height'] = 46;
 $mode_options['large']['block_size'] = 10;
-$mode_options['large']['how_many'] = 2;
+$mode_options['large']['how_many'] = 1;
 
 $mode_options['mega']['width'] = 72;
 $mode_options['mega']['height'] = 72;
@@ -60,7 +60,7 @@ if (FALSE) {
   $mode = $mode_keys[0];
 }
 else {
-  $mode = 'mega';
+  $mode = 'large';
 }
 
 //**************************************************************************************//
