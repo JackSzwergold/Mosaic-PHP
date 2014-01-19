@@ -92,18 +92,6 @@ foreach ($image_files as $image_file_key => $image_file_value) {
 }
 
 //**************************************************************************************//
-// Testing images with a non-square aspect ratio.
-
-if (FALSE) {
-  $raw_image_files = array();
-  $raw_image_files[] = 'images/wrinkle_dogs.jpg';
-  $raw_image_files[] = 'images/comfort.jpg';
-  $raw_image_files[] = 'images/rocks.jpg';
-  $raw_image_files[] = 'images/night_skiiing.jpg';
-  $raw_image_files[] = 'images/sunlight.jpg';
-}
-
-//**************************************************************************************//
 // Shuffle the image files.
 
 shuffle($raw_image_files);
@@ -205,9 +193,9 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 
    . '<title></title>'
    . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-   . '<meta name="description" content="" />'
-   . '<meta name="copyright" content="" />'
-   . '<meta name="robots" content="index,follow" />'
+   . '<meta name="description" content="One, two. Check. One, two. Check." />'
+   . '<meta name="copyright" content="(c) Copyright ' . date('Y') . ' Jack Szwergold. All rights reserved." />'
+   . '<meta name="robots" content="noindex,nofollow" />'
    . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
 
    . '<script src="script/json2.js" type="text/javascript"></script>'
