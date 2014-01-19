@@ -477,10 +477,11 @@ class ImageMosaic {
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($blocks) {
 
-   $css_width = $this->width_resampled * $this->block_size_x;
-   $css_height = $this->height_resampled * $this->block_size_y;
+    $css_width = $this->width_resampled * $this->block_size_x;
+    // $css_height = $this->height_resampled * $this->block_size_y;
 
-    $block_container_dimensions = sprintf('width: %spx; height: %spx;', $css_width, $css_height);
+    // $block_container_dimensions = sprintf('width: %spx; height: %spx;', $css_width, $css_height);
+    $block_container_dimensions = sprintf('width: %spx;', $css_width);
 
     $ret = sprintf('<div class="PixelBoxContainer" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $blocks)

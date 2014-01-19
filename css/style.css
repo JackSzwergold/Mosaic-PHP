@@ -119,11 +119,18 @@ ul, li
 .Core .Text .Padding { padding: 15px 0 15px 0; }
 
 /**************************************************************************************************/
-.PixelBox
+.PixelBoxWrapper,
+.PixelBox,
+.PixelBoxOverlay,
+.PixelBoxContainer
 {
 	float: left;
 	display: inline;
 	position: relative;
+}
+
+.PixelBox
+{
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -141,9 +148,6 @@ ul, li
 
 .PixelBoxOverlay
 {
-	float: left;
-	display: inline;
-	position: relative;
 	margin: 4px 4px 4px 4px;
 	padding: 0;
 	height: 3px;
@@ -162,12 +166,4 @@ ul, li
 	/* border-right: 1px black solid; */
 	/* border-bottom: 1px black solid; */
 	/* border-left: 1px #666 solid; */
-}
-
-.PixelBoxContainer
-{
-	float: left;
-	position: relative;
-	display: inline;
-	/* background-color: black; */
 }

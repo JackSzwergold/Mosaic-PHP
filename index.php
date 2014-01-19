@@ -94,7 +94,7 @@ foreach ($image_files as $image_file_key => $image_file_value) {
 //**************************************************************************************//
 // Testing images with a non-square aspect ratio.
 
-if (FALSE) {
+if (TRUE) {
   $raw_image_files = array();
   $raw_image_files[] = 'images/wrinkle_dogs.jpg';
   $raw_image_files[] = 'images/comfort.jpg';
@@ -163,9 +163,13 @@ $wrapper = '<div class="Wrapper">'
          . '<div class="Grid">'
          . '<div class="Padding">'
 
+         . '<div class="PixelBoxWrapper">'
+
          . '<ul>'
          . $final_images
          . '</ul>'
+
+         . '</div><!-- .PixelBoxWrapper -->'
 
          . '</div><!-- .Padding -->'
          . '</div><!-- .Grid -->'
@@ -205,6 +209,11 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '<meta name="copyright" content="" />'
    . '<meta name="robots" content="index,follow" />'
    . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
+
+   . '<script src="script/json2.js" type="text/javascript"></script>'
+   . '<script type="text/javascript" src="script/jquery/jquery-1.10.2.min.js"></script>'
+   . '<script type="text/javascript" src="script/jquery/jquery.noconflict.js"></script>'
+   . '<script type="text/javascript" src="script/common.js"></script>'
 
    . '</head>'
    . '<body>'
