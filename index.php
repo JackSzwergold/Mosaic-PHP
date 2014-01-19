@@ -196,6 +196,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '<meta name="description" content="One, two. Check. One, two. Check." />'
    . '<meta name="copyright" content="(c) Copyright ' . date('Y') . ' Jack Szwergold. All rights reserved." />'
    . '<meta name="robots" content="noindex,nofollow" />'
+   . '<meta name = "viewport" content = "width = device-width, initial-scale=0.65" />'
    . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
 
    . '<script src="script/json2.js" type="text/javascript"></script>'
