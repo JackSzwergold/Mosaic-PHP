@@ -156,7 +156,11 @@ class ImageMosaic {
   // Manage caching.
   function cache_manager ($json_filename, $pixel_array = null) {
 
-    if (!empty($pixel_array)) {
+    $ret = FALSE;
+
+    if (!empty($json_filename) && !empty($pixel_array)) {
+
+      // echo $json_filename . ' <b>Not Cached</b><br />';
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
@@ -169,14 +173,13 @@ class ImageMosaic {
       fwrite($file_handle, json_encode((object) $pixel_array));
       fclose($file_handle);
 
-      return FALSE;
-
     }
-    else if (!file_exists($json_filename)) {
-      return json_decode(file_get_contents($json_filename), TRUE);
+    else if (!empty($json_filename) && file_exists($json_filename)) {
+      // echo $json_filename . ' <b>Yes! Cached!</b><br />';
+      $ret = json_decode(file_get_contents($json_filename), TRUE);
     }
 
-    return FALSE;
+    return $ret;
 
   } // process_image
 
@@ -431,14 +434,15 @@ class ImageMosaic {
   // Generate the pixels.
   function generate_pixels ($image_file, $image_processed) {
 
-    $ret = array();
+   $ret = array();
 
     for ($height = 0; $height < $this->height_resampled; $height++) {
 
-      $rows = array();
+     $rows = array();
       for ($width = 0; $width <= $this->width_resampled; $width++) {
 
-        $color_index = imagecolorat($image_processed, $width, $height);
+        // echo 'Dimensions: ' . $width . ' x ' . $height . '<br >';
+        $color_index = @imagecolorat($image_processed, $width, $height);
 
         if (FALSE) {
           $rgb_array = array();
@@ -458,6 +462,9 @@ class ImageMosaic {
         if ($width != $this->width_resampled) {
           $rows[] = $rgb_array;
         }
+        else {
+          // $rows[] = $rgb_array;
+        }
 
         if ($width == $this->width_resampled) {
           $ret[] = $rows;
@@ -469,6 +476,8 @@ class ImageMosaic {
 
     // Get rid of the image to free up memory.
     imagedestroy($image_processed);
+
+    // echo 'Count: ' . count($ret);
 
     return $ret;
 
