@@ -156,7 +156,7 @@ class ImageMosaic {
   // Manage caching.
   function cache_manager ($json_filename, $pixel_array = null) {
 
-    if (!empty($pixel_array)) {
+    if (!empty($json_filename) && !empty($pixel_array)) {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
@@ -169,14 +169,16 @@ class ImageMosaic {
       fwrite($file_handle, json_encode((object) $pixel_array));
       fclose($file_handle);
 
-      return FALSE;
+      $ret = FALSE;
 
     }
-    else if (!file_exists($json_filename)) {
-      return json_decode(file_get_contents($json_filename), TRUE);
+    else if (!empty($json_filename) && file_exists($json_filename)) {
+      $ret = json_decode(file_get_contents($json_filename), TRUE);
     }
 
-    return FALSE;
+    $ret = FALSE;
+
+    return $ret;
 
   } // process_image
 
