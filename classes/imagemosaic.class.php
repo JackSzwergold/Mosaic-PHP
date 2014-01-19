@@ -96,7 +96,7 @@ class ImageMosaic {
   function process_image () {
 
     // Check if the image actually exists.
-    if (empty(realpath($this->image_file))) {
+    if (!file_exists($this->image_file)) {
       return;
     }
 
@@ -165,13 +165,14 @@ class ImageMosaic {
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
-      fwrite($file_handle, json_encode((object) $pixel_array, JSON_PRETTY_PRINT));
+      // fwrite($file_handle, json_encode((object) $pixel_array, JSON_PRETTY_PRINT));
+      fwrite($file_handle, json_encode((object) $pixel_array));
       fclose($file_handle);
 
       return FALSE;
 
     }
-    else if (!empty(realpath($json_filename))) {
+    else if (!file_exists($json_filename)) {
       return json_decode(file_get_contents($json_filename), TRUE);
     }
 
@@ -313,13 +314,13 @@ class ImageMosaic {
 
       // Process the filename & generate the image files.
       $filename = $this->create_filename($this->image_file, $image_type);
-      if ($image_type == 'gif' && empty(realpath($filename))) {
+      if ($image_type == 'gif' && !file_exists($filename)) {
         imagegif($image_processed, $filename, $this->image_quality['gif']);
       }
-      else if ($image_type == 'jpeg' && empty(realpath($filename))) {
+      else if ($image_type == 'jpeg' && !file_exists($filename)) {
         imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
       }
-      else if ($image_type == 'png' && empty(realpath($filename))) {
+      else if ($image_type == 'png' && !file_exists($filename)) {
         imagepng($image_processed, $filename, $this->image_quality['png']);
       }
     }
@@ -380,13 +381,13 @@ class ImageMosaic {
 
       // Process the filename & generate the image files.
       $filename = $this->create_filename($this->image_file, $image_type);
-      if ($image_type == 'gif' && empty(realpath($filename))) {
+      if ($image_type == 'gif' && !file_exists($filename)) {
         imagegif($image_processed, $filename, $this->image_quality['gif']);
       }
-      else if ($image_type == 'jpeg' && empty(realpath($filename))) {
+      else if ($image_type == 'jpeg' && !file_exists($filename)) {
         imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
       }
-      else if ($image_type == 'png' && empty(realpath($filename))) {
+      else if ($image_type == 'png' && !file_exists($filename)) {
         imagepng($image_processed, $filename, $this->image_quality['png']);
 
       }
