@@ -39,7 +39,7 @@ class ImageMosaic {
   private $directory_permissions = 0775;
   private $file_permissions = 0664;
 
-  private $cache_path = array('json' => 'cache_data/', 'gif' => 'cache_media/', 'jpeg' => 'cache_media/', 'png' => 'cache_media/');
+  private $cache_path = array('json' => 'cache/data/', 'gif' => 'cache/media/', 'jpeg' => 'cache/media/', 'png' => 'cache/media/');
   private $image_types = array('gif', 'jpeg', 'png');
   private $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
 
@@ -167,7 +167,7 @@ class ImageMosaic {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
-        mkdir($this->cache_path['json'], $this->directory_permissions);
+        mkdir($this->cache_path['json'], $this->directory_permissions, true);
       }
 
       // Cache the pixel blocks to a JSON file.
@@ -315,7 +315,7 @@ class ImageMosaic {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], $this->directory_permissions);
+        mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
       }
 
       // Process the filename & generate the image files.
@@ -329,10 +329,6 @@ class ImageMosaic {
       else if ($image_type == 'png' && !file_exists($filename)) {
         imagepng($image_processed, $filename, $this->image_quality['png']);
       }
-    }
-
-    if ($this->DEBUG_MODE) {
-      imagepng($image_processed, 'zzz_debug.png', $this->image_quality['png']);
     }
 
     imagedestroy($image_processed);
@@ -382,7 +378,7 @@ class ImageMosaic {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], $this->directory_permissions);
+        mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
       }
 
       // Process the filename & generate the image files.
@@ -397,10 +393,6 @@ class ImageMosaic {
         imagepng($image_processed, $filename, $this->image_quality['png']);
 
       }
-    }
-
-    if ($this->DEBUG_MODE) {
-      imagepng($image_processed, 'zzz_debug.png', $this->image_quality['png']);
     }
 
     imagedestroy($image_processed);
