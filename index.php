@@ -199,7 +199,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '<meta property="og:description" content="a dynamically generated image mosaic using html & css" />'
    . '<meta property="og:type" content="website" />'
    . '<meta property="og:locale" content="en_US" />'
-   . '<meta property="og:url" content="http://www.preworn.com/mosaic" />'
+   . '<meta property="og:url" content="http://www.preworn.com/mosaic/" />'
    . '<meta property="og:site_name" content="preworn" />'
    . '<meta name="robots" content="noindex,nofollow" />'
    . '<meta name = "viewport" content = "width = device-width, initial-scale=0.65" />'
