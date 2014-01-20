@@ -1,6 +1,6 @@
 require 'capistrano/ext/multistage'
 set :stages, ['staging', 'production']
-set :application, "preworn_www"
+set :application, "image_mosaic"
 set :repository,  "git@github.com:JackSzwergold/ImageMosaic-Class.git"
 set :git_enable_submodules, true
 
