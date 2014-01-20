@@ -7,6 +7,7 @@ set :branch, "master"
 
 server "www.preworn.com", :app, :web, :db, :primary => true
 set :web_builds, "#{deployment_root}/builds"
+set :content_data_path, "#{deployment_root}/content/#{application}/production"
 set :live_root, "#{deployment_root}/www.preworn.com"
 
 set :deploy_to, "#{web_builds}/#{application}/production"
@@ -18,6 +19,8 @@ set :deploy_via, :remote_cache
 
 # Disable warnings about the absence of the styleseheets, javscripts & images directories.
 set :normalize_asset_timestamps, false
+
+before "deploy:create_symlink", :make_cache_link
 
 after "deploy:create_symlink" do
   # Link "current" into the web root

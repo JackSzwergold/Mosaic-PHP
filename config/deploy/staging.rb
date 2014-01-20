@@ -7,7 +7,8 @@ set :branch, "develop"
 
 server "www.preworn.com", :app, :web, :db, :primary => true
 set :web_builds, "#{deployment_root}/builds"
-set :live_root, "#{deployment_root}/www.preworn.com"
+set :content_data_path, "#{deployment_root}/content/#{application}/staging"
+set :live_root, "#{deployment_root}/staging.preworn.com"
 
 set :deploy_to, "#{web_builds}/#{application}/staging"
 
@@ -19,9 +20,15 @@ set :deploy_via, :remote_cache
 # Disable warnings about the absence of the styleseheets, javscripts & images directories.
 set :normalize_asset_timestamps, false
 
+before "deploy:create_symlink", :make_cache_link
+
 after "deploy:create_symlink" do
-  # Link "current" into the web root
-  run "cd #{live_root} && if [ -h site ]; then rm site; fi && ln -sf #{current_path} ./site"
+  # If there is no directory & no symbolic link to 'site' then create a directory named 'site'.
+  run "cd #{live_root} && if [ ! -d site ]; then if [ ! -h site ]; then mkdir ./site; fi; fi"
+  # If there is a symbolic link to 'site' then create a symbolic link called 'site'.
+  run "cd #{live_root} && if [ ! -h site ]; then if [ ! -d site ]; then ln -sf #{current_path} ./site; fi; fi"
+  # If there is a symbolic link to 'site/mosaic', delete it. Irregardless, create a new symbolic link to 'site/mosaic'.
+  run "cd #{live_root} && if [ -h site/mosaic ]; then rm site/mosaic; fi && ln -sf #{current_path} ./site/mosaic"
 end
 
 after "deploy:update", "deploy:cleanup"
