@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * ImageMosaic Class (imagemosaic.class.php)
@@ -35,6 +35,9 @@ class ImageMosaic {
 
   private $flip_horizontal = FALSE;
   private $orientation = 'square';
+  
+  private $directory_permissions = 0775;
+  private $file_permissions = 0664;
 
   private $cache_path = array('json' => 'cache_data/', 'gif' => 'cache_media/', 'jpeg' => 'cache_media/', 'png' => 'cache_media/');
   private $image_types = array('gif', 'jpeg', 'png');
@@ -164,7 +167,7 @@ class ImageMosaic {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
-        mkdir($this->cache_path['json'], 0755);
+        mkdir($this->cache_path['json'], $this->directory_permissions);
       }
 
       // Cache the pixel blocks to a JSON file.
@@ -312,7 +315,7 @@ class ImageMosaic {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], 0755);
+        mkdir($this->cache_path[$image_type], $this->directory_permissions);
       }
 
       // Process the filename & generate the image files.
@@ -379,7 +382,7 @@ class ImageMosaic {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], 0755);
+        mkdir($this->cache_path[$image_type], $this->directory_permissions);
       }
 
       // Process the filename & generate the image files.
