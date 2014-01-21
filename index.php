@@ -5,7 +5,7 @@
  *
  * Programming: Jack Szwergold <JackSzwergold@gmail.com>
  *
- * Created: 2014-01-11 js
+ * Created: 2014-01-11, js
  * Version: 2014-01-11, js: creation
  *          2014-01-11, js: development & cleanup
  *          2014-01-12, js: more development & adding new sample images
@@ -185,6 +185,32 @@ $body = sprintf('<div class="%sView">', $mode)
       ;
 
 //**************************************************************************************//
+// Set the favicons.
+
+$favicons = array();
+
+$favicons[] = '<!-- Opera Speed Dial Favicon -->'
+            . '<link rel="icon" type="image/png" href="favicons/speeddial-160px.png" />'
+            ;
+
+$favicons[] = '<!-- Standard Favicon -->'
+            . '<link rel="icon" type="image/x-icon" href="favicons/favicon.ico" />'
+            ;
+
+$favicons[] = '<!-- For iPhone 4 Retina display: -->'
+            . '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicons/apple-touch-icon-114x114-precomposed.png">'
+            ;
+
+$favicons[] = '<!-- For iPad: -->'
+            . '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicons/apple-touch-icon-72x72-precomposed.png">'
+            ;
+
+$favicons[] = '<!-- For iPhone: -->'
+            . '<link rel="apple-touch-icon-precomposed" href="favicons/apple-touch-icon-57x57-precomposed.png">'
+            ;
+
+
+//**************************************************************************************//
 // Return the output.
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
@@ -193,17 +219,20 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 
    . '<title>image mosaic</title>'
    . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-   . '<meta name="description" content="a dynamically generated image mosaic using html & css" />'
+   . '<meta name="description" content="a dynamically generated image mosaic using php, the gd graphics libarary, html & css" />'
    . '<meta name="copyright" content="(c) copyright ' . date('Y') . ' jack szwergold. all rights reserved." />'
    . '<meta property="og:title" content="image mosaic" />'
-   . '<meta property="og:description" content="a dynamically generated image mosaic using html & css" />'
+   . '<meta property="og:description" content="a dynamically generated image mosaic using php, the gd graphics libarary, html & css" />'
    . '<meta property="og:type" content="website" />'
    . '<meta property="og:locale" content="en_US" />'
    . '<meta property="og:url" content="http://www.preworn.com/mosaic/" />'
    . '<meta property="og:site_name" content="preworn" />'
+   . '<meta property="og:image" content="http://www.preworn.com/mosaic/favicons/speeddial-160px.png" />'
    . '<meta name="robots" content="noindex,nofollow" />'
    . '<meta name = "viewport" content = "width = device-width, initial-scale=0.65" />'
    . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
+
+   . join('', $favicons)
 
    . '<script src="script/json2.js" type="text/javascript"></script>'
    . '<script type="text/javascript" src="script/jquery/jquery-1.10.2.min.js"></script>'
