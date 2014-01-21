@@ -229,7 +229,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
    . '<meta property="og:site_name" content="preworn" />'
    . '<meta property="og:image" content="http://www.preworn.com/mosaic/favicons/speeddial-160px.png" />'
    . '<meta name="robots" content="noindex,nofollow" />'
-   . '<meta name = "viewport" content = "width = device-width, initial-scale=0.65" />'
+   . '<meta name="viewport" content="width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes" />'
    . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
 
    . join('', $favicons)
