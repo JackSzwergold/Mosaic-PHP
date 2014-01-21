@@ -219,10 +219,10 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
 
    . '<title>image mosaic</title>'
    . '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-   . '<meta name="description" content="a dynamically generated image mosaic using php, the gd graphics libarary, html & css" />'
+   . '<meta name="description" content="a dynamically generated image mosaic using php, the gd graphics libarary, html &amp; css" />'
    . '<meta name="copyright" content="(c) copyright ' . date('Y') . ' jack szwergold. all rights reserved." />'
    . '<meta property="og:title" content="image mosaic" />'
-   . '<meta property="og:description" content="a dynamically generated image mosaic using php, the gd graphics libarary, html & css" />'
+   . '<meta property="og:description" content="a dynamically generated image mosaic using php, the gd graphics libarary, html &amp; css" />'
    . '<meta property="og:type" content="website" />'
    . '<meta property="og:locale" content="en_US" />'
    . '<meta property="og:url" content="http://www.preworn.com/mosaic/" />'
