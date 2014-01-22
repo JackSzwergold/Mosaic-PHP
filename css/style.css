@@ -28,12 +28,8 @@ ul, li { list-style: none; }
 a { outline: none; }
 
 /**************************************************************************************************/
-.Core, .Content, .Section, 
-.Padding, .Border, .Image, .Icon,
-.Entry, .Text,
-.Nameplate,
-.Top, .Between, .Bottom, 
-.Left, .Right, .Middle,
+.Core,
+.PixelBoxWrapper, .PixelBox, .PixelBoxContainer,
 ul, li
 {
 	position: relative;
@@ -64,45 +60,8 @@ ul, li
 .megaView .Wrapper { width: 732px; }
 
 /**************************************************************************************************/
-.Content { width: 100%; }
-
-.Content .Padding
-{
-	padding: 0;
-	margin: 0;
-}
-
-/**************************************************************************************************/
-.Section
-{
-	width: 100%;
-	min-height: 500px;
-	clear: both;
-}
-
-.Section .Padding { padding: 0; }
-.Section .Middle { width: 100%; }
-
-/**************************************************************************************************/
 .Core { }
 .Core .Padding { padding: 0; }
-
-/**************************************************************************************************/
-.Core p
-{
-	font-size: 100%;
-	line-height: 1.4em;
-	margin: 0 0 10px 0;
-}
-
-.Core p a, .Core p a:active, .Core p a:hover, .Core p a:visited
-{
-	text-decoration: none;
-	color: #000;
-	font-weight: bold;
-}
-
-.Core p a:active, .Core p a:hover { border-color: #666; }
 
 /**************************************************************************************************/
 .Core .Grid .Padding { padding: 6px 3px 0 3px; }
@@ -119,15 +78,6 @@ ul, li
 .Core .Text .Padding { padding: 15px 0 15px 0; }
 
 /**************************************************************************************************/
-.PixelBoxWrapper,
-.PixelBox,
-.PixelBoxContainer
-{
-	float: left;
-	display: inline;
-	position: relative;
-}
-
 .PixelBox
 {
 	margin: 0;
