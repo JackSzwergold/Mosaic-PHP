@@ -29,6 +29,7 @@ a { outline: none; }
 
 /**************************************************************************************************/
 .Core,
+.Padding,
 .PixelBoxWrapper, .PixelBox, .PixelBoxContainer,
 ul, li
 {
