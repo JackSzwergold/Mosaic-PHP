@@ -13,11 +13,14 @@
  *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
  *          2014-01-18, js: adjustments to allow for additional image orientations.
+ *          2014-01-22, js: adding the common functions file.
  *
  */
 
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
+
+require_once('common/functions.inc.php');
 // require_once('classes/processimage.class.php');
 require_once('classes/imagemosaic.class.php');
 

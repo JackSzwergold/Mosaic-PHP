@@ -173,7 +173,11 @@ class ImageMosaic {
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
       // fwrite($file_handle, json_encode((object) $pixel_array, JSON_PRETTY_PRINT));
-      fwrite($file_handle, json_encode((object) $pixel_array));
+      // fwrite($file_handle, json_encode((object) $pixel_array));
+      $json_content = json_encode((object) $pixel_array);
+      $json_content = str_replace('\/','/', $json_content);
+      $json_content = prettyPrint($json_content);
+      fwrite($file_handle, $json_content);
       fclose($file_handle);
 
     }
