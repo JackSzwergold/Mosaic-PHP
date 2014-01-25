@@ -143,7 +143,7 @@ foreach($artworks as $image_file => $artwork) {
                             . '</li>'
                             ;
 }
-$final_images = implode('', $image_files);
+$final_images = sprintf('<ul>%s</ul>', implode('', $image_files));
 
 
 //**************************************************************************************//
