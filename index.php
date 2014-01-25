@@ -157,6 +157,7 @@ $frontendDisplayClass->setPageDescription('a dynamically generated image mosaic 
 $frontendDisplayClass->setPageContent($final_images);
 $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
+$frontendDisplayClass->setJavascripts(array('script/common.js'));
 $frontendDisplayClass->initContent();
 
 ?>
