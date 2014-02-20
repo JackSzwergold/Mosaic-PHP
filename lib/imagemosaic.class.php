@@ -34,6 +34,7 @@ class ImageMosaic {
   private $overlay_tile = 'css/brick.png';
 
   private $flip_horizontal = FALSE;
+  private $php_version_imageflip = 5.5;
   private $orientation = 'square';
   
   private $directory_permissions = 0775;
@@ -55,9 +56,9 @@ class ImageMosaic {
 
 
   public function flip_horizontal($flip_horizontal) {
-
-    $this->flip_horizontal = $flip_horizontal;
-
+    if (version_compare(phpversion(), $this->php_version_imageflip, '>')) {
+      $this->flip_horizontal = $flip_horizontal;
+    }
   } // flip_horizontal
 
 
@@ -494,7 +495,7 @@ class ImageMosaic {
 
     $ret = sprintf('<div class="PixelBoxContainer" style="%s">' . "\r\n", $block_container_dimensions)
          . implode('', $blocks)
-         .'</div><!-- .PixelBoxContainer -->' . "\r\n"
+         . '</div><!-- .PixelBoxContainer -->' . "\r\n"
          ;
 
     return $ret;
