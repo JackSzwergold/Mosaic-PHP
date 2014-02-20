@@ -13,6 +13,7 @@
  *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
  *          2014-01-18, js: adjustments to allow for additional image orientations.
+ *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'
  *
  */
 
@@ -129,7 +130,7 @@ class ImageMosaic {
       $this->cache_manager($json_filename, $pixel_array);
 
       // Here only for reference. Pixelate the image by reloading.
-      // $this->pixelate_image($image_processed);
+      // $this->pixelate_image_NO_LONGER_USED($image_processed);
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
@@ -342,7 +343,7 @@ class ImageMosaic {
 
 
   // Pixelate the image.
-  function pixelate_image ($image_source) {
+  function pixelate_image_NO_LONGER_USED ($image_source) {
 
     // Calculate the final width & final height
     $width_pixelate = $this->width_resampled * $this->block_size_x;
@@ -402,7 +403,7 @@ class ImageMosaic {
 
     imagedestroy($image_processed);
 
-  } // pixelate_image
+  } // pixelate_image_NO_LONGER_USED
 
 
   // Generate the pixel boxes.
