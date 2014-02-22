@@ -143,6 +143,7 @@ class ImageMosaic {
       foreach ($pixel_row as $pixel) {
         $blocks[] = $this->generate_pixel_boxes($pixel);
       }
+      // $blocks[] = '<br />';
     }
 
     $ret = '';
@@ -313,24 +314,27 @@ class ImageMosaic {
     }
 
     // Save the images.
-    $image_filenames = array();
-    foreach ($this->image_types as $image_type) {
+    // Process the filename & generate the image files.
+    if (TRUE) {
+      $image_filenames = array();
+      foreach ($this->image_types as $image_type) {
 
-      // If the cache directory doesn’t exist, create it.
-      if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
-      }
+        // If the cache directory doesn’t exist, create it.
+        if (!is_dir($this->cache_path[$image_type])) {
+          mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
+        }
 
-      // Process the filename & generate the image files.
-      $filename = $this->create_filename($this->image_file, $image_type);
-      if ($image_type == 'gif' && !file_exists($filename)) {
-        imagegif($image_processed, $filename, $this->image_quality['gif']);
-      }
-      else if ($image_type == 'jpeg' && !file_exists($filename)) {
-        imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
-      }
-      else if ($image_type == 'png' && !file_exists($filename)) {
-        imagepng($image_processed, $filename, $this->image_quality['png']);
+        // Process the filename & generate the image files.
+        $filename = $this->create_filename($this->image_file, $image_type);
+        if ($image_type == 'gif' && !file_exists($filename)) {
+          imagegif($image_processed, $filename, $this->image_quality['gif']);
+        }
+        else if ($image_type == 'jpeg' && !file_exists($filename)) {
+          imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
+        }
+        else if ($image_type == 'png' && !file_exists($filename)) {
+          imagepng($image_processed, $filename, $this->image_quality['png']);
+        }
       }
     }
 
