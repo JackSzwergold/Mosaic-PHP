@@ -149,7 +149,7 @@ class frontendDisplay {
     if (!empty($content)) {
 
       //**********************************************************************************//
-      // Set the favicons
+      // Set the meta tags
 
       $meta_content = $this->setMetaTags($this->page_description, $this->page_viewport, $this->page_robots);
 
