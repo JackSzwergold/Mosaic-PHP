@@ -37,7 +37,7 @@ class ImageMosaic {
   private $flip_horizontal = FALSE;
   private $php_version_imageflip = 5.5;
   private $orientation = 'square';
-  
+
   private $directory_permissions = 0775;
   private $file_permissions = 0664;
 
@@ -129,9 +129,6 @@ class ImageMosaic {
       // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_array);
 
-      // Here only for reference. Pixelate the image by reloading.
-      // $this->pixelate_image_NO_LONGER_USED($image_processed);
-
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
 
@@ -190,7 +187,7 @@ class ImageMosaic {
 
     return $ret;
 
-  } // process_image
+  } // cache_manager
 
 
   // Calculate the image ratio.
@@ -340,70 +337,6 @@ class ImageMosaic {
     imagedestroy($image_processed);
 
   } // pixelate_image_json
-
-
-  // Pixelate the image.
-  function pixelate_image_NO_LONGER_USED ($image_source) {
-
-    // Calculate the final width & final height
-    $width_pixelate = $this->width_resampled * $this->block_size_x;
-    $height_pixelate = $this->height_resampled * $this->block_size_y;
-
-    // Set the canvas for the processed image & resample the source image.
-    $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
-    imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
-    imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $width_pixelate, $height_pixelate, $this->width_resampled, $this->height_resampled);
-
-    // Loop through the origina image, get a color and then create a new box/rectangle based on that box.
-    $box_x = $box_y = 0;
-    for ($position_y = 0; $position_y <= $this->height_resampled; $position_y += 1) {
-      $box_y = ($position_y * $this->block_size_y);
-      for ($position_x = 0; $position_x <= $this->width_resampled; $position_x += 1) {
-        $box_x = ($position_x * $this->block_size_x);
-        $rgb = imagecolorsforindex($image_processed, imagecolorat($image_source, $position_x, $position_y));
-        $color = imagecolorclosest($image_processed, $rgb['red'], $rgb['green'], $rgb['blue']);
-        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-      }  // width loop.
-    }  // height loop.
-
-    // Place a tiled overlay on the image.
-    if ($this->flip_horizontal) {
-      imageflip($image_processed, IMG_FLIP_HORIZONTAL);
-    }
-
-    // Place a tiled overlay on the image.
-    $tiled_overlay = imagecreatefrompng($this->overlay_tile);
-    imagealphablending($image_processed, true);
-    imagesettile($image_processed, $tiled_overlay);
-    imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
-    imagedestroy($tiled_overlay);
-
-    // Save the images.
-    $image_filenames = array();
-    foreach ($this->image_types as $image_type) {
-
-      // If the cache directory doesn’t exist, create it.
-      if (!is_dir($this->cache_path[$image_type])) {
-        mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
-      }
-
-      // Process the filename & generate the image files.
-      $filename = $this->create_filename($this->image_file, $image_type);
-      if ($image_type == 'gif' && !file_exists($filename)) {
-        imagegif($image_processed, $filename, $this->image_quality['gif']);
-      }
-      else if ($image_type == 'jpeg' && !file_exists($filename)) {
-        imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
-      }
-      else if ($image_type == 'png' && !file_exists($filename)) {
-        imagepng($image_processed, $filename, $this->image_quality['png']);
-
-      }
-    }
-
-    imagedestroy($image_processed);
-
-  } // pixelate_image_NO_LONGER_USED
 
 
   // Generate the pixel boxes.
