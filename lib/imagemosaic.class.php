@@ -22,43 +22,31 @@
 
 class ImageMosaic {
 
-  private $DEBUG_MODE = FALSE;
+  public $DEBUG_MODE = FALSE;
 
-  private $image_file = FALSE;
+  public $image_file = FALSE;
 
-  private $height_resampled = 46;
-  private $width_resampled = 46;
+  public $height_resampled = 46;
+  public $width_resampled = 46;
 
-  private $block_size_x = 10;
-  private $block_size_y = 10;
+  public $block_size_x = 10;
+  public $block_size_y = 10;
 
-  private $generate_images = FALSE;
-  private $overlay_image = FALSE;
-  private $overlay_tile_file = 'css/brick.png';
+  public $generate_images = FALSE;
+  public $overlay_image = FALSE;
+  public $overlay_tile_file = 'css/brick.png';
 
-  private $row_flip_horizontal = FALSE;
-  private $row_delimiter = NULL;
-  private $php_version_imageflip = 5.5;
-  private $orientation = 'square';
+  public $row_flip_horizontal = FALSE;
+  public $row_delimiter = NULL;
+  public $php_version_imageflip = 5.5;
+  public $orientation = 'square';
 
-  private $directory_permissions = 0775;
-  private $file_permissions = 0664;
+  public $directory_permissions = 0775;
+  public $file_permissions = 0664;
 
-  private $cache_path = array('json' => 'cache/data/', 'gif' => 'cache/media/', 'jpeg' => 'cache/media/', 'png' => 'cache/media/');
-  private $image_types = array('gif', 'jpeg', 'png');
-  private $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
-
-  private $character_set = NULL;
-  private $character_set_count = 0;
-  private $character_set_shuffle = FALSE;
-  private $character_set_flip = FALSE;
-
-  private $ascii_vertical_compensation = 2;
-  private $process_ascii = FALSE;
-
-  private $saturation_value = 255;
-  private $saturation_multiplier = 3;
-  private $saturation_decimal_places = 4;
+  public $cache_path = array('json' => 'cache/data/', 'gif' => 'cache/media/', 'jpeg' => 'cache/media/', 'png' => 'cache/media/');
+  public $image_types = array('gif', 'jpeg', 'png');
+  public $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
 
   public function __construct() {
   } // __construct
@@ -105,14 +93,6 @@ class ImageMosaic {
   } // set_overlay_image
 
 
-  // Set to process ascii.
-  function process_ascii ($process_ascii = null) {
-    if (!empty($process_ascii)) {
-      $this->process_ascii = $process_ascii;
-    }
-  } // process_ascii
-
-
   // Set the row delimiter.
   function set_row_delimiter ($row_delimiter = null) {
     if (!empty($row_delimiter)) {
@@ -120,93 +100,6 @@ class ImageMosaic {
     }
   } // set_row_delimiter
 
-
-  // Set the ascii vertical compensation.
-  function set_ascii_vertical_compensation ($ascii_vertical_compensation = null) {
-    if (!empty($ascii_vertical_compensation)) {
-      $this->ascii_vertical_compensation = $ascii_vertical_compensation;
-      $this->height_resampled = $this->height_resampled / $this->ascii_vertical_compensation;
-    }
-  } // set_ascii_vertical_compensation
-
-
-  // Set the character sets.
-  function flip_character_set ($character_set_flip = FALSE) {
-    if ($character_set_flip) {
-      $this->character_set_flip = $character_set_flip;
-    }
-  } // flip_character_set
-
-
-  // Set the character sets.
-  function set_character_sets ($character_set_shuffle = FALSE, $character_set_reverse = FALSE) {
-
-    // Set the character set shuffle value.
-    if (!empty($character_set_shuffle)) {
-      $this->character_set_shuffle = $character_set_shuffle;
-    }
-
-    // Set the character set reverse value.
-    if (!empty($character_set_reverse)) {
-      $this->character_set_reverse = $character_set_reverse;
-    }
-
-    // Long character grayscale character sets.
-    $character_sets_long = array();
-    $character_sets_long[] = str_split("\$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ");
-    $character_sets_long[] = str_split("@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz\$CIu23Jcfry%1v7l+it[] {}?j|()=~!-/<>\"^_';,:`. ");
-    $character_sets_long[] = str_split("@#\$%&8BMW*mwqpdbkhaoQ0OZXYUJCLtfjzxnuvcr[]{}1()|/?Il!i><+_~-;,. ");
-
-    // Short character grayscale character sets.
-    $character_sets_short = array();
-    $character_sets_short[] = str_split("#%$*|:.' ");
-    $character_sets_short[] = str_split("@%#*+=-:. ");
-    $character_sets_short[] = str_split("@#8&o:*. ");
-    $character_sets_short[] = str_split("#*+. ");
-
-    $character_sets = array_merge($character_sets_short, $character_sets_long);
-
-    if ($this->character_set_shuffle) {
-      shuffle($character_sets);
-      $this->character_set = $character_sets[0];
-    }
-    else {
-      $this->character_set = $character_sets_short[3];
-    }
-
-    if ($this->character_set_flip) {
-      $this->character_set = array_reverse($this->character_set);
-    }
-    $this->character_set_count = count($this->character_set);
-
-  } // set_character_sets
-
-
-  // Generate the ascii art boxes.
-  function generate_ascii_boxes ($rgb_array) {
-
-    // Check if the image actually exists.
-    if (empty($rgb_array)) {
-      return;
-    }
-
-    // Calculate saturation.
-    $rgb_sat = array();
-    $rgb_sat['red'] = ($rgb_array['red'] / ($this->saturation_value * $this->saturation_multiplier));
-    $rgb_sat['green'] = ($rgb_array['green'] / ($this->saturation_value * $this->saturation_multiplier));
-    $rgb_sat['blue'] = ($rgb_array['blue'] / ($this->saturation_value * $this->saturation_multiplier));
-    $saturation = round(array_sum($rgb_sat), $this->saturation_decimal_places);
-
-    // Get the character key.
-    $character_key = intval($saturation * ($this->character_set_count - 1));
-
-    // Setting the ASCII art character.
-    // $ret = sprintf('<div>%s</div>', htmlentities($this->character_set[$character_key]));
-    $ret = sprintf('<span>%s</span>', htmlentities($this->character_set[$character_key]));
-
-    return $ret;
-
-  } // generate_ascii_boxes
 
   // Create the filename.
   function create_filename ($filename = '', $extension = '') {
@@ -275,12 +168,7 @@ class ImageMosaic {
         $pixel_row = array_reverse($pixel_row);
       }
       foreach ($pixel_row as $pixel) {
-        if (!$this->process_ascii) {
-          $blocks[] = $this->generate_pixel_boxes($pixel);
-        }
-        else {
-          $blocks[] = $this->generate_ascii_boxes($pixel);
-        }
+        $blocks[] = $this->generate_pixel_boxes($pixel);
       }
       if (!empty($this->row_delimiter)) {
         $blocks[] = $this->row_delimiter;
@@ -289,12 +177,7 @@ class ImageMosaic {
 
     $ret = '';
     if (!empty($blocks)) {
-      if (!$this->process_ascii) {
-        $ret = $this->render_pixel_box_container($blocks);
-      }
-      else {
-        $ret =  sprintf('<pre>%s</pre>', implode('', $blocks));
-      }
+      $ret = $this->render_pixel_box_container($blocks);
     }
 
     return $ret;
