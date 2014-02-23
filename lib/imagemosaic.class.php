@@ -32,12 +32,12 @@ class ImageMosaic {
   private $block_size_x = 10;
   private $block_size_y = 10;
 
-  private $generate_images = TRUE;
-  private $overlay_image = TRUE;
+  private $generate_images = FALSE;
+  private $overlay_image = FALSE;
   private $overlay_tile_file = 'css/brick.png';
 
   private $row_flip_horizontal = FALSE;
-  private $row_delimiter = null;
+  private $row_delimiter = NULL;
   private $php_version_imageflip = 5.5;
   private $orientation = 'square';
 
@@ -89,12 +89,36 @@ class ImageMosaic {
   } // set_image
 
 
-  // Set the ascii vertical compensation.
+  // Set the generate images value.
+  function set_generate_images ($generate_images = null) {
+    if (!empty($generate_images)) {
+      $this->generate_images = $generate_images;
+    }
+  } // set_generate_images
+
+
+  // Set the overlay image value.
+  function set_overlay_image ($overlay_image = null) {
+    if (!empty($generate_images)) {
+      $this->overlay_image = $overlay_image;
+    }
+  } // set_overlay_image
+
+
+  // Set to process ascii.
   function process_ascii ($process_ascii = null) {
     if (!empty($process_ascii)) {
       $this->process_ascii = $process_ascii;
     }
   } // process_ascii
+
+
+  // Set the row delimiter.
+  function set_row_delimiter ($row_delimiter = null) {
+    if (!empty($row_delimiter)) {
+      $this->row_delimiter = $row_delimiter;
+    }
+  } // set_row_delimiter
 
 
   // Set the ascii vertical compensation.
