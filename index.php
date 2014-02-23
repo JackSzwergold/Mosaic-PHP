@@ -123,6 +123,9 @@ foreach ($image_files as $image_file) {
   $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
   $ImageMosaicClass->debug_mode(FALSE);
   $ImageMosaicClass->row_flip_horizontal(FALSE);
+  $ImageMosaicClass->set_row_delimiter(NULL);
+  $ImageMosaicClass->set_generate_images(TRUE);
+  $ImageMosaicClass->set_overlay_image(TRUE);
   $artworks[$image_file] = $ImageMosaicClass->process_image();
 }
 
