@@ -9,6 +9,7 @@
  * Version: 2014-01-22, js: creation
  *          2014-01-22, js: development & cleanup
  *          2014-01-23, js: refinements
+ *          2014-02-17, js: setting a 'base'
  *
  */
 
@@ -30,6 +31,8 @@ class frontendDisplay {
 
   private $javascripts = array();
 
+  private $base = NULL;
+
   private $view_mode = NULL;
   private $page_title = NULL;
   private $page_description = NULL;
@@ -42,6 +45,14 @@ class frontendDisplay {
 
   public function __construct($content_type = NULL, $charset = NULL, $json_encode = NULL, $DEBUG_MODE = NULL) {
     global $VALID_CONTENT_TYPES, $VALID_CHARSETS;
+
+    if (!defined('BASE_PATH')) {
+      define('BASE_PATH', '/');
+    }
+
+    if (!defined('BASE_URL')) {
+      define('BASE_URL', '');
+    }
 
     if (!empty($content_type) && in_array($content_type, $VALID_CONTENT_TYPES)) {
       $this->content_type = $content_type;
@@ -74,7 +85,7 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
-  // Set the page description.
+  // Set the page title.
   function setPageTitle($page_title = null) {
     $this->page_title = $page_title;
   } // setPageTitle
@@ -102,7 +113,7 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
-  // Set the page content.
+  // Set the page viewport.
   function setPageViewport($page_viewport = null) {
     $this->page_viewport = $page_viewport;
   } // setPageViewport
@@ -120,6 +131,13 @@ class frontendDisplay {
   function setJavascripts($javascripts = null) {
     $this->javascripts = $javascripts;
   } // setJavascripts
+
+
+  //**************************************************************************************//
+  // Set the HTML base.
+  function setPageBase($page_base = null) {
+    $this->base = $page_base;
+  } // setPageBase
 
 
   //**************************************************************************************//
@@ -185,9 +203,10 @@ class frontendDisplay {
            . '<head>'
            . '<title>' . $this->page_title . '</title>'
            . join('', $meta_content)
-           . '<link rel="stylesheet" href="css/style.css" type="text/css" />'
+           . '<link rel="stylesheet" href="' . BASE_URL . 'css/style.css" type="text/css" />'
            . join('', $favicons)
            . join('', $javascript)
+           . '<base href="' . $this->base . '" />'
            . '</head>'
            . '<body>'
            . $body
@@ -233,10 +252,10 @@ class frontendDisplay {
 
     // Set the javascript values.
     $javascripts = array();
-    $javascripts[] = 'script/json2.js';
-    $javascripts[] = 'script/jquery/jquery-1.10.2.min.js';
-    $javascripts[] = 'script/jquery/jquery-1.10.2.min.map';
-    $javascripts[] = 'script/jquery/jquery.noconflict.js';
+    $javascripts[] = BASE_URL . 'script/json2.js';
+    $javascripts[] = BASE_URL . 'script/jquery/jquery-1.10.2.min.js';
+    $javascripts[] = BASE_URL . 'script/jquery/jquery-1.10.2.min.map';
+    $javascripts[] = BASE_URL . 'script/jquery/jquery.noconflict.js';
 
     // Merge the base JavaScripts with the passed array of javasccripts.
     $javascripts = array_merge($javascripts, $this->javascripts);
