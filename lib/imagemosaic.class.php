@@ -13,7 +13,8 @@
  *          2014-01-16, js: More improvements including actual image generation.
  *          2014-01-16, js: getting pure JSON saved instead of plain DIVs.
  *          2014-01-18, js: adjustments to allow for additional image orientations.
- *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'
+ *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'.
+ *          2014-02-25, js: reworking the cache manager.
  *
  */
 
@@ -47,6 +48,7 @@ class ImageMosaic {
   public $cache_path = array('json' => 'cache/data/', 'gif' => 'cache/media/', 'jpeg' => 'cache/media/', 'png' => 'cache/media/');
   public $image_types = array('gif', 'jpeg', 'png');
   public $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
+  public $cache_expiration_in_minutes = 60;
 
   public function __construct() {
   } // __construct
@@ -190,9 +192,25 @@ class ImageMosaic {
 
     $ret = FALSE;
 
-    if (!empty($json_filename) && !empty($pixel_array)) {
+    // If the '$json_filename' value is empty.
+    if (empty($json_filename)) {
+      return $ret;
+    }
 
-      // echo $json_filename . ' <b>Not Cached</b><br />';
+    // Set the boolean for file exists.
+    $file_exists = file_exists($json_filename);
+
+    // Set the basic time values.
+    $modified_time = $file_exists ? filemtime($json_filename) : 0;
+    $current_time = time();
+
+    // Calculate the time difference in minutes.
+    $diff_time_minutes = (($current_time - $modified_time) / 60);
+
+    // Set the boolean for file expired.
+    $file_expired = ($diff_time_minutes > $this->cache_expiration_in_minutes);
+
+    if ($file_expired || !empty($pixel_array)) {
 
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
@@ -210,9 +228,11 @@ class ImageMosaic {
       fclose($file_handle);
 
     }
-    else if (!empty($json_filename) && file_exists($json_filename)) {
-      // echo $json_filename . ' <b>Yes! Cached!</b><br />';
+    else if ($file_exists) {
+
+      // Return the JSON from the file.
       $ret = json_decode(file_get_contents($json_filename), TRUE);
+
     }
 
     return $ret;
