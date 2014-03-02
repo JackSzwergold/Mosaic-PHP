@@ -154,7 +154,7 @@ $final_images = sprintf('<ul>%s</ul>', implode('', $image_files));
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
 $frontendDisplayClass->setViewMode($mode);
-$frontendDisplayClass->setPageTitle('image mosaic');
+$frontendDisplayClass->setPageTitle('Image Mosaic');
 $frontendDisplayClass->setPageURL('http://www.preworn.com/mosaic/');
 $frontendDisplayClass->setPageCopyright('(c) Copyright ' . date('Y') . ' Jack Szwergold. All rights reserved.');
 $frontendDisplayClass->setPageDescription('A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.');
