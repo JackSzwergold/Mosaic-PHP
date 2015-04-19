@@ -1,10 +1,16 @@
-<?
+<?php
 
 /**
- * ProcessImage (a PHP class to process images via ImageMagic & GD)
- * Copyright (c) 2008-2014 Jack Szwergold. All rights reserved.
+ * ProcessImage (a PHP class to process images via ImageMagic & GD) (c) by Jack Szwergold
  *
- * Programming: Jack Szwergold <JackSzwergold@gmail.com>
+ * ProcessImage is licensed under a
+ * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ *
+ * You should have received a copy of the license along with this
+ * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>. 
+ *
+ * w: http://www.preworn.com
+ * e: me@preworn.com
  *
  * Created: 2010-10-24, js
  * Version: 2008-10-12, js: last revisions with Scriptaculous/Prototype
@@ -12,6 +18,9 @@
  *          2013-01-26, js: revisiting for new use.
  *
  */
+
+//**************************************************************************************//
+// Here is where the magic happens!
 
 class ProcessImage  {
 
