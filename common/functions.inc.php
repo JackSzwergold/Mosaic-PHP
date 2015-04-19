@@ -15,9 +15,6 @@
  * Created: 2014-01-22, js
  * Version: 2014-01-22, js: creation
  *          2014-01-22, js: development & cleanup
- *          2014-01-23, js: refinements
- *          2014-02-17, js: setting a 'base'
- *          2014-02-27, js: adding a page URL
  *
  */
 

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * ProcessImage (a PHP class to process images via ImageMagic & GD) (c) by Jack Szwergold
+ * ProcessImage Class (a PHP class to handle images via ImageMagic & GD) (c) by Jack Szwergold
  *
- * ProcessImage is licensed under a
+ * ProcessImage Class is licensed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
@@ -12,10 +12,12 @@
  * w: http://www.preworn.com
  * e: me@preworn.com
  *
- * Created: 2010-10-24, js
- * Version: 2008-10-12, js: last revisions with Scriptaculous/Prototype
- *          2010-10-24, js: cleanups and adjsuted for jQuery
- *          2013-01-26, js: revisiting for new use.
+ * Version: 2010-10-24
+ *
+ * Changes: 2008-10-12 js: last revisions with Scriptaculous/Prototype
+ *          2010-10-24 js: cleanups and adjsuted for jQuery
+ *          2013-01-26 js: revisiting for new use.
+ *          2015-04-16 js: revisiting again to see if I can get this to work.
  *
  */
 
@@ -149,7 +151,7 @@ class ProcessImage  {
              . ' -geometry ' . escapeshellarg($width . 'x' . $height)
              . ' -gamma ' . $this->gamma
              . ' ' . escapeshellarg($this->source)
-             .' ' . escapeshellarg($this->dest)
+             . ' ' . escapeshellarg($this->dest)
              ;
     exec($command);
   }
