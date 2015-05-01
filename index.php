@@ -167,6 +167,7 @@ $frontendDisplayClass->setPageCopyright('(c) Copyright ' . date('Y') . ' Jack Sz
 $frontendDisplayClass->setPageDescription('A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent($final_images);
+$frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');
 $frontendDisplayClass->setJavascripts(array('script/common.js'));

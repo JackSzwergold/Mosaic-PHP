@@ -137,6 +137,13 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
+  // Set the page DIV wrapper.
+  function setPageDivWrapper($page_div_wrapper = null) {
+    $this->page_div_wrapper = $page_div_wrapper;
+  } // setPageDivWrapper
+
+
+  //**************************************************************************************//
   // Set the page viewport.
   function setPageViewport($page_viewport = null) {
     $this->page_viewport = $page_viewport;
@@ -443,11 +450,11 @@ class frontendDisplay {
          . '<div class="Grid">'
          . '<div class="Padding">'
 
-         . '<div class="PixelBoxWrapper">'
+         . sprintf('<div class="%s">', $this->page_div_wrapper)
 
          . $body
 
-         . '</div><!-- .PixelBoxWrapper -->'
+         . sprintf('</div><!-- .%s -->', $this->page_div_wrapper)
 
          . '</div><!-- .Padding -->'
          . '</div><!-- .Grid -->'
