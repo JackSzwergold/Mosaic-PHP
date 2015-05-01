@@ -30,9 +30,9 @@ require_once('lib/imagemosaic.class.php');
 //**************************************************************************************//
 // Define the valid arrays.
 
-$VALID_CONTROLLERS = array('portfolio');
-$DISPLAY_CONTROLLERS = array('portfolio');
-$VALID_GET_PARAMETERS = array('_debug', 'portfolio');
+$VALID_CONTROLLERS = array();
+$DISPLAY_CONTROLLERS = array();
+$VALID_GET_PARAMETERS = array('_debug');
 $VALID_CONTENT_TYPES = array('application/json','text/plain','text/html');
 $VALID_CHARSETS = array('utf-8','iso-8859-1','cp-1252');
 
