@@ -160,7 +160,7 @@ class ImageMosaic {
       $image_processed = $this->resample_image($image_source);
 
       // Generate the pixels.
-      $pixel_array = $this->generate_pixels($this->image_file, $image_processed, FALSE);
+      $pixel_array = $this->generate_pixels($image_processed);
 
       // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_array);
@@ -426,7 +426,7 @@ class ImageMosaic {
 
 
   // Generate the pixels.
-  function generate_pixels ($image_file, $image_processed) {
+  function generate_pixels ($image_processed) {
 
    $ret = array();
 
