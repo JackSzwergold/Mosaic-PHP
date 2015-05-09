@@ -22,6 +22,7 @@
  *          2014-01-18, js: adjustments to allow for additional image orientations.
  *          2014-02-19, js: version check and setting 'pixelate_image_NO_LONGER_USED'.
  *          2014-02-25, js: reworking the cache manager.
+ *          2015-05-09, js: cleanup.
  *
  */
 
@@ -226,8 +227,6 @@ class ImageMosaic {
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
-      // fwrite($file_handle, json_encode((object) $pixel_array, JSON_PRETTY_PRINT));
-      // fwrite($file_handle, json_encode((object) $pixel_array));
       $json_content = json_encode((object) $pixel_array);
       $json_content = str_replace('\/','/', $json_content);
       $json_content = prettyPrint($json_content);
@@ -332,9 +331,7 @@ class ImageMosaic {
 
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
     $background_color = imagecolorallocate($image_processed, 20, 20, 20);
-    // imagefill($image_processed, 0, 0, $background_color);
     imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
-    // imageantialias($image_processed, TRUE);
 
     // Process the pixel_array
     $blocks = array();
@@ -344,7 +341,6 @@ class ImageMosaic {
         $box_x = ($position_x * $this->block_size_x);
         $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
         imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-        // imagefilledellipse($image_processed, $box_x + ($this->block_size_x/2), $box_y + ($this->block_size_y/2), $this->block_size_x, $this->block_size_y, $color);
       }
     }
 
@@ -356,12 +352,11 @@ class ImageMosaic {
     // Apply a gaussian blur.
     if (FALSE) {
       $blur_matrix = array(array(1.0, 2.0, 1.0), array(2.0, 4.0, 2.0), array(1.0, 2.0, 1.0));
-      // $blur_matrix = array(array(1,2,1), array(2,1,2), array(1,2,1));
       imageconvolution($image_processed, $blur_matrix, 16, 0);
     }
 
     // Process the filename & save the image files.
-    if ($this->generate_images) { // Foo!
+    if ($this->generate_images) {
 
       if ($this->overlay_image) {
         // Place a tiled overlay on the image.
@@ -435,7 +430,6 @@ class ImageMosaic {
      $rows = array();
       for ($width = 0; $width <= $this->width_resampled; $width++) {
 
-        // echo 'Dimensions: ' . $width . ' x ' . $height . '<br >';
         $color_index = @imagecolorat($image_processed, $width, $height);
 
         if (FALSE) {
@@ -470,8 +464,6 @@ class ImageMosaic {
 
     // Get rid of the image to free up memory.
     imagedestroy($image_processed);
-
-    // echo 'Count: ' . count($ret);
 
     return $ret;
 
