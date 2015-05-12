@@ -122,6 +122,22 @@ shuffle($raw_image_files);
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
 
 //**************************************************************************************//
+// Set the page DIVs array.
+
+$page_divs_array = array();
+$page_divs_array[] = 'Wrapper';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Content';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Section';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Middle';
+$page_divs_array[] = 'Core';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Grid';
+$page_divs_array[] = 'Padding';
+
+//**************************************************************************************//
 // Init the image mosaic class and roll through the images.
 
 $ImageMosaicClass = new ImageMosaic();
@@ -153,8 +169,7 @@ foreach($artworks as $image_file => $artwork) {
                             . '</li>'
                             ;
 }
-$final_images = sprintf('<ul>%s</ul>', implode('', $image_files));
-
+$body = sprintf('<ul>%s</ul>', implode('', $image_files));
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
@@ -166,7 +181,8 @@ $frontendDisplayClass->setPageURL('http://www.preworn.com/mosaic/');
 $frontendDisplayClass->setPageCopyright('(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.');
 $frontendDisplayClass->setPageDescription('A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.');
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
-$frontendDisplayClass->setPageContent($final_images);
+$frontendDisplayClass->setPageContent($body);
+$frontendDisplayClass->setPageDivs($page_divs_array);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 $frontendDisplayClass->setPageViewport('width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes');
 $frontendDisplayClass->setPageRobots('noindex, nofollow');

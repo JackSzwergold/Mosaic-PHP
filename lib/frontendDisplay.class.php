@@ -19,6 +19,7 @@
  *          2014-02-17, js: setting a 'base'
  *          2014-02-27, js: adding a page URL
  *          2015-05-10, js: adding DIV wrapper class & id
+ *          2015-05-11, js: setting dynamic DIV wrapper creation
  *
  */
 
@@ -48,8 +49,10 @@ class frontendDisplay {
   private $page_title = NULL;
   private $page_description = NULL;
   private $page_content = NULL;
+
   private $page_div_wrapper_class = NULL;
   private $page_div_wrapper_id = NULL;
+  private $page_div_wrappper_array = array();
 
   private $page_viewport = '';
   private $page_robots = '';
@@ -137,6 +140,13 @@ class frontendDisplay {
   function setPageContent($content = null) {
     $this->content = $content;
   } // setPageContent
+
+
+  //**************************************************************************************//
+  // Set the page DIVs.
+  function setPageDivs($page_div_wrappper_array = array()) {
+    $this->page_div_wrappper_array = $page_div_wrappper_array;
+  } // setPageDivs
 
 
   //**************************************************************************************//
@@ -450,46 +460,24 @@ class frontendDisplay {
       $body_div_stuff[] = sprintf('id="%s"', $this->page_div_wrapper_id);
     }
 
-    $ret = '<div class="Wrapper">'
-         . '<div class="Padding">'
+    if (!empty($this->page_div_wrapper_class) || (!empty($this->page_div_wrapper_class) && !empty($this->page_div_wrapper_id))) {
+      $body = sprintf('<div %s>', implode($body_div_stuff, ' '))
+            . $body
+            . sprintf('</div><!-- %s -->', implode($body_div_close_stuff, ' '))
+            ;
+    }
 
-         . '<div class="Content">'
-         . '<div class="Padding">'
+    // Set the wrapper divs.
+    $div_opening = $div_closing = '';
+    if (!empty($this->page_div_wrappper_array)) {
+      $div_opening = '<div class="' . implode($this->page_div_wrappper_array, '">' . "\n" . '<div class="') . '">';
+      $div_closing = '</div><!-- .' . implode(array_reverse($this->page_div_wrappper_array), '-->' . "\n" . '</div><!-- .') . ' -->';
+    }
 
-         . '<div class="Section">'
-         . '<div class="Padding">'
-         . '<div class="Middle">'
-
-         . '<div class="Core">'
-         . '<div class="Padding">'
-
-         . '<div class="Grid">'
-         . '<div class="Padding">'
-
-         . sprintf('<div %s>', implode($body_div_stuff, ' '))
-
+    return $div_opening
          . $body
-
-         . sprintf('</div><!-- %s -->', implode($body_div_close_stuff, ' '))
-
-         . '</div><!-- .Padding -->'
-         . '</div><!-- .Grid -->'
-
-         . '</div><!-- .Middle -->'
-         . '</div><!-- .Padding -->'
-         . '</div><!-- .Section -->'
-
-         . '</div><!-- .Padding -->'
-         . '</div><!-- .Core -->'
-
-         . '</div><!-- .Padding -->'
-         . '</div><!-- .Content -->'
-
-         . '</div><!-- .Padding -->'
-         . '</div><!-- .Wrapper -->'
+         . $div_closing
          ;
-
-    return $ret;
 
   } // setWrapper
 
