@@ -3,7 +3,7 @@
 # web_builds: The directory on the server into which the actual source code will deployed.
 # live_root: The live directory which the current version will be linked to.
 
-set :branch, "develop"
+set :branch, "master"
 
 server 'www.preworn.com', user: 'sysop', roles: %w{app db web}, my_property: :my_value
 
