@@ -2,6 +2,7 @@
 lock '3.4.0'
 
 set :application, 'image_mosaic'
+set :short_name, 'mosaic'
 set :repo_url, 'git@github.com:JackSzwergold/ImageMosaic-Class.git'
 
 # Set the 'deploy_to' directory.
