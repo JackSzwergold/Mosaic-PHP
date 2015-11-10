@@ -123,22 +123,6 @@ shuffle($raw_image_files);
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
 
 //**************************************************************************************//
-// Set the page DIVs array.
-
-$page_divs_array = array();
-$page_divs_array[] = 'Wrapper';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Content';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Section';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Middle';
-$page_divs_array[] = 'Core';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Grid';
-$page_divs_array[] = 'Padding';
-
-//**************************************************************************************//
 // Init the image mosaic class and roll through the images.
 
 $ImageMosaicClass = new ImageMosaic();
@@ -171,6 +155,22 @@ foreach($artworks as $image_file => $artwork) {
                             ;
 }
 $body = sprintf('<ul>%s</ul>', implode('', $image_files));
+
+//**************************************************************************************//
+// Set the page DIVs array.
+
+$page_divs_array = array();
+$page_divs_array[] = 'Wrapper';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Content';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Section';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Middle';
+$page_divs_array[] = 'Core';
+$page_divs_array[] = 'Padding';
+$page_divs_array[] = 'Grid';
+$page_divs_array[] = 'Padding';
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.

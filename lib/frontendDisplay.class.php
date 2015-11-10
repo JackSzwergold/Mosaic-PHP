@@ -472,8 +472,73 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
+  // Set the header.
+  function setNameplate($content = null) {
+
+    $list_items = array();
+
+    if ($this->page_depth > 0) {
+      $last_part = array_slice($this->markdown_parts,-1,1);
+      if ($last_part[0] == 'index') {
+        $back_url = BASE_PATH;
+      }
+      else {
+        $back_url = BASE_PATH . $this->markdown_parts[0];
+      }
+      $list_items[] = '<li id="back"><p>'
+                    . sprintf('<a href="%s" title="back">«</a>', $back_url)
+                    . '</p></li>'
+                    ;
+    }
+
+    if (!empty($this->amazon_info)) {
+      $list_items[] = sprintf('<li id="%s">', $this->amazon_info['short_name'])
+                    . '<p>'
+                    . sprintf('<a href="%s" title="%s">%s</a>', $this->amazon_info['url'], $this->amazon_info['description'], $this->amazon_info['short_name'])
+                    . '</p>'
+                    . '</li>'
+                    ;
+    }
+
+    if (!empty($this->paypal_info)) {
+      $list_items[] = sprintf('<li id="%s">', $this->paypal_info['short_name'])
+                    . '<p>'
+                    . sprintf('<a href="%s" title="%s">%s</a>', $this->paypal_info['url'], $this->paypal_info['description'], $this->paypal_info['short_name'])
+                    . '</p>'
+                    . '</li>'
+                    ;
+    }
+
+    if (!empty($list_items)) {
+      $content = '<ul>'
+               . implode('', $list_items)
+               . '</ul>'
+               ;
+    }
+
+    $ret = '<div class="Nameplate">'
+         . '<div class="Padding">'
+         . '<div class="Left">'
+         . '<div class="Padding">'
+
+         . $content
+
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Left -->'
+         . '</div><!-- .Padding -->'
+         . '</div><!-- .Nameplate -->'
+         ;
+
+    return $ret;
+
+  } // setNameplate
+
+
+  //**************************************************************************************//
   // Set the wrapper.
   function setWrapper($body = null) {
+
+    $nameplate = $this->setNameplate();
 
     $body_div_stuff = array();
     $body_div_close_stuff = array();
@@ -501,7 +566,8 @@ class frontendDisplay {
       $div_closing = '</div><!-- .' . implode(array_reverse($this->page_div_wrappper_array), '-->' . "\n" . '</div><!-- .') . ' -->';
     }
 
-    $ret = $div_opening
+    $ret = $nameplate
+         . $div_opening
          . $body
          . $div_closing
          ;
