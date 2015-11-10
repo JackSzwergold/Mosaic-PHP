@@ -24,7 +24,7 @@
 require_once 'conf/conf.inc.php';
 require_once BASE_FILEPATH . '/common/functions.inc.php';
 require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
-require_once BASE_FILEPATH . '/lib/Parsedown.php';
+// require_once BASE_FILEPATH . '/lib/Parsedown.php';
 // require_once BASE_FILEPATH . '/lib/processimage.class.php';
 require_once BASE_FILEPATH . '/lib/imagemosaic.class.php';
 
@@ -99,7 +99,7 @@ if (!is_dir($image_dir)) {
 //**************************************************************************************//
 // Process the images in the directory.
 
-$skip_files = array('..', '.', '.DS_Store');
+$skip_files = array('..', '.', '.DS_Store','ignore');
 $image_files = scandir($image_dir);
 $image_files = array_diff($image_files, $skip_files);
 
@@ -118,7 +118,7 @@ foreach ($image_files as $image_file_key => $image_file_value) {
 shuffle($raw_image_files);
 
 //**************************************************************************************//
-// Slice off a sybset of the image files.
+// Slice off a subset of the image files.
 
 $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
 
