@@ -18,6 +18,9 @@
  *
  */
 
+/**************************************************************************************************/
+// Define localized defaults.
+
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
   define('BASE_PATH', '/ImageMosaic-Class/');
 }
@@ -25,9 +28,7 @@ else {
   define('BASE_PATH', '/art/mosaic/');
 }
 
-/**************************************************************************************************/
-// Define localized defaults.
-
+// Site descriptive info.
 $SITE_TITLE = 'Image Mosaic';
 $SITE_DESCRIPTION = 'A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.';
 $SITE_URL = 'http://www.preworn.com/mosaic/';
@@ -35,19 +36,43 @@ $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Comm
 $SITE_ROBOTS = 'noindex, nofollow';
 $SITE_VIEWPORT = 'width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes';
 
+// Amazon link info.
 $AMAZON_INFO = array();
 $AMAZON_INFO['short_name'] = 'amazon';
 $AMAZON_INFO['url'] = 'http://www.amazon.com/?tag=lastplacechamp-20';
 $AMAZON_INFO['description'] = 'Support me when you buy things on Amazon with this link.';
 
+// PayPal link info.
 $PAYPAL_INFO = array();
 $PAYPAL_INFO['short_name'] = 'paypal';
 $PAYPAL_INFO['url'] = 'https://www.paypal.me/JackSzwergold';
 $PAYPAL_INFO['description'] = 'Support me with a PayPal donation.';
 
+// Set the page DIVs array.
+$PAGE_DIVS_ARRAY = array();
+$PAGE_DIVS_ARRAY[] = 'Wrapper';
+$PAGE_DIVS_ARRAY[] = 'Padding';
+$PAGE_DIVS_ARRAY[] = 'Content';
+$PAGE_DIVS_ARRAY[] = 'Padding';
+$PAGE_DIVS_ARRAY[] = 'Section';
+$PAGE_DIVS_ARRAY[] = 'Padding';
+$PAGE_DIVS_ARRAY[] = 'Middle';
+$PAGE_DIVS_ARRAY[] = 'Core';
+$PAGE_DIVS_ARRAY[] = 'Padding';
+$PAGE_DIVS_ARRAY[] = 'Grid';
+$PAGE_DIVS_ARRAY[] = 'Padding';
+
+// Set the javascript values.
+$JAVASCRIPTS_ARRAY = array();
+$JAVASCRIPTS_ARRAY[] = 'script/json2.js';
+$JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery-1.11.3.min.js';
+$JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery-1.11.3.min.map';
+$JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery.noconflict.js';
+$JAVASCRIPTS_ARRAY[] = 'script/common.js';
+    
+// Set the controller and parameter stuff.
 $VALID_CONTROLLERS = array('controller');
 $DISPLAY_CONTROLLERS = array('controller');
-
 $VALID_GET_PARAMETERS = array('_debug', 'controller', 'page', 'section', 'subsection');
 
 ?>

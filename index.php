@@ -155,22 +155,6 @@ foreach($artworks as $image_file => $artwork) {
 $body = sprintf('<ul>%s</ul>', implode('', $image_files));
 
 //**************************************************************************************//
-// Set the page DIVs array.
-
-$page_divs_array = array();
-$page_divs_array[] = 'Wrapper';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Content';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Section';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Middle';
-$page_divs_array[] = 'Core';
-$page_divs_array[] = 'Padding';
-$page_divs_array[] = 'Grid';
-$page_divs_array[] = 'Padding';
-
-//**************************************************************************************//
 // Init the "frontendDisplay()" class.
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
@@ -181,11 +165,11 @@ $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
 $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
 $frontendDisplayClass->setPageContent($body);
-$frontendDisplayClass->setPageDivs($page_divs_array);
+$frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
 $frontendDisplayClass->setPageRobots($SITE_ROBOTS);
-$frontendDisplayClass->setJavascripts(array('script/common.js'));
+$frontendDisplayClass->setJavascripts($JAVASCRIPTS_ARRAY);
 $frontendDisplayClass->initContent();
 
 ?>
