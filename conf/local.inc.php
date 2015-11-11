@@ -75,8 +75,8 @@ $JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery.noconflict.js';
 $JAVASCRIPTS_ARRAY[] = 'script/common.js';
     
 // Set the controller and parameter stuff.
-$VALID_CONTROLLERS = array('controller');
-$DISPLAY_CONTROLLERS = array('controller');
-$VALID_GET_PARAMETERS = array('_debug', 'controller', 'page', 'section', 'subsection');
+$VALID_CONTROLLERS = array();
+$DISPLAY_CONTROLLERS = array();
+$VALID_GET_PARAMETERS = array('_debug');
 
 ?>

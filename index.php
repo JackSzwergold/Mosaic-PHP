@@ -31,13 +31,6 @@ require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
 require_once BASE_FILEPATH . '/lib/frontendDisplayHelpers.php';
 
 //**************************************************************************************//
-// Define the valid arrays.
-
-$VALID_CONTROLLERS = array();
-$DISPLAY_CONTROLLERS = array();
-$VALID_GET_PARAMETERS = array('_debug');
-
-//**************************************************************************************//
 // Set the page base.
 if (FALSE && !empty($controller)) {
   $page_base = BASE_URL . $controller . '/';
