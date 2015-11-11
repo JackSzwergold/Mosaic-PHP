@@ -36,8 +36,6 @@ require_once BASE_FILEPATH . '/lib/frontendDisplayHelpers.php';
 $VALID_CONTROLLERS = array();
 $DISPLAY_CONTROLLERS = array();
 $VALID_GET_PARAMETERS = array('_debug');
-$VALID_CONTENT_TYPES = array('application/json','text/plain','text/html');
-$VALID_CHARSETS = array('utf-8','iso-8859-1','cp-1252');
 
 //**************************************************************************************//
 // Set the page base.
