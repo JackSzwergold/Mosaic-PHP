@@ -40,17 +40,16 @@ $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Comm
 $SITE_ROBOTS = 'noindex, nofollow';
 $SITE_VIEWPORT = 'width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes';
 
-// Amazon link info.
-$AMAZON_INFO = array();
-$AMAZON_INFO['short_name'] = 'amazon';
-$AMAZON_INFO['url'] = 'http://www.amazon.com/?tag=lastplacechamp-20';
-$AMAZON_INFO['description'] = 'Support me when you buy things on Amazon with this link.';
-
-// PayPal link info.
-$PAYPAL_INFO = array();
-$PAYPAL_INFO['short_name'] = 'paypal';
-$PAYPAL_INFO['url'] = 'https://www.paypal.me/JackSzwergold';
-$PAYPAL_INFO['description'] = 'Support me with a PayPal donation.';
+// Payment info.
+$PAYMENT_INFO = array();
+$PAYMENT_INFO['amazon']['short_name'] = 'Amazon';
+$PAYMENT_INFO['amazon']['emoji'] = '🎥📚📀';
+$PAYMENT_INFO['amazon']['url'] = 'http://www.amazon.com/?tag=lastplacechamp-20';
+$PAYMENT_INFO['amazon']['description'] = 'Support me when you buy things on Amazon with this link.';
+$PAYMENT_INFO['paypal']['short_name'] = 'PayPal';
+$PAYMENT_INFO['paypal']['emoji'] = '💰💸💳';
+$PAYMENT_INFO['paypal']['url'] = 'https://www.paypal.me/JackSzwergold';
+$PAYMENT_INFO['paypal']['description'] = 'Support me with a PayPal donation.';
 
 // Set the page DIVs array.
 $PAGE_DIVS_ARRAY = array();
@@ -66,14 +65,18 @@ $PAGE_DIVS_ARRAY[] = 'Padding';
 $PAGE_DIVS_ARRAY[] = 'Grid';
 $PAGE_DIVS_ARRAY[] = 'Padding';
 
-// Set the javascript values.
-$JAVASCRIPTS_ARRAY = array();
-$JAVASCRIPTS_ARRAY[] = 'script/json2.js';
-$JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery-1.11.3.min.js';
-$JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery-1.11.3.min.map';
-$JAVASCRIPTS_ARRAY[] = 'script/jquery/jquery.noconflict.js';
-$JAVASCRIPTS_ARRAY[] = 'script/common.js';
+// Set the JavaScript array.
+$JAVASCRIPTS_ITEMS = array();
+$JAVASCRIPTS_ITEMS[] = 'script/json2.js';
+$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.js';
+$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.map';
+$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery.noconflict.js';
+$JAVASCRIPTS_ITEMS[] = 'script/common.js';
     
+// Set the CSS array.
+$CSS_ITEMS = array();
+$CSS_ITEMS[] = 'css/style.css';
+
 // Set the controller and parameter stuff.
 $VALID_CONTROLLERS = array();
 $DISPLAY_CONTROLLERS = array();

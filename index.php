@@ -7,7 +7,7 @@
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
- * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
+ * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>. 
  *
  * w: http://www.preworn.com
  * e: me@preworn.com
@@ -44,7 +44,7 @@ else {
 // Init the "frontendDisplay()" class.
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
-$frontendDisplayClass->setViewMode($mode);
+$frontendDisplayClass->setViewMode($VIEW_MODE);
 $frontendDisplayClass->setPageTitle($SITE_TITLE);
 $frontendDisplayClass->setPageURL($SITE_URL);
 $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
@@ -53,13 +53,13 @@ $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 $frontendDisplayClass->setPageContent($body);
 $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
-$frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
+// $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
 $frontendDisplayClass->setPageRobots($SITE_ROBOTS);
-$frontendDisplayClass->setJavascripts($JAVASCRIPTS_ARRAY);
+$frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
+$frontendDisplayClass->setCSSItems($CSS_ITEMS);
 $frontendDisplayClass->setPageBase($page_base);
 // $frontendDisplayClass->setPageURLParts($markdown_parts);
-// $frontendDisplayClass->setAmazonInfo($AMAZON_INFO);
-// $frontendDisplayClass->setPayPalInfo($PAYPAL_INFO);
+// $frontendDisplayClass->setPaymentInfo($PAYMENT_INFO);
 $frontendDisplayClass->initContent();
 
 ?>

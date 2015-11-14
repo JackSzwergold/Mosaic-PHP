@@ -59,10 +59,10 @@ $mode_options['mega']['how_many'] = 1;
 if (FALSE) {
   $mode_keys = array_keys($mode_options);
   shuffle($mode_keys);
-  $mode = $mode_keys[0];
+  $VIEW_MODE = $mode_keys[0];
 }
 else {
-  $mode = 'large';
+  $VIEW_MODE = 'large';
 }
 
 //**************************************************************************************//
@@ -101,7 +101,7 @@ shuffle($raw_image_files);
 //**************************************************************************************//
 // Slice off a subset of the image files.
 
-$image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']);
+$image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_many']);
 
 //**************************************************************************************//
 // Init the image mosaic class and roll through the images.
@@ -109,7 +109,7 @@ $image_files = array_slice($raw_image_files, 0, $mode_options[$mode]['how_many']
 $ImageMosaicClass = new ImageMosaic();
 
 foreach ($image_files as $image_file) {
-  $ImageMosaicClass->set_image($image_file, $mode_options[$mode]['width'], $mode_options[$mode]['height'], $mode_options[$mode]['block_size']);
+  $ImageMosaicClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
   $ImageMosaicClass->debug_mode(FALSE);
   $ImageMosaicClass->row_flip_horizontal(FALSE);
   $ImageMosaicClass->set_row_delimiter(NULL);
