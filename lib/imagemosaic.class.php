@@ -323,10 +323,10 @@ class ImageMosaic {
   function pixelate_image_json ($json_filename) {
 
     // Load the JSON.
-    $pixel_array = $this->cache_manager($json_filename);
+    $pixel_object = $this->cache_manager($json_filename);
 
     // If the pixel array is empty, bail out of this function.
-    if (empty($pixel_array)) {
+    if (empty($pixel_object)) {
       return;
     }
 
@@ -342,12 +342,14 @@ class ImageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-    foreach ($pixel_array as $position_y => $pixel_row) {
-      $box_y = ($position_y * $this->block_size_y);
-      foreach ($pixel_row as  $position_x => $pixel) {
-        $box_x = ($position_x * $this->block_size_x);
-        $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
-        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+    foreach ($pixel_object as $pixel_array) {
+      foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+        $box_y = ($position_y * $this->block_size_y);
+        foreach ($pixel_row as  $position_x => $pixel) {
+          $box_x = ($position_x * $this->block_size_x);
+          $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
+          imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+        }
       }
     }
 
