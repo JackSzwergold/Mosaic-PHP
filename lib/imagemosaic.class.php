@@ -397,17 +397,16 @@ class ImageMosaic {
   // Generate the pixel boxes.
   function generate_pixel_boxes ($rgb_array) {
 
-    // $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array));
-    $hex_final = sprintf("#%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
-
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
     if (FALSE) {
+      $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array['rgba']));
       $block_rgb = sprintf('background-color: %s;', $rgb_final);
       $block_style = $block_dimensions . ' ' . $block_rgb;
     }
     else {
-      $block_hex = sprintf('background-color: %s;', $hex_final);
+      $hex_final = $this->rgb_to_hex($rgb_array['rgba']);
+      $block_hex = sprintf('background-color: #%s;',  $hex_final);
       $block_style = $block_dimensions . ' ' . $block_hex;
     }
 
@@ -418,6 +417,12 @@ class ImageMosaic {
     return $ret;
 
   } // generate_pixel_boxes
+
+
+  // Convert RGB values to .
+  function rgb_to_hex ($rgb_array) {
+    return sprintf("%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
+  } // rgb_to_hex
 
 
   // Generate the pixels.
@@ -448,7 +453,7 @@ class ImageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = $rgb_array;
+          $rows[] = array('hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
         }
         else {
           // $rows[] = $rgb_array;
