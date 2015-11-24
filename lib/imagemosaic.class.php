@@ -168,7 +168,7 @@ class ImageMosaic {
 
       // Create the pixel object.
       $pixel_object = new stdClass();
-      $pixel_object->name = $this->image_file;
+      $pixel_object->name = preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($json_filename));
 
       // Cache the pixels.
       $this->cache_manager($json_filename, array($pixel_object->name => $pixel_array_final));
