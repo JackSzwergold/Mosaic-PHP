@@ -163,8 +163,15 @@ class ImageMosaic {
       // Generate the pixels.
       $pixel_array = $this->generate_pixels($image_processed);
 
+      // Set the 'pixels' array.
+      $pixel_array_final = array('pixels' => $pixel_array);
+
+      // Create the pixel object.
+      $pixel_object = new stdClass();
+      $pixel_object->name = $this->image_file;
+
       // Cache the pixels.
-      $this->cache_manager($json_filename, $pixel_array);
+      $this->cache_manager($json_filename, array($pixel_object->name => $pixel_array_final));
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
