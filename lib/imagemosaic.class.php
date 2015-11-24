@@ -7,7 +7,7 @@
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
- * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>. 
+ * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
  *
  * w: http://www.preworn.com
  * e: me@preworn.com
@@ -134,6 +134,12 @@ class ImageMosaic {
   } // create_filename
 
 
+  // Get image file basename.
+  function get_file_basename ($filename = '') {
+    return preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($filename));
+  } // get_file_basename
+
+
   // Process the image.
   function process_image () {
 
@@ -146,9 +152,12 @@ class ImageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
-    $pixel_array = $this->cache_manager($json_filename);
+    $pixel_object_final = $this->cache_manager($json_filename);
 
-    // If the pixels array is empty, then we need to generate & cache the data.
+    // Set the pixel object name.
+    $pixel_object_name = $this->get_file_basename($json_filename);
+
+   // If the pixels array is empty, then we need to generate & cache the data.
     if ($this->DEBUG_MODE || empty($pixel_array)) {
 
       // Ingest the source image for rendering.
@@ -168,19 +177,25 @@ class ImageMosaic {
 
       // Create the pixel object.
       $pixel_object = new stdClass();
-      $pixel_object->name = preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($json_filename));
+      $pixel_object->name = $pixel_object_name;
+
+      // Set the final pixel object with actual pixel data.
+      $pixel_object_final = array($pixel_object->name => $pixel_array_final);
 
       // Cache the pixels.
-      $this->cache_manager($json_filename, array($pixel_object->name => $pixel_array_final));
+      $this->cache_manager($json_filename, $pixel_object_final);
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
 
     }
 
+    // Get the actual pixel array.
+    $pixel_array_final = $pixel_object_final[$pixel_object_name]['pixels'];
+
     // Process the pixel_array
     $blocks = array();
-    foreach ($pixel_array as $pixel_row) {
+    foreach ($pixel_array_final as $pixel_row) {
       if ($this->row_flip_horizontal) {
         $pixel_row = array_reverse($pixel_row);
       }
