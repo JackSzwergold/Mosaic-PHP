@@ -33,7 +33,7 @@ else {
 }
 
 // Site descriptive info.
-$SITE_TITLE = 'Image Mosaic';
+$SITE_TITLE = 'Mosaic';
 $SITE_DESCRIPTION = 'A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.';
 $SITE_URL = 'http://www.preworn.com/mosaic/';
 $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.';
