@@ -21,7 +21,7 @@
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
 
-require_once BASE_FILEPATH . '/lib/imagemosaic.class.php';
+require_once BASE_FILEPATH . '/lib/imageMosaic.class.php';
 
 //**************************************************************************************//
 // Set an array of mode options.

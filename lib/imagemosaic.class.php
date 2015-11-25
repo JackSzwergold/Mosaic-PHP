@@ -1,9 +1,9 @@
 <?php
 
 /**
- * ImageMosaic Class (imagemosaic.class.php) (c) by Jack Szwergold
+ * imageMosaic Class (imageMosaic.class.php) (c) by Jack Szwergold
  *
- * ImageMosaic Class is licensed under a
+ * imageMosaic Class is licensed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
@@ -29,7 +29,7 @@
 //**************************************************************************************//
 // Here is where the magic happens!
 
-class ImageMosaic {
+class imageMosaic {
 
   public $DEBUG_MODE = FALSE;
 
@@ -530,6 +530,6 @@ class ImageMosaic {
   } // renderImage
 
 
-} // ImageMosaic
+} // imageMosaic
 
 ?>
