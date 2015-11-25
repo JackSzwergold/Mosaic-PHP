@@ -180,7 +180,8 @@ class ImageMosaic {
       $pixel_object->name = $pixel_object_name;
 
       // Set the final pixel object with actual pixel data.
-      $pixel_object_final = array($pixel_object->name => $pixel_array_final);
+      // $pixel_object_final = array($pixel_object->name => $pixel_array_final);
+      $pixel_object_final = $pixel_array_final;
 
       // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_object_final);
@@ -191,7 +192,7 @@ class ImageMosaic {
     }
 
     // Get the actual pixel array.
-    $pixel_array_final = $pixel_object_final[$pixel_object_name]['pixels'];
+    $pixel_array_final = $pixel_object_final['pixels'];
 
     // Process the pixel_array
     $blocks = array();
@@ -358,7 +359,8 @@ class ImageMosaic {
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_object as $pixel_array) {
-      foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+      // foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+      foreach ($pixel_array as $position_y => $pixel_row) {
         $box_y = ($position_y * $this->block_size_y);
         foreach ($pixel_row as  $position_x => $pixel) {
           $box_x = ($position_x * $this->block_size_x);
