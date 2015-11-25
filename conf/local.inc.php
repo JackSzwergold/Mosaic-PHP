@@ -26,7 +26,7 @@ $DEBUG_OUTPUT_JSON = false;
 
 // Set the base URL path.
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-  define('BASE_PATH', '/ImageMosaic-Class/');
+  define('BASE_PATH', '/imageMosaic-PHP-Class/');
 }
 else {
   define('BASE_PATH', '/art/mosaic/');
