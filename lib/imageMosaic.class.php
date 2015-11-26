@@ -97,7 +97,7 @@ class imageMosaic {
 
   // Set the overlay image value.
   function set_overlay_image ($overlay_image = null) {
-    if (!empty($generate_images)) {
+    if (!empty($overlay_image)) {
       $this->overlay_image = $overlay_image;
     }
   } // set_overlay_image
