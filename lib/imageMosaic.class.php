@@ -351,7 +351,6 @@ class imageMosaic {
     $height_pixelate = $this->height_resampled * $this->block_size_y;
 
     // Set the canvas for the processed image & resample the source image.
-
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
     $background_color = imagecolorallocate($image_processed, 20, 20, 20);
     imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
@@ -364,7 +363,7 @@ class imageMosaic {
         $box_y = ($position_y * $this->block_size_y);
         foreach ($pixel_row as  $position_x => $pixel) {
           $box_x = ($position_x * $this->block_size_x);
-          $color = imagecolorclosest($image_processed, $pixel['red'], $pixel['green'], $pixel['blue']);
+          $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
           imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
         }
       }
@@ -520,7 +519,7 @@ class imageMosaic {
   } // render_pixel_box_container
 
 
-  // Rendethe image straight to the browser.
+  // Render the image straight to the browser.
   function render_image ($image_processed) {
 
     header('Content-Type: image/jpeg');
