@@ -478,7 +478,7 @@ class imageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = array('hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          $rows[] = array('x' => $width, 'y' => $height, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
         }
         else {
           // $rows[] = $rgb_array;
