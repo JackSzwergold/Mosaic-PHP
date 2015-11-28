@@ -453,8 +453,8 @@ class imageMosaic {
   // Generate the pixels.
   function generate_pixels ($image_processed) {
 
-   $ret = array();
-
+    $order = 0;
+    $ret = array();
     for ($height = 0; $height < $this->height_resampled; $height++) {
 
      $rows = array();
@@ -478,7 +478,8 @@ class imageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = array('x' => $width, 'y' => $height, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          $rows[] = array('x' => $width, 'y' => $height, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          $order++;
         }
         else {
           // $rows[] = $rgb_array;
@@ -487,6 +488,7 @@ class imageMosaic {
         if ($width == $this->width_resampled) {
           $ret[] = $rows;
         }
+
 
       } // $width loop.
 
