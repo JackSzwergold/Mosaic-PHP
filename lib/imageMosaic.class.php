@@ -173,11 +173,15 @@ class imageMosaic {
       $pixel_array = $this->generate_pixels($image_processed);
 
       // Set the 'pixels' array.
-      $pixel_array_final = array('pixels' => $pixel_array);
+      $pixel_array_final = array();
+      $pixel_array_final['name'] = $pixel_object_name;
+      $pixel_array_final['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
+      $pixel_array_final['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
+      $pixel_array_final['pixels'] = $pixel_array;
 
       // Create the pixel object.
-      $pixel_object = new stdClass();
-      $pixel_object->name = $pixel_object_name;
+      // $pixel_object = new stdClass();
+      // $pixel_object->name = $pixel_object_name;
 
       // Set the final pixel object with actual pixel data.
       // $pixel_object_final = array($pixel_object->name => $pixel_array_final);
