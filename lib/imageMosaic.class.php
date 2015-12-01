@@ -157,7 +157,7 @@ class imageMosaic {
     // Set the pixel object name.
     $pixel_object_name = $this->get_file_basename($json_filename);
 
-   // If the pixels array is empty, then we need to generate & cache the data.
+    // If the pixels array is empty, then we need to generate & cache the data.
     if ($this->DEBUG_MODE || empty($pixel_array)) {
 
       // Ingest the source image for rendering.
@@ -181,7 +181,8 @@ class imageMosaic {
 
       // Set the final pixel object with actual pixel data.
       // $pixel_object_final = array($pixel_object->name => $pixel_array_final);
-      $pixel_object_final = $pixel_array_final;
+      $pixel_object_final = array('images' => array($pixel_array_final));
+      // $pixel_object_final = $pixel_array_final;
 
       // Cache the pixels.
       $this->cache_manager($json_filename, $pixel_object_final);
@@ -478,7 +479,8 @@ class imageMosaic {
         }
 
         if ($width != $this->width_resampled) {
-          $rows[] = array('x' => $width, 'y' => $height, 'width' => $this->block_size_x, 'height' => $this->block_size_y, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          // $rows[] = array('x' => $width, 'y' => $height, 'width' => $this->block_size_x, 'height' => $this->block_size_y, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
+          $rows[] = array('x' => $width, 'y' => $height, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
           $order++;
         }
         else {
