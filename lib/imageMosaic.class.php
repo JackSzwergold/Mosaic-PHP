@@ -157,8 +157,8 @@ class imageMosaic {
     // Set the pixel object name.
     $pixel_object_name = $this->get_file_basename($json_filename);
 
-    // If the pixels array is empty, then we need to generate & cache the data.
-    if ($this->DEBUG_MODE || empty($pixel_array)) {
+    // If the pixel object array is empty, then we need to generate & cache the data.
+    if ($this->DEBUG_MODE || empty($pixel_object_final)) {
 
       // Ingest the source image for rendering.
       $image_source = imagecreatefromjpeg($this->image_file);
