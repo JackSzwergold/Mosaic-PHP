@@ -152,13 +152,13 @@ class imageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
-    $pixel_object_final = $this->cache_manager($json_filename);
+    $image_object = json_decode($this->cache_manager($json_filename), TRUE);
 
     // Set the pixel object name.
     $pixel_object_name = $this->get_file_basename($json_filename);
 
     // If the pixel object array is empty, then we need to generate & cache the data.
-    if ($this->DEBUG_MODE || empty($pixel_object_final)) {
+    if ($this->DEBUG_MODE || empty($image_object)) {
 
       // Ingest the source image for rendering.
       $image_source = imagecreatefromjpeg($this->image_file);
@@ -179,26 +179,23 @@ class imageMosaic {
       $pixel_array_final['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
       $pixel_array_final['pixels'] = $pixel_array;
 
-      // Create the pixel object.
-      // $pixel_object = new stdClass();
-      // $pixel_object->name = $pixel_object_name;
-
       // Set the final pixel object with actual pixel data.
-      // $pixel_object_final = array($pixel_object->name => $pixel_array_final);
-      $pixel_object_final = array('images' => array($pixel_array_final));
-      // $pixel_object_final = $pixel_array_final;
+      $image_object = new stdClass();
+      $image_object->images = array($pixel_array_final);
 
       // Cache the pixels.
-      $this->cache_manager($json_filename, $pixel_object_final);
+      $this->cache_manager($json_filename, $image_object);
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
 
     }
 
-    // Get the actual pixel array.
-    // $pixel_array_final = $pixel_object_final['pixels'];
-    $pixel_array_final = $pixel_object_final['images'][0]['pixels'];
+    // Cast the image object as an array.
+    $image_array = (array) $image_object;
+
+    // Get the actual pixel array from the image object.
+    $pixel_array_final = $image_array['images'][0]['pixels'];
 
     // Process the pixel_array
     $blocks = array();
@@ -266,7 +263,7 @@ class imageMosaic {
     else if ($file_exists) {
 
       // Return the JSON from the file.
-      $ret = json_decode(file_get_contents($json_filename), TRUE);
+      $ret = file_get_contents($json_filename);
 
     }
 
@@ -345,7 +342,7 @@ class imageMosaic {
   function pixelate_image_json ($json_filename) {
 
     // Load the JSON.
-    $pixel_object = $this->cache_manager($json_filename);
+    $pixel_object = json_decode($this->cache_manager($json_filename), TRUE);
 
     // If the pixel array is empty, bail out of this function.
     if (empty($pixel_object)) {
