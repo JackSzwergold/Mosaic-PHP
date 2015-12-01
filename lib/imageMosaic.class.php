@@ -151,8 +151,11 @@ class imageMosaic {
     // Process the JSON filename.
     $json_filename = $this->create_filename($this->image_file, 'json');
 
-    // Check if the image json actually exists.
-    $image_array = json_decode($this->cache_manager($json_filename), TRUE);
+    // Get the raw JSON content.
+    $raw_json = $this->cache_manager($json_filename);
+
+    // Check if the image JSON file actually exists.
+    $image_array = json_decode($raw_json, TRUE);
 
     // Set the pixel object name.
     $pixel_object_name = $this->get_file_basename($json_filename);
