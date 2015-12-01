@@ -152,13 +152,13 @@ class imageMosaic {
     $json_filename = $this->create_filename($this->image_file, 'json');
 
     // Check if the image json actually exists.
-    $image_object = json_decode($this->cache_manager($json_filename), TRUE);
+    $image_array = json_decode($this->cache_manager($json_filename), TRUE);
 
     // Set the pixel object name.
     $pixel_object_name = $this->get_file_basename($json_filename);
 
     // If the pixel object array is empty, then we need to generate & cache the data.
-    if ($this->DEBUG_MODE || empty($image_object)) {
+    if ($this->DEBUG_MODE || empty($image_array)) {
 
       // Ingest the source image for rendering.
       $image_source = imagecreatefromjpeg($this->image_file);
@@ -180,19 +180,19 @@ class imageMosaic {
       $pixel_array_final['pixels'] = $pixel_array;
 
       // Set the final pixel object with actual pixel data.
-      $image_object = new stdClass();
-      $image_object->images = array($pixel_array_final);
+      $images_object = new stdClass();
+      $images_object->images = array($pixel_array_final);
+
+      // Cast the image object as an array.
+      $image_array = (array) $images_object;
 
       // Cache the pixels.
-      $this->cache_manager($json_filename, $image_object);
+      $this->cache_manager($json_filename, $images_object);
 
       // Pixelate the image via the JSON data.
       $this->pixelate_image_json($json_filename);
 
     }
-
-    // Cast the image object as an array.
-    $image_array = (array) $image_object;
 
     // Get the actual pixel array from the image object.
     $pixel_array_final = $image_array['images'][0]['pixels'];
