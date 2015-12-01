@@ -193,7 +193,8 @@ class imageMosaic {
     }
 
     // Get the actual pixel array.
-    $pixel_array_final = $pixel_object_final['pixels'];
+    // $pixel_array_final = $pixel_object_final['pixels'];
+    $pixel_array_final = $pixel_object_final['images'][0]['pixels'];
 
     // Process the pixel_array
     $blocks = array();
@@ -359,8 +360,8 @@ class imageMosaic {
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_object as $pixel_array) {
-      // foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
-      foreach ($pixel_array as $position_y => $pixel_row) {
+      // foreach ($pixel_array as $position_y => $pixel_row) {
+      foreach ($pixel_array[0]['pixels'] as $position_y => $pixel_row) {
         $box_y = ($position_y * $this->block_size_y);
         foreach ($pixel_row as  $position_x => $pixel) {
           $box_x = ($position_x * $this->block_size_x);
