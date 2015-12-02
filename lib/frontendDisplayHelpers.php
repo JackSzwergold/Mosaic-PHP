@@ -108,7 +108,7 @@ $image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_m
 
 $ImageMosaicClass = new ImageMosaic();
 
-// Init the artworks array.
+// Init the items array.
 $items = array();
 
 // Loop through the image files array.
@@ -151,10 +151,10 @@ foreach ($items as $file => $image) {
 
 } // foreach
 
-// Set the body in an unordered list.
+// Set the body content.
 $body_content = sprintf('<ul>%s</ul>', implode('', $image_item));
 
-// Implode the JSON content.
+// Set the JSON content.
 $json_content = implode('', $image_json);
 
 ?>
