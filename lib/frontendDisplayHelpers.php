@@ -109,9 +109,9 @@ $image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_m
 $ImageMosaicClass = new ImageMosaic();
 
 // Init the artworks array.
-$artworks = array();
+$items = array();
 
-// Loop through the image files.
+// Loop through the image files array.
 foreach ($image_files as $image_file) {
 
   // Set the options for the image processing.
@@ -123,27 +123,33 @@ foreach ($image_files as $image_file) {
   $ImageMosaicClass->set_overlay_image(TRUE);
 
   // Set the options for the image processing.
-  $artworks[$image_file] = $ImageMosaicClass->process_image();
+  $processed_image = $ImageMosaicClass->process_image();
+  $items[$image_file] = $processed_image['blocks'];
 
 } // foreach
 
 //**************************************************************************************//
-// Filter out the empty images.
+// Use 'array_filter' to filter out the empty images.
 
-$artworks = array_filter($artworks);
+$items = array_filter($items);
 
 //**************************************************************************************//
 // Place the images in <li> tags.
 
-$image_files = array();
-foreach($artworks as $image_file => $artwork) {
-  $image_files[$image_file] = '<li>'
-                            . '<div class="Padding">'
-                            . $artwork
-                            . '</div><!-- .Padding -->'
-                            . '</li>'
-                            ;
+// Init the artworks array.
+$images = array();
+
+// Loop through the artworks array.
+foreach ($items as $file => $image) {
+  $images[$file] = '<li>'
+                 . '<div class="Padding">'
+                 . $image
+                 . '</div><!-- .Padding -->'
+                 . '</li>'
+                 ;
 }
-$body = sprintf('<ul>%s</ul>', implode('', $image_files));
+
+// Set the body in an unordered list.
+$body = sprintf('<ul>%s</ul>', implode('', $images));
 
 ?>

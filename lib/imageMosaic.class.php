@@ -214,9 +214,13 @@ class imageMosaic {
       }
     }
 
-    $ret = '';
+    $ret = array();
+
     if (!empty($blocks)) {
-      $ret = $this->render_pixel_box_container($blocks);
+      $ret['blocks'] = $this->render_pixel_box_container($blocks);
+    }
+    if (!empty($raw_json)) {
+      $ret['json'] = $raw_json;
     }
 
     return $ret;
