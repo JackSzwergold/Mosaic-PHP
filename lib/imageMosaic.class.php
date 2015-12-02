@@ -56,7 +56,7 @@ class imageMosaic {
   public $cache_path = array('json' => 'cache/data/', 'gif' => 'cache/media/', 'jpeg' => 'cache/media/', 'png' => 'cache/media/');
   public $image_types = array('gif', 'jpeg', 'png');
   public $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
-  public $cache_expiration_in_minutes = 60;
+  public $cache_expiration_in_minutes = 60 * 12;
 
   public function __construct() {
   } // __construct
