@@ -318,7 +318,7 @@ class frontendDisplay {
       //**********************************************************************************//
       // Return the output.
 
-      $this->renderContent($content, $response_header);
+      $this->renderContent($ret, $response_header);
 
     }
 
@@ -649,7 +649,7 @@ class frontendDisplay {
       }
       exit();
     }
-    else if (TRUE && !empty($this->json_content)) {
+    else if (!empty($this->json_content)) {
       $json_content = $this->json_encode ? json_encode($this->json_content) : $this->json_content;
       header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
       if ($this->json_via_header) {
