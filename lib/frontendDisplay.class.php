@@ -141,6 +141,13 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
+  // Set the page content markdown file.
+  function setPageContentJSON($json_content = null) {
+    $this->json_content = $json_content;
+  } // setPageContent
+
+
+  //**************************************************************************************//
   // Set the page content.
   function setPageContent($content = null) {
     $this->content = $content;
@@ -300,6 +307,7 @@ class frontendDisplay {
       // Return the output.
 
       $this->renderContent($ret, $response_header);
+      // $this->renderContent($content, $response_header);
 
     }
 
@@ -630,8 +638,9 @@ class frontendDisplay {
       }
       exit();
     }
-    else if (FALSE) {
-      $json_content = $this->json_encode ? json_encode($content) : '';
+    else if (TRUE) {
+      // $json_content = $this->json_encode ? json_encode($content) : '';
+      $json_content = $content;
       header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
       if ($this->json_via_header) {
         header('X-JSON:' . $json_content);

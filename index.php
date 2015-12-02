@@ -44,12 +44,14 @@ else {
 // Init the "frontendDisplay()" class.
 
 $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
+// $frontendDisplayClass = new frontendDisplay('application/json', 'utf-8', FALSE, FALSE);
 $frontendDisplayClass->setViewMode($VIEW_MODE);
 $frontendDisplayClass->setPageTitle($SITE_TITLE);
 $frontendDisplayClass->setPageURL($SITE_URL);
 $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
 $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 // $frontendDisplayClass->setPageContentMarkdown('index.md');
+$frontendDisplayClass->setPageContentJSON($json_content);
 $frontendDisplayClass->setPageContent($body_content);
 $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
