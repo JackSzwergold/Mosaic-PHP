@@ -48,7 +48,6 @@ if (array_key_exists('controller', $params) && !empty($params['controller'])) {
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
 
-// $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
 $frontendDisplayClass = new frontendDisplay(FALSE, FALSE);
 if ($params['controller'] == 'json') {
   $frontendDisplayClass->setContentType('application/json');
