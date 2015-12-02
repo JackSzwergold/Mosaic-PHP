@@ -124,7 +124,8 @@ foreach ($image_files as $image_file) {
 
   // Set the options for the image processing.
   $processed_image = $ImageMosaicClass->process_image();
-  $items[$image_file] = $processed_image['blocks'];
+  $items[$image_file]['blocks'] = $processed_image['blocks'];
+  $items[$image_file]['json'] = $processed_image['json'];
 
 } // foreach
 
@@ -136,20 +137,24 @@ $items = array_filter($items);
 //**************************************************************************************//
 // Place the images in <li> tags.
 
-// Init the artworks array.
-$images = array();
+// Init the image item and related json array.
+$image_item = $image_json = array();
 
 // Loop through the artworks array.
 foreach ($items as $file => $image) {
-  $images[$file] = '<li>'
-                 . '<div class="Padding">'
-                 . $image
-                 . '</div><!-- .Padding -->'
-                 . '</li>'
-                 ;
-}
+
+  // Set the image item array value.
+  $image_item[$file] = '<li><div class="Padding">' . $image['blocks'] . '</div><!-- .Padding --></li>';
+
+  // Set the image json array value.
+  $image_json[$file] = $image['json'];
+
+} // foreach
 
 // Set the body in an unordered list.
-$body = sprintf('<ul>%s</ul>', implode('', $images));
+$body_content = sprintf('<ul>%s</ul>', implode('', $image_item));
+
+// Implode the JSON content.
+$json_content = implode('', $image_json);
 
 ?>
