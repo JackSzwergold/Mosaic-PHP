@@ -108,15 +108,24 @@ $image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_m
 
 $ImageMosaicClass = new ImageMosaic();
 
+// Init the artworks array.
+$artworks = array();
+
+// Loop through the image files.
 foreach ($image_files as $image_file) {
+
+  // Set the options for the image processing.
   $ImageMosaicClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
   $ImageMosaicClass->debug_mode(FALSE);
   $ImageMosaicClass->row_flip_horizontal(FALSE);
   $ImageMosaicClass->set_row_delimiter(NULL);
   $ImageMosaicClass->set_generate_images(TRUE);
   $ImageMosaicClass->set_overlay_image(TRUE);
+
+  // Set the options for the image processing.
   $artworks[$image_file] = $ImageMosaicClass->process_image();
-}
+
+} // foreach
 
 //**************************************************************************************//
 // Filter out the empty images.
