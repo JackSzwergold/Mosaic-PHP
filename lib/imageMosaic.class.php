@@ -254,11 +254,13 @@ class imageMosaic {
         mkdir($this->cache_path['json'], $this->directory_permissions, true);
       }
 
-      // Cache the pixel blocks to a JSON file.
-      $file_handle = fopen($json_filename, 'w');
+      // Process the JSON content.
       $json_content = json_encode((object) $pixel_array);
       $json_content = str_replace('\/','/', $json_content);
       $json_content = prettyPrint($json_content);
+
+      // Cache the pixel blocks to a JSON file.
+      $file_handle = fopen($json_filename, 'w');
       fwrite($file_handle, $json_content);
       fclose($file_handle);
 
