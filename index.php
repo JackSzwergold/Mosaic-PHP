@@ -50,6 +50,7 @@ if (array_key_exists('controller', $params) && !empty($params['controller'])) {
 
 $frontendDisplayClass = new frontendDisplay(FALSE, FALSE);
 if ($params['controller'] == 'json') {
+  // $frontendDisplayClass->setContentType('application/vnd.api+json');
   $frontendDisplayClass->setContentType('application/json');
   $frontendDisplayClass->setPageContentJSON($json_content);
 }

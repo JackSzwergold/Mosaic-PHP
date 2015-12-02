@@ -50,7 +50,7 @@ define('BASE_URL', $URL_HOST . BASE_PATH);
 /**************************************************************************************************/
 // Define the defaults.
 
-$VALID_CONTENT_TYPES = array('application/json','text/plain','text/html');
+$VALID_CONTENT_TYPES = array('application/vnd.api+json', 'application/json','text/plain','text/html');
 $VALID_CHARSETS = array('utf-8','iso-8859-1','cp-1252');
 
 ?>
