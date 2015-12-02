@@ -43,8 +43,10 @@ else {
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
 
-$frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
-// $frontendDisplayClass = new frontendDisplay('application/json', 'utf-8', FALSE, FALSE);
+// $frontendDisplayClass = new frontendDisplay('text/html', 'utf-8', FALSE, FALSE);
+$frontendDisplayClass = new frontendDisplay(FALSE, FALSE);
+$frontendDisplayClass->setContentType('application/json');
+$frontendDisplayClass->setCharset('utf-8');
 $frontendDisplayClass->setViewMode($VIEW_MODE);
 $frontendDisplayClass->setPageTitle($SITE_TITLE);
 $frontendDisplayClass->setPageURL($SITE_URL);
