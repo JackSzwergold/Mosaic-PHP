@@ -1,9 +1,9 @@
 <?php
 
 /**
- * imageMosaic Class (imageMosaic.class.php) (c) by Jack Szwergold
+ * Mosaic Class (Mosaic.class.php) (c) by Jack Szwergold
  *
- * imageMosaic Class is licensed under a
+ * Mosaic Class is licensed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
  *
  * You should have received a copy of the license along with this
