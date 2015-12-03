@@ -184,7 +184,8 @@ class imageMosaic {
 
       // Set the final pixel object with actual pixel data.
       $images_object = new stdClass();
-      $images_object->images = array($pixel_array_final);
+      $images_object->links = array('self' => BASE_URL);
+      $images_object->data = array($pixel_array_final);
 
       // Cast the image object as an array.
       $image_array = (array) $images_object;
@@ -198,7 +199,7 @@ class imageMosaic {
     }
 
     // Get the actual pixel array from the image object.
-    $pixel_array_final = $image_array['images'][0]['pixels'];
+    $pixel_array_final = $image_array['data'][0]['pixels'];
 
     // Process the pixel_array
     $blocks = array();
@@ -366,9 +367,8 @@ class imageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-    foreach ($pixel_object as $pixel_array) {
-      // foreach ($pixel_array as $position_y => $pixel_row) {
-      foreach ($pixel_array[0]['pixels'] as $position_y => $pixel_row) {
+    foreach ($pixel_object['data'] as $pixel_array) {
+      foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
         $box_y = ($position_y * $this->block_size_y);
         foreach ($pixel_row as  $position_x => $pixel) {
           $box_x = ($position_x * $this->block_size_x);
