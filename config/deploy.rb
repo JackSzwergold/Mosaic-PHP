@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'image_mosaic'
+set :application, 'mosaic'
 set :short_name, 'mosaic'
 set :repo_url, 'git@github.com:JackSzwergold/imageMosaic-PHP-Class.git'
 
