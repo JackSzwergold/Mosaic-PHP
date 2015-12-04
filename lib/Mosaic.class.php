@@ -211,11 +211,15 @@ class imageMosaic {
       }
     }
 
+    // Return the data.
     $ret = array();
 
+    // If the blocks value isn’t empty, set that value in the output.
     if (!empty($blocks)) {
       $ret['blocks'] = $this->render_pixel_box_container($blocks);
     }
+
+    // If the JSON value isn’t empty, set that value in the output.
     if (!empty($raw_json)) {
       $ret['json'] = $raw_json;
     }
