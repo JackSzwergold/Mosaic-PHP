@@ -144,7 +144,7 @@ $image_item = $image_json = array();
 foreach ($items as $file => $image) {
 
   // Set the image item array value.
-  $image_item[$file] = '<li><div class="Padding">' . $image['blocks'] . '</div><!-- .Padding --></li>';
+  $image_item[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
 
   // Set the image json array value.
   $image_json[$file] = $image['json'];
