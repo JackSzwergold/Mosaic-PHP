@@ -155,6 +155,6 @@ foreach ($items as $file => $image) {
 $body_content = sprintf('<ul>%s</ul>', implode('', $image_item));
 
 // Set the JSON content.
-$json_content = implode('', $image_json);
+$json_content = implode(",\r\n", $image_json);
 
 ?>

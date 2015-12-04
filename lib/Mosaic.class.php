@@ -546,8 +546,10 @@ class imageMosaic {
   // Render the image straight to the browser.
   function render_image ($image_processed) {
 
+    // Set  the output header; in this case making it a JPEG.
     header('Content-Type: image/jpeg');
 
+    // Output the image; note that 'null' is set in the second option to prevent a file from being saved.
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
