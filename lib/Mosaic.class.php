@@ -137,7 +137,9 @@ class imageMosaic {
 
   // Get image file basename.
   function get_file_basename ($filename = '') {
+
     return preg_replace('/\\.[^.\\s]{3,4}$/', '', basename($filename));
+
   } // get_file_basename
 
 
@@ -171,24 +173,24 @@ class imageMosaic {
       $image_processed = $this->resample_image($image_source);
 
       // Set the image data array for the JSON object.
-      $image_data_array = $this->build_image_data_array($json_filename, $image_processed);
+      $image_object_data = $this->build_image_data_object($json_filename, $image_processed);
 
       // Build the image object.
-      $image_object = $this->build_image_object($image_data_array);
+      // $image_object = $this->build_image_object($image_object_data);
 
       // Send the image object to the cache manager.
-      $raw_json = $this->cache_manager($json_filename, $image_object);
+      $raw_json = $this->cache_manager($json_filename, $image_object_data);
 
       // Pixelate the image via the JSON data.
       $this->generate_image_from_json($json_filename);
 
       // Cast the image object as an array.
-      $image_array = (array) $image_object;
+      $image_array = (array) $image_object_data;
 
     }
 
     // Get the actual pixel array from the image object.
-    $pixel_array_final = $image_array['data'][0]['pixels'];
+    $pixel_array_final = $image_array['pixels'];
 
     // Process the pixel_array
     $blocks = array();
@@ -222,10 +224,10 @@ class imageMosaic {
   } // process_image
 
 
-  // Build the image data array.
-  function build_image_data_array ($json_filename, $image_processed) {
+  // Build the image data object.
+  function build_image_data_object ($json_filename, $image_processed) {
 
-    // Set the image data array for the JSON object.
+    // Build the object.
     $ret = array();
     $ret['name'] = $this->get_file_basename($json_filename);
     $ret['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
@@ -234,18 +236,18 @@ class imageMosaic {
 
     return $ret;
 
-  } // build_image_data_array
+  } // build_image_data_object
 
 
   // Build the image object.
-  function build_image_object ($image_data_array) {
+  function build_image_object ($image_object_data) {
 
     // Create the data JSON object.
     $ret = new stdClass();
     $ret->links = array('self' => BASE_URL);
 
     // Set the image data array to the image object.
-    $ret->data = array($image_data_array);
+    $ret->data = array($image_object_data);
 
     return $ret;
 
@@ -371,11 +373,11 @@ class imageMosaic {
   // Pixelate the image via JSON data.
   function generate_image_from_json ($json_filename) {
 
-    // Load the JSON.
-    $pixel_object = json_decode($this->cache_manager($json_filename), TRUE);
+    // Load the JSON into an array.
+    $pixel_array = json_decode($this->cache_manager($json_filename), TRUE);
 
     // If the pixel array is empty, bail out of this function.
-    if (empty($pixel_object)) {
+    if (empty($pixel_array)) {
       return;
     }
 
@@ -390,16 +392,15 @@ class imageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-    foreach ($pixel_object['data'] as $pixel_array) {
-      foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
-        $box_y = ($position_y * $this->block_size_y);
-        foreach ($pixel_row as  $position_x => $pixel) {
-          $box_x = ($position_x * $this->block_size_x);
-          $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
-          imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-        }
-      }
-    }
+	foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+	  $box_y = ($position_y * $this->block_size_y);
+	  foreach ($pixel_row as  $position_x => $pixel) {
+	    $box_x = ($position_x * $this->block_size_x);
+	    $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
+	    imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+	  }
+	}
+
 
     // Place a tiled overlay on the image.
     if ($this->row_flip_horizontal) {
