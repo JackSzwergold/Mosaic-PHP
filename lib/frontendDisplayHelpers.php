@@ -161,9 +161,9 @@ foreach ($image_json_array as  $image_json_value) {
 }
 
 // Now merge the JSON data object back into the parent image object.
-$json_content = $ImageMosaicClass->build_image_object($json_data_array[0]);
-$json_content = json_encode($json_content);
-$json_content = str_replace('\/','/', $json_content);
-// $json_content = prettyPrint($json_content);
+$image_object = $ImageMosaicClass->build_image_object($json_data_array);
+
+// Process the JSON content.
+$json_content = $ImageMosaicClass->json_encode_helper($image_object);
 
 ?>

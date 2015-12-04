@@ -240,18 +240,30 @@ class imageMosaic {
 
 
   // Build the image object.
-  function build_image_object ($image_object_data) {
+  function build_image_object ($image_object_array) {
 
     // Create the data JSON object.
     $ret = new stdClass();
     $ret->links = array('self' => BASE_URL);
 
     // Set the image data array to the image object.
-    $ret->data = array($image_object_data);
+    $ret->data = $image_object_array;
 
     return $ret;
 
   } // build_image_object
+
+
+  // JSON encoding helper.
+  function json_encode_helper ($data) {
+
+    $ret = json_encode((object) $data);
+    $ret = str_replace('\/','/', $ret);
+    // $ret = prettyPrint($ret);
+
+    return $ret;
+
+  } // json_encode_helper
 
 
   // Manage caching.
@@ -282,9 +294,7 @@ class imageMosaic {
       }
 
       // Process the JSON content.
-      $json_content = json_encode((object) $pixel_array);
-      $json_content = str_replace('\/','/', $json_content);
-      // $json_content = prettyPrint($json_content);
+      $json_content = $this->json_encode_helper($pixel_array);
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
