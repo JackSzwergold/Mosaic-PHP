@@ -157,9 +157,6 @@ class imageMosaic {
     // Check if the image JSON file actually exists.
     $image_array = json_decode($raw_json, TRUE);
 
-    // Set the pixel object name.
-    $pixel_object_name = $this->get_file_basename($json_filename);
-
     // If the pixel object array is empty, then we need to generate & cache the data.
     if ($this->DEBUG_MODE || empty($image_array)) {
 
@@ -172,29 +169,28 @@ class imageMosaic {
       // Resample the image.
       $image_processed = $this->resample_image($image_source);
 
-      // Generate the pixels.
-      $pixel_array = $this->generate_pixels($image_processed);
+      // Creat the data JSON object.
+      $image_object = new stdClass();
+      $image_object->links = array('self' => BASE_URL);
 
-      // Set the 'pixels' array.
-      $pixel_array_final = array();
-      $pixel_array_final['name'] = $pixel_object_name;
-      $pixel_array_final['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
-      $pixel_array_final['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
-      $pixel_array_final['pixels'] = $pixel_array;
+      // Set the image data array for the JSON object.
+      $image_data_array = array();
+      $image_data_array['name'] = $this->get_file_basename($json_filename);
+      $image_data_array['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
+      $image_data_array['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
+      $image_data_array['pixels'] = $this->generate_pixels($image_processed);
 
-      // Set the final pixel object with actual pixel data.
-      $images_object = new stdClass();
-      $images_object->links = array('self' => BASE_URL);
-      $images_object->data = array($pixel_array_final);
+      // Set the image data array to the image object.
+      $image_object->data = array($image_data_array);
 
-      // Cast the image object as an array.
-      $image_array = (array) $images_object;
-
-      // Cache the pixels.
-      $raw_json = $this->cache_manager($json_filename, $images_object);
+      // Send the image object to the cache manager.
+      $raw_json = $this->cache_manager($json_filename, $image_object);
 
       // Pixelate the image via the JSON data.
       $this->generate_image_from_json($json_filename);
+
+      // Cast the image object as an array.
+      $image_array = (array) $image_object;
 
     }
 
