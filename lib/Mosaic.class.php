@@ -170,8 +170,11 @@ class imageMosaic {
       // Resample the image.
       $image_processed = $this->resample_image($image_source);
 
+      // Set the image data array for the JSON object.
+      $image_data_array = $this->build_image_data_array($json_filename, $image_processed);
+
       // Build the image object.
-      $image_object = $this->build_image_object($json_filename, $image_processed);
+      $image_object = $this->build_image_object($image_data_array);
 
       // Send the image object to the cache manager.
       $raw_json = $this->cache_manager($json_filename, $image_object);
@@ -219,24 +222,32 @@ class imageMosaic {
   } // process_image
 
 
-  // Build the image object.
-  function build_image_object ($json_filename, $image_processed) {
-
-    // Create the data JSON object.
-    $image_object = new stdClass();
-    $image_object->links = array('self' => BASE_URL);
+  // Build the image data array.
+  function build_image_data_array ($json_filename, $image_processed) {
 
     // Set the image data array for the JSON object.
-    $image_data_array = array();
-    $image_data_array['name'] = $this->get_file_basename($json_filename);
-    $image_data_array['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
-    $image_data_array['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
-    $image_data_array['pixels'] = $this->generate_pixels($image_processed);
+    $ret = array();
+    $ret['name'] = $this->get_file_basename($json_filename);
+    $ret['pixel_size'] = array('width' => $this->block_size_x, 'height' => $this->block_size_y);
+    $ret['resampled_size'] = array('width' => $this->width_resampled, 'height' => $this->height_resampled);
+    $ret['pixels'] = $this->generate_pixels($image_processed);
+
+    return $ret;
+
+  } // build_image_data_array
+
+
+  // Build the image object.
+  function build_image_object ($image_data_array) {
+
+    // Create the data JSON object.
+    $ret = new stdClass();
+    $ret->links = array('self' => BASE_URL);
 
     // Set the image data array to the image object.
-    $image_object->data = array($image_data_array);
+    $ret->data = array($image_data_array);
 
-    return $image_object;
+    return $ret;
 
   } // build_image_object
 
