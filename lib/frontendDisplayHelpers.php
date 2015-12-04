@@ -46,7 +46,7 @@ $mode_options['small']['how_many'] = 9;
 $mode_options['large']['width'] = 46;
 $mode_options['large']['height'] = 46;
 $mode_options['large']['block_size'] = 10;
-$mode_options['large']['how_many'] = 1;
+$mode_options['large']['how_many'] = 3;
 
 $mode_options['mega']['width'] = 72;
 $mode_options['mega']['height'] = 72;
@@ -80,7 +80,7 @@ if (!is_dir($image_dir)) {
 //**************************************************************************************//
 // Process the images in the directory.
 
-$skip_files = array('..', '.', '.DS_Store','ignore');
+$skip_files = array('..', '.', '.DS_Store', 'ignore');
 $image_files = scandir($image_dir);
 $image_files = array_diff($image_files, $skip_files);
 
