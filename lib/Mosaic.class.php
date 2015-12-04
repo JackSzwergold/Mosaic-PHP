@@ -284,7 +284,7 @@ class imageMosaic {
       // Process the JSON content.
       $json_content = json_encode((object) $pixel_array);
       $json_content = str_replace('\/','/', $json_content);
-      $json_content = prettyPrint($json_content);
+      // $json_content = prettyPrint($json_content);
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');

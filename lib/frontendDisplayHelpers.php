@@ -138,23 +138,32 @@ $items = array_filter($items);
 // Place the images in <li> tags.
 
 // Init the image item and related json array.
-$image_item = $image_json = array();
+$image_item_array = $image_json_array = array();
 
 // Loop through the artworks array.
 foreach ($items as $file => $image) {
 
   // Set the image item array value.
-  $image_item[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
+  $image_item_array[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
 
   // Set the image json array value.
-  $image_json[$file] = $image['json'];
+  $image_json_array[$file] = $image['json'];
 
 } // foreach
 
 // Set the body content.
-$body_content = sprintf('<ul>%s</ul>', implode('', $image_item));
+$body_content = sprintf('<ul>%s</ul>', implode('', $image_item_array));
 
-// Set the JSON content.
-$json_content = implode(',' . "\r\n", $image_json);
+// Convert the JSON back to an object.
+$json_data_array = array();
+foreach ($image_json_array as  $image_json_value) {
+  $json_data_array[] = json_decode($image_json_value);
+}
+
+// Now merge the JSON data object back into the parent image object.
+$json_content = $ImageMosaicClass->build_image_object($json_data_array[0]);
+$json_content = json_encode($json_content);
+$json_content = str_replace('\/','/', $json_content);
+// $json_content = prettyPrint($json_content);
 
 ?>
