@@ -194,7 +194,7 @@ class imageMosaic {
       $raw_json = $this->cache_manager($json_filename, $images_object);
 
       // Pixelate the image via the JSON data.
-      $this->pixelate_image_json($json_filename);
+      $this->generate_image_from_json($json_filename);
 
     }
 
@@ -346,7 +346,7 @@ class imageMosaic {
 
 
   // Pixelate the image via JSON data.
-  function pixelate_image_json ($json_filename) {
+  function generate_image_from_json ($json_filename) {
 
     // Load the JSON.
     $pixel_object = json_decode($this->cache_manager($json_filename), TRUE);
@@ -425,7 +425,7 @@ class imageMosaic {
 
     imagedestroy($image_processed);
 
-  } // pixelate_image_json
+  } // generate_image_from_json
 
 
   // Generate the pixel boxes.
