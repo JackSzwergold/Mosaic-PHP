@@ -42,7 +42,7 @@ list($params, $page_title, $markdown_file) = $contentCreationClass->init();
 
 $page_base = BASE_URL;
 $controller = 'large';
-if (array_key_exists('controller', $params) && !empty($params['controller'])) {
+if (array_key_exists('controller', $params) && !empty($params['controller']) && $params['controller'] != 'index') {
   $controller = $params['controller'];
   $page_base = BASE_URL . $params['controller'] . '/';
 }
@@ -52,11 +52,6 @@ if (array_key_exists('controller', $params) && !empty($params['controller'])) {
 
 $frontendDisplayHelperClass = new frontendDisplayHelper();
 list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller);
-
-echo '<pre>';
-print_r($params);
-print_r($_GET);
-echo '</pre>';
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
