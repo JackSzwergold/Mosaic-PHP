@@ -32,12 +32,6 @@ require_once BASE_FILEPATH . '/lib/frontendDisplayHelper.class.php';
 require_once BASE_FILEPATH . '/lib/contentCreation.class.php';
 
 //**************************************************************************************//
-// Fetch the values out of the frontend display helper.
-
-$frontendDisplayHelperClass = new frontendDisplayHelper();
-list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init('large');
-
-//**************************************************************************************//
 // Init the "contentCreation()" class.
 
 $contentCreationClass = new contentCreation();
@@ -47,9 +41,22 @@ list($params, $page_title, $markdown_file) = $contentCreationClass->init();
 // Set the page base.
 
 $page_base = BASE_URL;
+$controller = 'large';
 if (array_key_exists('controller', $params) && !empty($params['controller'])) {
+  $controller = $params['controller'];
   $page_base = BASE_URL . $params['controller'] . '/';
 }
+
+//**************************************************************************************//
+// Fetch the values out of the frontend display helper.
+
+$frontendDisplayHelperClass = new frontendDisplayHelper();
+list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller);
+
+echo '<pre>';
+print_r($params);
+print_r($_GET);
+echo '</pre>';
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
