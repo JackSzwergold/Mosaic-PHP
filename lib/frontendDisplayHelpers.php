@@ -26,12 +26,12 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 //**************************************************************************************//
 // Fetch the values out of the frontend display helper.
 
-list($VIEW_MODE, $body_content, $json_content) = frontend_display_helper();
+list($VIEW_MODE, $body_content, $json_content) = frontend_display_helper('large');
 
 //**************************************************************************************//
 // Define the frontend display helper function.
 
-function frontend_display_helper () {
+function frontend_display_helper ($VIEW_MODE = null) {
 
 	//**************************************************************************************//
 	// Set an array of mode options.
@@ -66,13 +66,10 @@ function frontend_display_helper () {
 	//**************************************************************************************//
 	// Set the mode.
 
-	if (FALSE) {
+	if (empty($VIEW_MODE) || (!empty($VIEW_MODE) && !array_key_exists($VIEW_MODE, $mode_options))) {
 	  $mode_keys = array_keys($mode_options);
 	  shuffle($mode_keys);
 	  $VIEW_MODE = $mode_keys[0];
-	}
-	else {
-	  $VIEW_MODE = 'large';
 	}
 
 	//**************************************************************************************//
