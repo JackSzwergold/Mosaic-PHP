@@ -28,8 +28,14 @@
 require_once 'conf/conf.inc.php';
 require_once BASE_FILEPATH . '/common/functions.inc.php';
 require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
-require_once BASE_FILEPATH . '/lib/frontendDisplayHelpers.php';
+require_once BASE_FILEPATH . '/lib/frontendDisplayHelper.class.php';
 require_once BASE_FILEPATH . '/lib/contentCreation.class.php';
+
+//**************************************************************************************//
+// Fetch the values out of the frontend display helper.
+
+$frontendDisplayHelperClass = new frontendDisplayHelper();
+list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init('large');
 
 //**************************************************************************************//
 // Init the "contentCreation()" class.
