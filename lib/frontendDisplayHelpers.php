@@ -104,9 +104,9 @@ shuffle($raw_image_files);
 $image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_many']);
 
 //**************************************************************************************//
-// Init the image mosaic class and roll through the images.
+// Init the class and roll through the images.
 
-$ImageMosaicClass = new ImageMosaic();
+$MosaicClass = new ImageMosaic();
 
 // Init the items array.
 $items = array();
@@ -115,15 +115,15 @@ $items = array();
 foreach ($image_files as $image_file) {
 
   // Set the options for the image processing.
-  $ImageMosaicClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
-  $ImageMosaicClass->debug_mode(FALSE);
-  $ImageMosaicClass->row_flip_horizontal(FALSE);
-  $ImageMosaicClass->set_row_delimiter(NULL);
-  $ImageMosaicClass->set_generate_images(TRUE);
-  $ImageMosaicClass->set_overlay_image(TRUE);
+  $MosaicClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+  $MosaicClass->debug_mode(FALSE);
+  $MosaicClass->row_flip_horizontal(FALSE);
+  $MosaicClass->set_row_delimiter(NULL);
+  $MosaicClass->set_generate_images(TRUE);
+  $MosaicClass->set_overlay_image(TRUE);
 
-  // Set the options for the image processing.
-  $processed_image = $ImageMosaicClass->process_image();
+  // Process the image and add it to the items array.
+  $processed_image = $MosaicClass->process_image();
   $items[$image_file]['blocks'] = $processed_image['blocks'];
   $items[$image_file]['json'] = $processed_image['json'];
 
@@ -161,9 +161,9 @@ foreach ($image_json_array as  $image_json_value) {
 }
 
 // Now merge the JSON data object back into the parent image object.
-$image_object = $ImageMosaicClass->build_image_object($json_data_array);
+$image_object = $MosaicClass->build_image_object($json_data_array);
 
 // Process the JSON content.
-$json_content = $ImageMosaicClass->json_encode_helper($image_object);
+$json_content = $MosaicClass->json_encode_helper($image_object);
 
 ?>
