@@ -247,6 +247,9 @@ class imageMosaic {
     $ret->links = array('self' => BASE_URL);
 
     // Set the image data array to the image object.
+    //$ret->data->type = 'images';
+    //$ret->data->attributes = $image_object_array;
+    //$ret->data->type = 'images';
     $ret->data = $image_object_array;
 
     return $ret;
@@ -255,11 +258,13 @@ class imageMosaic {
 
 
   // JSON encoding helper.
-  function json_encode_helper ($data) {
+  function json_encode_helper ($data, $pretty_print = FALSE) {
 
     $ret = json_encode((object) $data);
     $ret = str_replace('\/','/', $ret);
-    // $ret = prettyPrint($ret);
+    if ($pretty_print) {
+      $ret = prettyPrint($ret);
+    }
 
     return $ret;
 
@@ -294,7 +299,7 @@ class imageMosaic {
       }
 
       // Process the JSON content.
-      $json_content = $this->json_encode_helper($pixel_array);
+      $json_content = $this->json_encode_helper($pixel_array, FALSE);
 
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');

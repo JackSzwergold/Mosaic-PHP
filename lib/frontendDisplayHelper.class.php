@@ -171,7 +171,7 @@ class frontendDisplayHelper {
     $image_object = $MosaicClass->build_image_object($json_data_array);
 
     // Process the JSON content.
-    $json_content = $MosaicClass->json_encode_helper($image_object);
+    $json_content = $MosaicClass->json_encode_helper($image_object, FALSE);
 
     return array($VIEW_MODE, $body_content, $json_content);
 
