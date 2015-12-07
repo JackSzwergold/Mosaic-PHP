@@ -240,19 +240,22 @@ class imageMosaic {
 
 
   // Build the image object.
-  function build_image_object ($image_object_array) {
+  function build_image_object ($image_object_array, $page_base) {
 
     // Create the data JSON object.
-    $ret = new stdClass();
-    $ret->links = array('self' => BASE_URL);
+    $parent_obj = new stdClass();
+    $parent_obj->links = array('self' => $page_base);
 
     // Set the image data array to the image object.
-    //$ret->data->type = 'images';
-    //$ret->data->attributes = $image_object_array;
-    //$ret->data->type = 'images';
-    $ret->data = $image_object_array;
+    // $ret->data->type = 'images';
+    // $ret->data->attributes = $image_object_array;
+    // $ret->data->type = 'images';
+    $child_obj = new stdClass();
+    $child_obj->type = 'images';
+    $child_obj->attributes = $image_object_array;
+    $parent_obj->data = $child_obj;
 
-    return $ret;
+    return $parent_obj;
 
   } // build_image_object
 

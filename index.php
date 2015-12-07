@@ -48,10 +48,15 @@ if (array_key_exists('controller', $params) && !empty($params['controller']) && 
 }
 
 //**************************************************************************************//
+// Set the query suffix to the page base.
+
+$page_base = array_key_exists('json', $params) ? $page_base . '?json' : $page_base;
+
+//**************************************************************************************//
 // Fetch the values out of the frontend display helper.
 
 $frontendDisplayHelperClass = new frontendDisplayHelper();
-list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller);
+list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base);
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
