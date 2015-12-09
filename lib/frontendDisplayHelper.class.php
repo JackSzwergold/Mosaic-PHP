@@ -38,16 +38,16 @@ class frontendDisplayHelper {
     $mode_options['micro']['width'] = 6;
     $mode_options['micro']['height'] = 6;
     $mode_options['micro']['block_size'] = 10;
-    $mode_options['micro']['how_many'] = 25;
-    $mode_options['micro']['block_display'] = 25;
-    $mode_options['micro']['json_display'] = 25;
+    $mode_options['micro']['how_many'] = 35;
+    $mode_options['micro']['block_display'] = 15;
+    $mode_options['micro']['json_display'] = 35;
 
     $mode_options['tiny']['width'] = 12;
     $mode_options['tiny']['height'] = 12;
     $mode_options['tiny']['block_size'] = 10;
-    $mode_options['tiny']['how_many'] = 16;
-    $mode_options['tiny']['block_display'] = 16;
-    $mode_options['tiny']['json_display'] = 16;
+    $mode_options['tiny']['how_many'] = 24;
+    $mode_options['tiny']['block_display'] = 12;
+    $mode_options['tiny']['json_display'] = 24;
 
     $mode_options['small']['width'] = 23;
     $mode_options['small']['height'] = 23;
