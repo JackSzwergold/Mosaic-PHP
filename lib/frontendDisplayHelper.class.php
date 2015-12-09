@@ -28,7 +28,7 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 
 class frontendDisplayHelper {
 
-  public function init($VIEW_MODE = 'small', $page_base) {
+  public function init($VIEW_MODE = 'small', $page_base, $page_base_suffix = '') {
 
     //**************************************************************************************//
     // Set an array of mode options.
@@ -188,10 +188,10 @@ class frontendDisplayHelper {
     }
 
     // Now merge the JSON data object back into the parent image object.
-    $image_object = $MosaicClass->build_image_object($json_data_array, $page_base);
+    $image_object = $MosaicClass->build_image_object($json_data_array, $page_base, $page_base_suffix, array_keys($mode_options));
 
     // Process the JSON content.
-    $json_content = $MosaicClass->json_encode_helper($image_object);
+    $json_content = $MosaicClass->json_encode_helper($image_object, FALSE);
 
     return array($VIEW_MODE, $body_content, $json_content);
 

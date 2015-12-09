@@ -50,13 +50,13 @@ if (array_key_exists('controller', $params) && !empty($params['controller']) && 
 //**************************************************************************************//
 // Set the query suffix to the page base.
 
-$page_base = array_key_exists('json', $params) ? $page_base . '?json' : $page_base;
+$page_base_suffix = array_key_exists('json', $params) ? '?json' : '';
 
 //**************************************************************************************//
 // Fetch the values out of the frontend display helper.
 
 $frontendDisplayHelperClass = new frontendDisplayHelper();
-list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base);
+list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base, $page_base_suffix);
 
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
@@ -86,7 +86,7 @@ $frontendDisplayClass->setPageRobots($SITE_ROBOTS);
 $frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
 $frontendDisplayClass->setCSSItems($CSS_ITEMS);
 $frontendDisplayClass->setFaviconItems($FAVICONS);
-$frontendDisplayClass->setPageBase($page_base);
+$frontendDisplayClass->setPageBase($page_base . $page_base_suffix);
 // $frontendDisplayClass->setPageURLParts($markdown_parts);
 // $frontendDisplayClass->setPaymentInfo($PAYMENT_INFO);
 $frontendDisplayClass->initContent();

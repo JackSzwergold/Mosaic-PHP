@@ -240,16 +240,21 @@ class imageMosaic {
 
 
   // Build the image object.
-  function build_image_object ($image_object_array, $page_base) {
+  function build_image_object ($image_object_array, $page_base, $page_base_suffix, $extra_endpoints) {
 
     // Create the data JSON object.
     $parent_obj = new stdClass();
-    $parent_obj->links = array('self' => $page_base);
+
+    // Set the endpoints.
+    $endpoints = array('self' => $page_base . $page_base_suffix);
+    foreach ($extra_endpoints as $endpoint_key => $endpoint_value) {
+      $endpoints[$endpoint_value] = BASE_URL . $endpoint_value . '/' . $page_base_suffix;
+    }
+
+    // Add the endpoints to the object.
+    $parent_obj->links = $endpoints;
 
     // Set the image data array to the image object.
-    // $ret->data->type = 'images';
-    // $ret->data->attributes = $image_object_array;
-    // $ret->data->type = 'images';
     $child_obj = new stdClass();
     $child_obj->type = 'images';
     $child_obj->attributes = $image_object_array;
