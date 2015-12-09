@@ -39,26 +39,31 @@ class frontendDisplayHelper {
     $mode_options['micro']['height'] = 6;
     $mode_options['micro']['block_size'] = 10;
     $mode_options['micro']['how_many'] = 25;
+    $mode_options['micro']['display'] = 25;
 
     $mode_options['tiny']['width'] = 12;
     $mode_options['tiny']['height'] = 12;
     $mode_options['tiny']['block_size'] = 10;
     $mode_options['tiny']['how_many'] = 16;
+    $mode_options['tiny']['display'] = 16;
 
     $mode_options['small']['width'] = 23;
     $mode_options['small']['height'] = 23;
     $mode_options['small']['block_size'] = 10;
     $mode_options['small']['how_many'] = 9;
+    $mode_options['small']['display'] = 9;
 
     $mode_options['large']['width'] = 46;
     $mode_options['large']['height'] = 46;
     $mode_options['large']['block_size'] = 10;
     $mode_options['large']['how_many'] = 3;
+    $mode_options['large']['display'] = 1;
 
     $mode_options['mega']['width'] = 72;
     $mode_options['mega']['height'] = 72;
     $mode_options['mega']['block_size'] = 10;
     $mode_options['mega']['how_many'] = 1;
+    $mode_options['mega']['display'] = 1;
 
     //**************************************************************************************//
     // Set the view mode.
