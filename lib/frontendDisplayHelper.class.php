@@ -123,7 +123,7 @@ class frontendDisplayHelper {
     //**************************************************************************************//
     // Init the class and roll through the images.
 
-    $MosaicClass = new ImageMosaic();
+    $ProcessingClass = new ImageMosaic();
 
     // Init the items array.
     $items = array();
@@ -132,15 +132,15 @@ class frontendDisplayHelper {
     foreach ($image_files as $image_file) {
 
       // Set the options for the image processing.
-      $MosaicClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
-      $MosaicClass->debug_mode(FALSE);
-      $MosaicClass->row_flip_horizontal(FALSE);
-      $MosaicClass->set_row_delimiter(NULL);
-      $MosaicClass->set_generate_images(TRUE);
-      $MosaicClass->set_overlay_image(TRUE);
+      $ProcessingClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+      $ProcessingClass->debug_mode(FALSE);
+      $ProcessingClass->row_flip_horizontal(FALSE);
+      $ProcessingClass->set_row_delimiter(NULL);
+      $ProcessingClass->set_generate_images(TRUE);
+      $ProcessingClass->set_overlay_image(TRUE);
 
       // Process the image and add it to the items array.
-      $processed_image = $MosaicClass->process_image();
+      $processed_image = $ProcessingClass->process_image();
       $items[$image_file]['blocks'] = $processed_image['blocks'];
       $items[$image_file]['json'] = $processed_image['json'];
 
@@ -188,10 +188,10 @@ class frontendDisplayHelper {
     }
 
     // Now merge the JSON data object back into the parent image object.
-    $image_object = $MosaicClass->build_image_object($json_data_array, $page_base, $page_base_suffix, array_keys($mode_options));
+    $image_object = $ProcessingClass->build_image_object($json_data_array, $page_base, $page_base_suffix, array_keys($mode_options));
 
     // Process the JSON content.
-    $json_content = $MosaicClass->json_encode_helper($image_object, FALSE);
+    $json_content = $ProcessingClass->json_encode_helper($image_object, FALSE);
 
     return array($VIEW_MODE, $body_content, $json_content);
 
