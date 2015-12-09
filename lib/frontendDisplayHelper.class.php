@@ -38,9 +38,9 @@ class frontendDisplayHelper {
     $mode_options['micro']['width'] = 6;
     $mode_options['micro']['height'] = 6;
     $mode_options['micro']['block_size'] = 10;
-    $mode_options['micro']['how_many'] = 35;
-    $mode_options['micro']['block_display'] = 15;
-    $mode_options['micro']['json_display'] = 35;
+    $mode_options['micro']['how_many'] = 30;
+    $mode_options['micro']['block_display'] = 10;
+    $mode_options['micro']['json_display'] = 30;
 
     $mode_options['tiny']['width'] = 12;
     $mode_options['tiny']['height'] = 12;
