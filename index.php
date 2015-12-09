@@ -41,7 +41,7 @@ list($params, $page_title, $markdown_file) = $contentCreationClass->init();
 // Set the page base.
 
 $page_base = BASE_URL;
-$controller = 'large';
+$controller = 'small';
 if (array_key_exists('controller', $params) && !empty($params['controller']) && $params['controller'] != 'index') {
   $controller = $params['controller'];
   $page_base = BASE_URL . $params['controller'] . '/';

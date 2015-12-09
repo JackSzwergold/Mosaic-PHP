@@ -28,7 +28,7 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 
 class frontendDisplayHelper {
 
-  public function init($VIEW_MODE = 'large', $page_base) {
+  public function init($VIEW_MODE = 'small', $page_base) {
 
     //**************************************************************************************//
     // Set an array of mode options.
@@ -79,7 +79,7 @@ class frontendDisplayHelper {
       $VIEW_MODE = $mode_keys[0];
     }
     else if (!empty($VIEW_MODE) && !array_key_exists($VIEW_MODE, $mode_options)) {
-      $VIEW_MODE = 'large';
+      $VIEW_MODE = 'small';
     }
 
     //**************************************************************************************//
