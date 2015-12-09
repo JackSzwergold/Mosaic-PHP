@@ -53,7 +53,7 @@ class frontendDisplayHelper {
     $mode_options['small']['height'] = 23;
     $mode_options['small']['block_size'] = 10;
     $mode_options['small']['how_many'] = 9;
-    $mode_options['small']['block_display'] = 6;
+    $mode_options['small']['block_display'] = 3;
     $mode_options['small']['json_display'] = 9;
 
     $mode_options['large']['width'] = 46;
