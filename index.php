@@ -69,22 +69,13 @@ $frontendDisplayHelperClass = new frontendDisplayHelper();
 list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base, $page_base_suffix, $DEBUG_MODE);
 
 //**************************************************************************************//
-// Init the front end display class.
+// Init the front end display class and set other things.
 
 $frontendDisplayClass = new frontendDisplay();
-if ($JSON_MODE) {
-  $frontendDisplayClass->setJSONMode($JSON_MODE);
-  $frontendDisplayClass->setContentType('application/json');
-  $frontendDisplayClass->setPageContentJSON($json_content);
-}
-else {
-  $frontendDisplayClass->setContentType('text/html');
-}
-
-//**************************************************************************************//
-// Set the other front end display class things.
-
+$frontendDisplayClass->setPageContentJSON($json_content);
+$frontendDisplayClass->setJSONMode($JSON_MODE);
 $frontendDisplayClass->setDebugMode($DEBUG_MODE);
+$frontendDisplayClass->setContentType(($JSON_MODE ? 'application/json' : 'text/html'));
 $frontendDisplayClass->setCharset('utf-8');
 $frontendDisplayClass->setViewMode($VIEW_MODE);
 $frontendDisplayClass->setPageTitle($SITE_TITLE);
