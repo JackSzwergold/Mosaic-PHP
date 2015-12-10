@@ -250,18 +250,18 @@ class frontendDisplay {
     //**************************************************************************************//
     // Load the markdown content.
 
-    $content = '';
+    $html_content = '';
     if (!empty($this->content)) {
-      $content = $this->content;
+      $html_content = $this->content;
     }
     else if (!empty($this->page_markdown_file)) {
-      $content = $this->loadMarkdown($this->page_markdown_file);
+      $html_content = $this->loadMarkdown($this->page_markdown_file);
     }
 
     //**********************************************************************************//
     // If the content is not empty, do something with it.
 
-    if (!empty($content)) {
+    if (!empty($html_content)) {
 
       //**********************************************************************************//
       // Set the meta tags
@@ -292,7 +292,7 @@ class frontendDisplay {
       // Set the view wrapper.
 
       $body = sprintf('<div class="%sView">', $this->view_mode)
-            . $this->setWrapper($content)
+            . $this->setWrapper($html_content)
             . sprintf('</div><!-- .%sView -->', $this->view_mode)
             ;
 
@@ -317,7 +317,7 @@ class frontendDisplay {
       //**********************************************************************************//
       // Return the output.
 
-      $this->renderContent($html_content, $response_header);
+      $this->renderContent($ret, $response_header);
 
     }
 
