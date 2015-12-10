@@ -317,7 +317,7 @@ class frontendDisplay {
       //**********************************************************************************//
       // Return the output.
 
-      $this->renderContent($ret, $response_header);
+      $this->renderContent($html_content, $response_header);
 
     }
 
