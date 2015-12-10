@@ -248,10 +248,24 @@ class frontendDisplay {
   //**************************************************************************************//
   // Init the content.
   function initContent($response_header = NULL) {
-    global $VALID_CONTROLLERS;
+
+    // If we are not in JSON mode, then build the HTML content.
+    if (!$this->JSON_MODE) {
+      $this->buildHTMLContent();
+    }
+
+    // If we are not in JSON mode, then build the HTML content.
+    $this->renderContent($response_header);
+
+  } // initContent
+
+
+  //**************************************************************************************//
+  // Build the HTML content.
+  function buildHTMLContent() {
 
     //**************************************************************************************//
-    // Load the markdown content.
+    // Set the HTML content or load the markdown content as HTML content.
 
     $html_content = '';
     if (!empty($this->html_content)) {
@@ -322,14 +336,9 @@ class frontendDisplay {
 
       $this->html_content = $ret;
 
-      //**********************************************************************************//
-      // Return the output.
-
-      $this->renderContent($response_header);
-
     }
 
-  } // initContent
+  } // buildHTMLContent
 
 
   //**************************************************************************************//
@@ -629,15 +638,7 @@ class frontendDisplay {
     }
     else if ($this->DEBUG_MODE && !empty($this->html_content)) {
       header('Content-Type: text/plain; charset=utf-8');
-      if ($DEBUG_OUTPUT_JSON && $this->json_encode) {
-        $json_content = json_encode($this->html_content);
-        // Strip back slahes from forward slashes so we can read URLs.
-        $json_content = str_replace('\/','/', $json_content);
-        echo prettyPrint($json_content);
-      }
-      else {
-        print_r($this->html_content);
-      }
+      echo $this->html_content;
       exit();
     }
     else {
