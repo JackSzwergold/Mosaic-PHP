@@ -72,7 +72,7 @@ list($VIEW_MODE, $html_content, $json_content) = $frontendDisplayHelperClass->in
 // Init the front end display class and set other things.
 
 $frontendDisplayClass = new frontendDisplay();
-$frontendDisplayClass->setPageContentJSON($json_content);
+$frontendDisplayClass->setPageJSONContent($json_content);
 $frontendDisplayClass->setJSONMode($JSON_MODE);
 $frontendDisplayClass->setDebugMode($DEBUG_MODE);
 $frontendDisplayClass->setContentType(($JSON_MODE ? 'application/json' : 'text/html'));

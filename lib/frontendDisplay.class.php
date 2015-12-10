@@ -31,6 +31,9 @@ class frontendDisplay {
   private $DEBUG_MODE = FALSE;
   private $JSON_MODE = FALSE;
 
+  private $html_content;
+  private $json_content;
+
   private $content_type = 'text/html';
   private $charset = 'utf-8';
   private $doctype = 'html5';
@@ -158,15 +161,15 @@ class frontendDisplay {
 
   //**************************************************************************************//
   // Set the page content markdown file.
-  function setPageContentJSON($json_content = null) {
+  function setPageJSONContent($json_content = null) {
     $this->json_content = $json_content;
-  } // setPageContent
+  } // setPageJSONContent
 
 
   //**************************************************************************************//
   // Set the page content.
-  function setPageContent($content = null) {
-    $this->content = $content;
+  function setPageContent($html_content = null) {
+    $this->html_content = $html_content;
   } // setPageContent
 
 
@@ -251,8 +254,8 @@ class frontendDisplay {
     // Load the markdown content.
 
     $html_content = '';
-    if (!empty($this->content)) {
-      $html_content = $this->content;
+    if (!empty($this->html_content)) {
+      $html_content = $this->html_content;
     }
     else if (!empty($this->page_markdown_file)) {
       $html_content = $this->loadMarkdown($this->page_markdown_file);
@@ -296,8 +299,8 @@ class frontendDisplay {
             . sprintf('</div><!-- .%sView -->', $this->view_mode)
             ;
 
-       //**********************************************************************************//
-      // Set the final content.
+      //**********************************************************************************//
+      // Set the final HTML content.
 
       $ret = $doctype
            . '<head>'
@@ -315,9 +318,14 @@ class frontendDisplay {
            ;
 
       //**********************************************************************************//
+      // Set the HTML content class.
+
+      $this->html_content = $ret;
+
+      //**********************************************************************************//
       // Return the output.
 
-      $this->renderContent($ret, $response_header);
+      $this->renderContent($response_header);
 
     }
 
@@ -450,18 +458,18 @@ class frontendDisplay {
     $ret = array();
 
     // Roll through the '$meta_http_equivs'
-    foreach($meta_http_equivs as $http_equiv => $content) {
-      $ret[] = sprintf('<meta http-equiv="%s" content="%s" />', $http_equiv, $content);
+    foreach($meta_http_equivs as $http_equiv_key => $http_equiv_value) {
+      $ret[] = sprintf('<meta http-equiv="%s" content="%s" />', $http_equiv_key, $http_equiv_value);
     }
 
     // Roll through the '$meta_names'
-    foreach($meta_names as $name => $content) {
-      $ret[] = sprintf('<meta name="%s" content="%s" />', $name, $content);
+    foreach($meta_names as $name_key => $name_value) {
+      $ret[] = sprintf('<meta name="%s" content="%s" />', $name_key, $name_value);
     }
 
     // Roll through the '$meta_properties'
-    foreach($meta_properties as $property => $content) {
-      $ret[] = sprintf('<meta property="%s" content="%s" />', $property, $content);
+    foreach($meta_properties as $property_key => $property_value) {
+      $ret[] = sprintf('<meta property="%s" content="%s" />', $property_key, $content);
     }
 
     return $ret;
@@ -603,7 +611,7 @@ class frontendDisplay {
 
   //**************************************************************************************//
   // Function to send content to output.
-  private function renderContent ($html_content, $response_header = NULL) {
+  private function renderContent ($response_header = NULL) {
     global $VALID_CONTENT_TYPES, $VALID_CHARSETS, $DEBUG_OUTPUT_JSON;
 
     // If we are in debugging mode, just dump the content array & exit.
@@ -619,22 +627,22 @@ class frontendDisplay {
       }
       exit();
     }
-    else if ($this->DEBUG_MODE && !empty($html_content)) {
+    else if ($this->DEBUG_MODE && !empty($this->html_content)) {
       header('Content-Type: text/plain; charset=utf-8');
       if ($DEBUG_OUTPUT_JSON && $this->json_encode) {
-        $json_content = json_encode($html_content);
+        $json_content = json_encode($this->html_content);
         // Strip back slahes from forward slashes so we can read URLs.
         $json_content = str_replace('\/','/', $json_content);
         echo prettyPrint($json_content);
       }
       else {
-        print_r($html_content);
+        print_r($this->html_content);
       }
       exit();
     }
     else {
       header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
-      echo $html_content;
+      echo $this->html_content;
       exit();
     }
 
