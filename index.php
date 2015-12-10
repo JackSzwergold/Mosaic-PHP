@@ -66,7 +66,7 @@ $page_base_suffix = $JSON_MODE ? '?json' : '';
 // Fetch the values out of the frontend display helper.
 
 $frontendDisplayHelperClass = new frontendDisplayHelper();
-list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base, $page_base_suffix, $DEBUG_MODE);
+list($VIEW_MODE, $html_content, $json_content) = $frontendDisplayHelperClass->init($controller, $page_base, $page_base_suffix, $DEBUG_MODE);
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
@@ -82,7 +82,7 @@ $frontendDisplayClass->setPageTitle($SITE_TITLE);
 $frontendDisplayClass->setPageURL($SITE_URL);
 $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
 $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
-$frontendDisplayClass->setPageContent($body_content);
+$frontendDisplayClass->setPageContent($html_content);
 $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
 $frontendDisplayClass->setPageDivWrapper('PixelBoxWrapper');
 $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);

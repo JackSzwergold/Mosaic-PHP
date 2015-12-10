@@ -603,24 +603,11 @@ class frontendDisplay {
 
   //**************************************************************************************//
   // Function to send content to output.
-  private function renderContent ($body_content, $response_header = NULL) {
+  private function renderContent ($html_content, $response_header = NULL) {
     global $VALID_CONTENT_TYPES, $VALID_CHARSETS, $DEBUG_OUTPUT_JSON;
 
     // If we are in debugging mode, just dump the content array & exit.
-    if ($this->DEBUG_MODE) {
-      header('Content-Type: text/plain; charset=utf-8');
-      if ($DEBUG_OUTPUT_JSON && $this->json_encode) {
-        $json_content = json_encode($body_content);
-        // Strip back slahes from forward slashes so we can read URLs.
-        $json_content = str_replace('\/','/', $json_content);
-        echo prettyPrint($json_content);
-      }
-      else {
-        print_r($body_content);
-      }
-      exit();
-    }
-    else if ($this->JSON_MODE && !empty($this->json_content)) {
+    if ($this->JSON_MODE && !empty($this->json_content)) {
       $json_content = $this->json_encode ? json_encode($this->json_content) : $this->json_content;
       header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
       if ($this->json_via_header) {
@@ -632,9 +619,22 @@ class frontendDisplay {
       }
       exit();
     }
+    else if ($this->DEBUG_MODE && !empty($html_content)) {
+      header('Content-Type: text/plain; charset=utf-8');
+      if ($DEBUG_OUTPUT_JSON && $this->json_encode) {
+        $json_content = json_encode($html_content);
+        // Strip back slahes from forward slashes so we can read URLs.
+        $json_content = str_replace('\/','/', $json_content);
+        echo prettyPrint($json_content);
+      }
+      else {
+        print_r($html_content);
+      }
+      exit();
+    }
     else {
       header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
-      echo $body_content;
+      echo $html_content;
       exit();
     }
 
