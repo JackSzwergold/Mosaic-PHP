@@ -65,9 +65,13 @@ $frontendDisplayClass = new frontendDisplay();
 if (array_key_exists('json', $params)) {
   $frontendDisplayClass->setContentType('application/json');
   $frontendDisplayClass->setPageContentJSON($json_content);
+  $frontendDisplayClass->setJSONMode(TRUE);
 }
 else {
   $frontendDisplayClass->setContentType('text/html');
+}
+if (array_key_exists('_debug', $params)) {
+  $frontendDisplayClass->setDebugMode(TRUE);
 }
 $frontendDisplayClass->setCharset('utf-8');
 $frontendDisplayClass->setViewMode($VIEW_MODE);
