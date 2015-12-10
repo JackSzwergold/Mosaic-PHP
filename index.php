@@ -61,10 +61,8 @@ list($VIEW_MODE, $body_content, $json_content) = $frontendDisplayHelperClass->in
 //**************************************************************************************//
 // Init the "frontendDisplay()" class.
 
-$frontendDisplayClass = new frontendDisplay(FALSE, FALSE);
-// if (array_key_exists('json', $params) && !empty($params['json']) && $params['controller'] == 'json') {
+$frontendDisplayClass = new frontendDisplay();
 if (array_key_exists('json', $params)) {
-  // $frontendDisplayClass->setContentType('application/vnd.api+json');
   $frontendDisplayClass->setContentType('application/json');
   $frontendDisplayClass->setPageContentJSON($json_content);
 }

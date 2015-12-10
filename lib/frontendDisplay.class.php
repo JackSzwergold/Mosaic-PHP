@@ -38,8 +38,6 @@ class frontendDisplay {
   private $json_encode = FALSE;
   private $json_via_header = FALSE;
 
-  private $params = array();
-
   private $javascripts = array();
   private $css = array();
 
@@ -65,8 +63,7 @@ class frontendDisplay {
 
   private $page_markdown_file = NULL;
 
-  public function __construct($json_encode = NULL, $DEBUG_MODE = NULL) {
-    global $VALID_CONTENT_TYPES, $VALID_CHARSETS;
+  public function __construct() {
 
     if (!defined('BASE_PATH')) {
       define('BASE_PATH', '/');
@@ -76,19 +73,25 @@ class frontendDisplay {
       define('BASE_URL', '');
     }
 
-    if (!empty($json_encode)) {
-      $this->json_encode = $json_encode;
-    }
+  } // __construct
 
-    // if (!empty($json_via_header)) {
-    //   $this->json_via_header = $json_via_header;
-    // }
 
+  //**************************************************************************************//
+  // Set the debug mode.
+  function setDebugMode($DEBUG_MODE = null) {
     if (!empty($DEBUG_MODE)) {
       $this->DEBUG_MODE = $DEBUG_MODE;
     }
+  } // setDebugMode
 
-  } // __construct
+
+  //**************************************************************************************//
+  // Set the JSON mode.
+  function setJSONMode($JSON_MODE = null) {
+    if (!empty($JSON_MODE)) {
+      $this->JSON_MODE = $JSON_MODE;
+    }
+  } // setJSONMode
 
 
   //**************************************************************************************//
@@ -243,11 +246,6 @@ class frontendDisplay {
   // Init the content.
   function initContent($response_header = NULL) {
     global $VALID_CONTROLLERS;
-
-    //**************************************************************************************//
-    // Filtrer the URL parameters
-
-    $this->filterURLParameters();
 
     //**************************************************************************************//
     // Load the markdown content.
@@ -601,46 +599,6 @@ class frontendDisplay {
     return $ret;
 
   } // setWrapper
-
-
-  //**************************************************************************************//
-  // Filter through the URL parameters.
-  private function filterURLParameters() {
-    global $VALID_GET_PARAMETERS;
-
-    $this->params['controller'] = null;
-    $this->params['id'] = 0;
-    $this->params['section'] = null;
-    $this->params['subsection'] = null;
-    $this->params['_debug'] = FALSE;
-
-    foreach($_GET as $key => $value) {
-
-      if (in_array($key, $VALID_GET_PARAMETERS)) {
-        if ($key == 'controller') {
-          $this->params['controller'] = preg_replace('/[^A-Za-z-_]/s', '', trim($_GET['controller']));
-        }
-        else if ($key == 'id') {
-          $this->params['id'] = intval($_GET['id']);
-        }
-        else if ($key == 'section') {
-          $this->params['section'] = intval($_GET['section']);
-        }
-        else if ($key == 'subsection') {
-          $this->params['subsection'] = intval($_GET['subsection']);
-        }
-        else if ($key == '_debug') {
-          $this->params['_debug'] = TRUE;
-          $this->DEBUG_MODE = TRUE;
-        }
-        else if ($key == 'json') {
-          $this->params['json'] = TRUE;
-          $this->JSON_MODE = TRUE;
-        }
-      }
-    }
-
-  } // filterURLParameters
 
 
   //**************************************************************************************//
