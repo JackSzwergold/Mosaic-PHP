@@ -28,7 +28,7 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 
 class frontendDisplayHelper {
 
-  public function init($VIEW_MODE = 'small', $page_base, $page_base_suffix = '') {
+  public function init($VIEW_MODE = 'small', $page_base, $page_base_suffix = '', $DEBUG_MODE = FALSE) {
 
     //**************************************************************************************//
     // Set an array of mode options.
@@ -191,7 +191,7 @@ class frontendDisplayHelper {
     $image_object = $ProcessingClass->build_image_object($json_data_array, $page_base, $page_base_suffix, array_keys($mode_options));
 
     // Process the JSON content.
-    $json_content = $ProcessingClass->json_encode_helper($image_object, FALSE);
+    $json_content = $ProcessingClass->json_encode_helper($image_object, $DEBUG_MODE);
 
     return array($VIEW_MODE, $body_content, $json_content);
 
