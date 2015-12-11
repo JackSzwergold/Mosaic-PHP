@@ -19,18 +19,59 @@
  */
 
 //**************************************************************************************//
-// Require the basic configuration settings & functions.
+// Require the basics.
 
 require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 
 //**************************************************************************************//
-// The beginnings of a frontend display helper class.
+// The beginnings of a front end display helper class.
 
 class frontendDisplayHelper {
 
-  public function init($VIEW_MODE = 'small', $page_base, $page_base_suffix = '', $DEBUG_MODE = FALSE) {
+  private $controller = '';
+  private $page_base = '';
+  private $page_base_suffix = '';
 
-    //**************************************************************************************//
+  private $url_parts = '';
+  private $VIEW_MODE = 'small';
+  private $DEBUG_MODE = FALSE;
+  private $html_content = '';
+  private $json_content = '';
+
+  //**************************************************************************************//
+  // Set the controller.
+  public function setController ($value) {
+    if (!empty($value)) {
+      $this->controller = $value;
+    }
+  } // setController
+
+
+  //**************************************************************************************//
+  // Set the page base.
+  public function setPageBase ($value) {
+    if (!empty($value)) {
+      $this->page_base = $value;
+    }
+  } // setPageBase
+
+
+  //**************************************************************************************//
+  // Set the page base.
+  public function setPageBaseSuffix ($value) {
+    if (!empty($value)) {
+      $this->page_base_suffix = $value;
+    }
+  } // setPageBaseSuffix
+
+
+  public function initContent ($DEBUG_MODE = FALSE) {
+
+ 	//**************************************************************************************//
+	// Set the debug mode.
+	$this->DEBUG_MODE = $DEBUG_MODE;
+
+   //**************************************************************************************//
     // Set an array of mode options.
 
     $mode_options = array();
@@ -73,13 +114,13 @@ class frontendDisplayHelper {
     //**************************************************************************************//
     // Set the view mode.
 
-    if (!empty($VIEW_MODE) && $VIEW_MODE == 'random') {
+    if (!empty($this->VIEW_MODE) && $this->VIEW_MODE == 'random') {
       $mode_keys = array_keys($mode_options);
       shuffle($mode_keys);
-      $VIEW_MODE = $mode_keys[0];
+      $this->VIEW_MODE = $mode_keys[0];
     }
-    else if (!empty($VIEW_MODE) && !array_key_exists($VIEW_MODE, $mode_options)) {
-      $VIEW_MODE = 'small';
+    else if (!empty($this->VIEW_MODE) && !array_key_exists($this->VIEW_MODE, $mode_options)) {
+      $this->VIEW_MODE = 'small';
     }
 
     //**************************************************************************************//
@@ -118,7 +159,7 @@ class frontendDisplayHelper {
     //**************************************************************************************//
     // Slice off a subset of the image files.
 
-    $image_files = array_slice($raw_image_files, 0, $mode_options[$VIEW_MODE]['how_many']);
+    $image_files = array_slice($raw_image_files, 0, $mode_options[$this->VIEW_MODE]['how_many']);
 
     //**************************************************************************************//
     // Init the class and roll through the images.
@@ -132,7 +173,7 @@ class frontendDisplayHelper {
     foreach ($image_files as $image_file) {
 
       // Set the options for the image processing.
-      $ProcessingClass->set_image($image_file, $mode_options[$VIEW_MODE]['width'], $mode_options[$VIEW_MODE]['height'], $mode_options[$VIEW_MODE]['block_size']);
+      $ProcessingClass->set_image($image_file, $mode_options[$this->VIEW_MODE]['width'], $mode_options[$this->VIEW_MODE]['height'], $mode_options[$this->VIEW_MODE]['block_size']);
       $ProcessingClass->debug_mode(FALSE);
       $ProcessingClass->row_flip_horizontal(FALSE);
       $ProcessingClass->set_row_delimiter(NULL);
@@ -164,12 +205,12 @@ class frontendDisplayHelper {
     foreach ($items as $file => $image) {
 
       // Set the image item array value.
-      if ($count < $mode_options[$VIEW_MODE]['block_display']) {
+      if ($count < $mode_options[$this->VIEW_MODE]['block_display']) {
         $image_item_array[$file] = sprintf('<li><div class="Padding">%s</div><!-- .Padding --></li>', $image['blocks']);
       }
 
       // Set the image json array value.
-      if ($count < $mode_options[$VIEW_MODE]['json_display']) {
+      if ($count < $mode_options[$this->VIEW_MODE]['json_display']) {
         $image_json_array[$file] = $image['json'];
       }
 
@@ -179,7 +220,7 @@ class frontendDisplayHelper {
     } // foreach
 
     // Set the body content.
-    $html_content = sprintf('<ul>%s</ul>', implode('', $image_item_array));
+    $this->html_content = sprintf('<ul>%s</ul>', implode('', $image_item_array));
 
     // Convert the JSON back to an object.
     $json_data_array = array();
@@ -191,11 +232,45 @@ class frontendDisplayHelper {
     $image_object = $ProcessingClass->build_image_object($json_data_array, $page_base, $page_base_suffix, array_keys($mode_options));
 
     // Process the JSON content.
-    $json_content = $ProcessingClass->json_encode_helper($image_object, $DEBUG_MODE);
+    $this->json_content = $ProcessingClass->json_encode_helper($image_object, $DEBUG_MODE);
 
-    return array($VIEW_MODE, $html_content, $json_content);
+  } // initContent
 
-  } // init
+
+  //**************************************************************************************//
+  // Get the view mode.
+  public function getViewMode () {
+    return $this->VIEW_MODE;
+  } // getViewMode
+
+
+  //**************************************************************************************//
+  // Get the page title.
+  public function getPageTitle () {
+    return $this->page_title;
+  } // getPageTitle
+
+
+  //**************************************************************************************//
+  // Get the URL parts.
+  public function getURLParts () {
+    return $this->url_parts;
+  } // getURLParts
+
+
+  //**************************************************************************************//
+  // Get the HTML content.
+  public function getHTMLContent () {
+    return $this->html_content;
+  } // getHTMLContent
+
+
+  //**************************************************************************************//
+  // Get the JSON content.
+  public function getJSONContent () {
+    return $this->json_content;
+  } // getJSONContent
+
 
 } // frontendDisplayHelper
 
