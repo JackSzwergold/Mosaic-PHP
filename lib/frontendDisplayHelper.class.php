@@ -31,6 +31,7 @@ class frontendDisplayHelper {
   private $controller = '';
   private $page_base = '';
   private $page_base_suffix = '';
+  private $page_title = '';
 
   private $url_parts = '';
   private $VIEW_MODE = 'small';
