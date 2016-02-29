@@ -514,7 +514,7 @@ class imageMosaic {
     for ($height = 0; $height < $this->height_resampled; $height++) {
 
      $rows = array();
-      for ($width = 0; $width <= $this->width_resampled; $width++) {
+     for ($width = 0; $width <= $this->width_resampled; $width++) {
 
         $color_index = @imagecolorat($image_processed, $width, $height);
 
