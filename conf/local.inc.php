@@ -26,13 +26,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
   define('BASE_PATH', '/Mosaic-PHP/');
 }
 else {
-  define('BASE_PATH', '/art/mosaic/');
+  define('BASE_PATH', '/projects/mosaic/');
 }
 
 // Site descriptive info.
 $SITE_TITLE = 'Mosaic';
 $SITE_DESCRIPTION = 'A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.';
-$SITE_URL = 'http://www.lastplacechamp.com/art/mosaic/';
+$SITE_URL = 'http://www.preworn.com/projects/mosaic/';
 $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.';
 $SITE_ROBOTS = 'noindex, nofollow';
 $SITE_VIEWPORT = 'width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes';
