@@ -33,6 +33,18 @@ set :linked_dirs, fetch(:linked_dirs, []).push('cache')
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
+# Disable warnings about the absence of the styleseheets, javscripts & images directories.
+set :normalize_asset_timestamps, false
+
+# The directory on the server into which the actual source code will deployed.
+set :web_builds, "#{deploy_to}/builds"
+
+# The directory on the server that stores content related data.
+set :content_data_path, "#{deploy_to}/content"
+
+# The path where projects get deployed.
+set :projects_path, "projects"
+
 namespace :deploy do
 
   after :restart, :clear_cache do
@@ -44,4 +56,23 @@ namespace :deploy do
     end
   end
 
+  # Create the 'create_symlink' task to create symbolic links and other related items.
+  desc "Set the symbolic links."
+  task :create_symlink do
+    on roles(:app) do
+
+      # info "If there is no directory & no symbolic link to 'site/#{fetch(:projects_path)}' then create a directory named 'site/#{fetch(:projects_path)}'."
+      execute "cd #{fetch(:live_root)} && if [ ! -d site/#{fetch(:projects_path)} ]; then if [ ! -h site/#{fetch(:projects_path)} ]; then mkdir ./site/#{fetch(:projects_path)}; fi; fi"
+
+      # info "If there is a symbolic link to 'site/#{fetch(:projects_path)}' then create a symbolic link called 'site/#{fetch(:projects_path)}'."
+      execute "cd #{fetch(:live_root)} && if [ ! -h site/#{fetch(:projects_path)} ]; then if [ ! -d site/#{fetch(:projects_path)} ]; then ln -sf #{current_path} ./site/#{fetch(:projects_path)}; fi; fi"
+
+      # info "If there is a symbolic link to 'site/#{fetch(:projects_path)}/#{fetch(:short_name)}', delete it. Irregardless, create a new symbolic link to 'site/#{fetch(:projects_path)}/#{fetch(:short_name)}'."
+      execute "cd #{fetch(:live_root)} && if [ -h site/#{fetch(:projects_path)}/#{fetch(:short_name)} ]; then rm site/#{fetch(:projects_path)}/#{fetch(:short_name)}; fi && ln -sf #{current_path} ./site/#{fetch(:projects_path)}/#{fetch(:short_name)}"
+
+    end
+  end
+
 end
+
+after "deploy:published", "deploy:create_symlink"
