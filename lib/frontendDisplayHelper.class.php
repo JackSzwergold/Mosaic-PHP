@@ -76,8 +76,8 @@ class frontendDisplayHelper {
 	// Set the debug mode.
 	$this->DEBUG_MODE = $DEBUG_MODE;
 
-   //**************************************************************************************//
-   // Set an array of mode options.
+	//**************************************************************************************//
+	// Set an array of mode options.
 
     $mode_options = array();
 
