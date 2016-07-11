@@ -234,7 +234,7 @@ class frontendDisplayHelper {
     }
 
     // Now merge the JSON data object back into the parent image object.
-    $image_object = $ProcessingClass->build_image_object($json_data_array, $this->page_base, $this->page_base_suffix, array_keys($mode_options));
+    $image_object = $ProcessingClass->build_content_object($json_data_array, $this->page_base, $this->page_base_suffix, array_keys($mode_options));
 
     // Process the JSON content.
     $this->json_content = $ProcessingClass->json_encode_helper($image_object, $DEBUG_MODE);
