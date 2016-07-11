@@ -137,7 +137,7 @@ class frontendDisplayHelper {
     // Check if there is an image directory. If not? Exit.
 
     if (!is_dir($image_dir)) {
-      die();
+      die('Sorry. Image directory not found.');
     }
 
     //**************************************************************************************//
