@@ -169,7 +169,7 @@ class frontendDisplayHelper {
     //**************************************************************************************//
     // Init the class and roll through the images.
 
-    $ProcessingClass = new ImageMosaic();
+    $ProcessingClass = new imageMosaic();
 
     // Init the items array.
     $items = array();
