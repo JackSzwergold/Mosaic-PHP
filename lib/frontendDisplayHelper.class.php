@@ -230,8 +230,10 @@ class frontendDisplayHelper {
     // Convert the JSON back to an object.
     $json_data_array = array();
     foreach ($image_json_array as  $image_json_value) {
-      $json_data_array[] = json_decode($image_json_value);
+      $json_data_array['content'][] = json_decode($image_json_value);
     }
+    $json_data_array['count'] = count($json_data_array['content']);
+    $json_data_array['total'] = count($image_json_array);
 
     // Now merge the JSON data object back into the parent image object.
     $image_object = $ProcessingClass->build_content_object($json_data_array, $this->page_base, $this->page_base_suffix, array_keys($mode_options), 'images');

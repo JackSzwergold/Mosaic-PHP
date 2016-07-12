@@ -257,8 +257,17 @@ class imageMosaic {
     // Set the image data array to the image object.
     $child_obj = new stdClass();
     $child_obj->type = $type;
-    $child_obj->attributes = $content_object_array;
+    $child_obj->attributes = $content_object_array['content'];
     $parent_obj->data = $child_obj;
+
+    // Add the count info to the endpoint.
+    $parent_obj->count = count($content_object_array);
+
+    // Add the total info to the endpoint.
+    $parent_obj->count = $content_object_array['count'];
+
+    // Add the total info to the endpoint.
+    $parent_obj->total = $content_object_array['total'];
 
     return $parent_obj;
 
