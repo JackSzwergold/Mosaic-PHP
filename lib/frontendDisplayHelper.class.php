@@ -35,7 +35,7 @@ class frontendDisplayHelper {
   private $count = 1;
 
   private $url_parts = array();
-  private $VIEW_MODE = 'small';
+  private $VIEW_MODE = '';
   private $DEBUG_MODE = FALSE;
   private $html_content = '';
   private $json_content = '';
