@@ -37,8 +37,8 @@ $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Comm
 $SITE_LICENSE_CODE = 'CC-BY-NC-SA-4.0';
 $SITE_LICENSE = 'This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC-BY-NC-SA-4.0)';
 $SITE_ROBOTS = 'noindex, nofollow';
-$SITE_VIEWPORT = 'width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes';
-// $SITE_VIEWPORT = 'width=device-width, initial-scale=1.0';
+// $SITE_VIEWPORT = 'width=device-width, initial-scale=0.65, maximum-scale=2, minimum-scale=0.65, user-scalable=yes';
+$SITE_VIEWPORT = 'width=device-width, initial-scale=1.0';
 $SITE_IMAGE = 'favicons/icon_200x200.png';
 $SITE_FB_ADMINS = '504768652';
 $SITE_KEYWORD = 'lexicon';
@@ -136,16 +136,8 @@ amzn_assoc_default_category = "All";
 // Set the page DIVs array.
 $PAGE_DIVS_ARRAY = array();
 $PAGE_DIVS_ARRAY[] = 'Wrapper';
-$PAGE_DIVS_ARRAY[] = 'Padding';
-$PAGE_DIVS_ARRAY[] = 'Content';
-$PAGE_DIVS_ARRAY[] = 'Padding';
-$PAGE_DIVS_ARRAY[] = 'Section';
-$PAGE_DIVS_ARRAY[] = 'Padding';
-$PAGE_DIVS_ARRAY[] = 'Middle';
 $PAGE_DIVS_ARRAY[] = 'Core';
-$PAGE_DIVS_ARRAY[] = 'Padding';
 $PAGE_DIVS_ARRAY[] = 'Grid';
-$PAGE_DIVS_ARRAY[] = 'Padding';
 
 // Set the JavaScript array.
 $JAVASCRIPTS_ITEMS = array();
