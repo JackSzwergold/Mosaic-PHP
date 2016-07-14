@@ -141,11 +141,11 @@ $PAGE_DIVS_ARRAY[] = 'Grid';
 
 // Set the JavaScript array.
 $JAVASCRIPTS_ITEMS = array();
-$JAVASCRIPTS_ITEMS[] = 'script/json2.js';
-$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.js';
-$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.map';
-$JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery.noconflict.js';
-$JAVASCRIPTS_ITEMS[] = 'script/common.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/json2.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery-1.11.3.min.map';
+// $JAVASCRIPTS_ITEMS[] = 'script/jquery/jquery.noconflict.js';
+// $JAVASCRIPTS_ITEMS[] = 'script/common.js';
 
 // Set the link items array.
 $LINK_ITEMS = array();
