@@ -32,6 +32,7 @@ class frontendDisplayHelper {
   private $page_base = '';
   private $page_base_suffix = '';
   private $page_title = '';
+  private $count = 1;
 
   private $url_parts = array();
   private $VIEW_MODE = 'small';
@@ -64,6 +65,15 @@ class frontendDisplayHelper {
       $this->page_base_suffix = $value;
     }
   } // setPageBaseSuffix
+
+
+  //**************************************************************************************//
+  // Set the count.
+  public function setCount ($value) {
+    if (!empty($value)) {
+      $this->count = $value;
+    }
+  } // setCount
 
 
   public function initContent ($DEBUG_MODE = FALSE) {
