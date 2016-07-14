@@ -79,7 +79,6 @@ ul, li
 	height: calc(100% - 20px);
 	margin: 0;
 	padding: 10px;
-	background-color: #ffc;
 }
 
 /**************************************************************************************************/
@@ -99,19 +98,10 @@ ul, li
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: #ffc;
 }
 
 /**************************************************************************************************/
-.Core
-{
-	flex-grow: 1;
-	flex-shrink: 0;
-	flex-basis: auto;
-	width: calc(100% - 20px);
-	text-align: left;
-	background-color: #fcc;
-}
+.Core { text-align: left; }
 
 /**************************************************************************************************/
 .microView .Core { width: 336px; }
@@ -121,17 +111,7 @@ ul, li
 .megaView .Core { width: 732px; }
 
 /**************************************************************************************************/
-.Core .Grid
-{
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	align-content: center;
-	background-color: #ccf;
-}
-
+.Core .Grid { }
 .Core .Grid ul li .Padding { padding: 0 3px 6px 3px; }
 
 /**************************************************************************************************/
