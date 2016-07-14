@@ -78,7 +78,7 @@ ul, li
 	min-width: calc(100% - 20px);
 	margin: 0;
 	padding: 10px;
-	background-color: #fff;
+	background-color: #ffc;
 }
 
 .microView .Wrapper { width: 336px; }
@@ -88,8 +88,14 @@ ul, li
 .megaView .Wrapper { width: 732px; }
 
 /**************************************************************************************************/
-.Core { }
-.Core .Padding { padding: 0; }
+.Core
+{
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: auto;
+	/* width: calc(100% - 20px); */
+	text-align: left;
+}
 
 /**************************************************************************************************/
 .Core .Grid .Padding { padding: 6px 3px 0 3px; }
@@ -101,9 +107,6 @@ ul, li
 }
 
 .Core .Grid ul li .Padding { padding: 0 3px 6px 3px; }
-
-/**************************************************************************************************/
-.Core .Text .Padding { padding: 15px 0 15px 0; }
 
 /**************************************************************************************************/
 .PixelBox
