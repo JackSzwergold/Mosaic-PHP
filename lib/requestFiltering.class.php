@@ -69,7 +69,7 @@ class requestFiltering {
 
     return $params;
 
-  } // parse_parameters
+  } // process_parameters
 
   //**************************************************************************************//
   // Set the markdown file.
