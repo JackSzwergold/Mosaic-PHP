@@ -60,8 +60,8 @@ $frontendDisplayHelperClass->setCount(array_key_exists('count', $params) ? $para
 $frontendDisplayHelperClass->initContent($DEBUG_MODE);
 
 $VIEW_MODE = $frontendDisplayHelperClass->getViewMode();
-$page_title = $frontendDisplayHelperClass->getPageTitle();
-$url_parts = $frontendDisplayHelperClass->getURLParts();
+// $page_title = $frontendDisplayHelperClass->getPageTitle();
+// $url_parts = $frontendDisplayHelperClass->getURLParts();
 $html_content = $frontendDisplayHelperClass->getHTMLContent();
 $json_content = $frontendDisplayHelperClass->getJSONContent();
 
