@@ -37,62 +37,27 @@ require_once BASE_FILEPATH . '/lib/Spyc.php';
 
 $requestFilteringClass = new requestFiltering();
 $params = $requestFilteringClass->process_parameters();
+$DEBUG_MODE = $requestFilteringClass->process_debug_mode($params);
+$JSON_MODE = $requestFilteringClass->process_json_mode($params);
+$page_base_suffix = $requestFilteringClass->process_page_base_suffix($JSON_MODE);
+
 $markdown_file = $requestFilteringClass->process_markdown_file($params);
 $page_title = $requestFilteringClass->process_page_title($params);
 
-//**************************************************************************************//
-// Set the debug mode value.
-
-$DEBUG_MODE = array_key_exists('_debug', $params);
-
-//**************************************************************************************//
-// Set the JSON mode value.
-
-$JSON_MODE = array_key_exists('json', $params);
+$url_parts = $requestFilteringClass->process_url_parts($params);
+$controller = $requestFilteringClass->process_controllers($url_parts);
+$page_base = $requestFilteringClass->process_page_base($controller);
 
 //**************************************************************************************//
-// Set the page base.
-
-$page_base = BASE_URL;
-$controller = $SITE_DEFAULT_CONTROLLER;
-$url_parts = array();
-$controller_parts = array('parent', 'child', 'grandchild', 'greatgrandchild');
-foreach ($controller_parts as $part) {
-  if (array_key_exists($part, $params) && !empty($params[$part]) && $params[$part] != 'index') {
-    $url_parts[$part] = rawurlencode($params[$part]);
-  }
-}
-if (!empty($url_parts)) {
-  $controller = implode($url_parts, '/');
-  $page_base = BASE_URL . $controller . '/';
-}
-
-//**************************************************************************************//
-// Set the query suffix to the page base.
-
-$page_base_suffix = $JSON_MODE ? '?json' : '';
-
-//**************************************************************************************//
-// Instantiate the front end display helper class.
+// Now deal with the front end display helper class related stuff.
 
 $frontendDisplayHelperClass = new frontendDisplayHelper();
-
-//**************************************************************************************//
-// Set some values to the front end display helper class.
-
 $frontendDisplayHelperClass->setDefaultController($SITE_DEFAULT_CONTROLLER);
 $frontendDisplayHelperClass->setSelectedController($controller);
 $frontendDisplayHelperClass->setPageBase($page_base);
 $frontendDisplayHelperClass->setPageBaseSuffix($page_base_suffix);
 $frontendDisplayHelperClass->setCount(array_key_exists('count', $params) ? $params['count'] : 1);
-
-//**************************************************************************************//
-// Init the content via the class.
-
 $frontendDisplayHelperClass->initContent($DEBUG_MODE);
-
-//**************************************************************************************//
-// Get values from the front end display helper class.
 
 $VIEW_MODE = $frontendDisplayHelperClass->getViewMode();
 $page_title = $frontendDisplayHelperClass->getPageTitle();
