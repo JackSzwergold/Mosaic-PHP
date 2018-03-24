@@ -492,7 +492,7 @@ class frontendDisplay {
     // Roll through the JavaScripts array.
     $ret = array();
     foreach ($this->javascripts as $javascript) {
-      $ret[] = sprintf('<script src="' . BASE_URL . '%s" type="%s"></script>', $javascript, 'text/javascript');
+      $ret[] = sprintf('<script src="' . BASE_URL . '%s" defer="defer"></script>', $javascript);
     }
 
     return $ret;
@@ -692,7 +692,7 @@ class frontendDisplay {
               . $author
               . (!empty($date) ? ' • <span>' . $date . '</span>' : '')
               ;
- 
+
       // Parse the header values.
       $header = Parsedown::instance()->parse($header);
 
