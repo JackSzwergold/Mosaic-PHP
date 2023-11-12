@@ -36,6 +36,9 @@ class imageMosaic {
 
   public $image_file = FALSE;
 
+  public $width_source = NULL;
+  public $height_source = NULL;
+
   public $height_resampled = 46;
   public $width_resampled = 46;
 
@@ -257,17 +260,8 @@ class imageMosaic {
     // Set the image data array to the image object.
     $child_obj = new stdClass();
     $child_obj->type = $type;
-    $child_obj->attributes = $content_object_array['content'];
+    $child_obj->attributes = $content_object_array;
     $parent_obj->data = $child_obj;
-
-    // Add the count info to the endpoint.
-    $parent_obj->count = count($content_object_array);
-
-    // Add the total info to the endpoint.
-    $parent_obj->count = $content_object_array['count'];
-
-    // Add the total info to the endpoint.
-    $parent_obj->total = $content_object_array['total'];
 
     return $parent_obj;
 
@@ -424,14 +418,14 @@ class imageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-	foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
-	  $box_y = ($position_y * $this->block_size_y);
-	  foreach ($pixel_row as  $position_x => $pixel) {
-	    $box_x = ($position_x * $this->block_size_x);
-	    $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
-	    imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-	  }
-	}
+  foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+    $box_y = ($position_y * $this->block_size_y);
+    foreach ($pixel_row as  $position_x => $pixel) {
+      $box_x = ($position_x * $this->block_size_x);
+      $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
+      imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+    }
+  }
 
 
     // Place a tiled overlay on the image.
@@ -468,7 +462,8 @@ class imageMosaic {
         // Process the filename & generate the image files.
         $filename = $this->create_filename($this->image_file, $image_type);
         if ($image_type == 'gif' && !file_exists($filename)) {
-          imagegif($image_processed, $filename, $this->image_quality['gif']);
+          // imagegif($image_processed, $filename, $this->image_quality['gif']);
+          imagegif($image_processed, $filename);
         }
         else if ($image_type == 'jpeg' && !file_exists($filename)) {
           imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
