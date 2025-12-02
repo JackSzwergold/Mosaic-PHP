@@ -9,8 +9,8 @@
  * You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
  *
- * w: http://www.preworn.com
- * e: me@preworn.com
+ * w: https://www.szwergold.com
+ * e: jackszwergold@icloud.com
  *
  * Created: 2014-02-16, js
  * Version: 2014-02-16, js: creation
@@ -32,7 +32,7 @@ else {
 // Site descriptive info.
 $SITE_TITLE = 'Mosaic';
 $SITE_DESCRIPTION = 'A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.';
-$SITE_URL = 'http://www.preworn.com/projects_base/mosaic/';
+$SITE_URL = 'http://www.arsaurum.com/projects_base/mosaic/';
 $SITE_COPYRIGHT = '(c) Copyright ' . date('Y') . ' Jack Szwergold. Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.';
 $SITE_LICENSE_CODE = 'CC-BY-NC-SA-4.0';
 $SITE_LICENSE = 'This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC-BY-NC-SA-4.0)';

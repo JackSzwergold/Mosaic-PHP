@@ -113,7 +113,7 @@ Ruby 2.0 method of installing a specific version of `net-ssh`.
 
 **NOTE:** If Capistrano somehow installs a version of `net-ssh` higher than 2.7.0, the connections will fail saying something like this:
 
-> connection failed for: www.preworn.com (Net::SSH::AuthenticationFailed: Authentication failed for user sysop@www.preworn.com)
+> connection failed for: www.arsaurum.com (Net::SSH::AuthenticationFailed: Authentication failed for user sysop@www.arsaurum.com)
 
 This bizarre error comes from versions of `net-ssh` erroneously disabling `KbdInteractiveAuthentication` (aka: keyboard interaction) when `ChallengeResponseAuthentication` is set on your host system. The most viable thing to do is to ensure `net-ssh` is only using version 2.7.0 by uninstalling any other version `capistrano` might install.
 
