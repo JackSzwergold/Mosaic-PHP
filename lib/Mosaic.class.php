@@ -165,7 +165,7 @@ class imageMosaic {
     // Check if the image actually exists.
     if (!file_exists($this->image_file)) {
       return;
-    }
+    } // if
 
     //************************************************************************************//
     // Process the JSON filename.
@@ -217,35 +217,40 @@ class imageMosaic {
 
     } // if
 
+    //************************************************************************************//
     // Get the actual pixel array from the image object.
     $pixel_array_final = $image_array['pixels'];
 
+    //************************************************************************************//
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_array_final as $pixel_row) {
       if ($this->row_flip_horizontal) {
         $pixel_row = array_reverse($pixel_row);
-      }
+      } // if
       foreach ($pixel_row as $pixel) {
         $blocks[] = $this->generate_pixel_boxes($pixel);
-      }
+      } // foreach
       if (!empty($this->row_delimiter)) {
         $blocks[] = $this->row_delimiter;
-      }
-    }
+      } // if
+    } // foreach
 
+    //************************************************************************************//
     // Return the data.
     $ret = array();
 
+    //************************************************************************************//
     // If the blocks value isn’t empty, set that value in the output.
     if (!empty($blocks)) {
       $ret['blocks'] = $this->render_pixel_box_container($blocks);
-    }
+    } // if
 
+    //************************************************************************************//
     // If the JSON value isn’t empty, set that value in the output.
     if (!empty($raw_json)) {
       $ret['json'] = $raw_json;
-    }
+    } // if
 
     return $ret;
 
