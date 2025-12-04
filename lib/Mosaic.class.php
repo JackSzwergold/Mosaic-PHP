@@ -62,32 +62,35 @@ class imageMosaic {
   public $image_quality = array('gif' => 100, 'jpeg' => 100, 'png' => 9);
   public $cache_expiration_in_minutes = 720;
 
+  //**************************************************************************************//
+  // Set the constructor.
   public function __construct() {
   } // __construct
 
-
+  //**************************************************************************************//
+  // Set the debug mode.
   public function debug_mode($DEBUG_MODE) {
 
     $this->DEBUG_MODE = $DEBUG_MODE;
 
   } // debug_mode
 
-
+  //**************************************************************************************//
+  // The row flip horizontal function.
   public function row_flip_horizontal($row_flip_horizontal) {
     if (version_compare(phpversion(), $this->php_version_imageflip, '>')) {
       $this->row_flip_horizontal = $row_flip_horizontal;
-    }
+    } // if
   } // row_flip_horizontal
 
-
+  //**************************************************************************************//
+  // The set image function.
   public function set_image($image_file, $width_resampled, $height_resampled, $block_size) {
-
     $this->image_file = $image_file;
     $this->width_resampled = $width_resampled;
     $this->height_resampled = $height_resampled;
     $this->block_size_x = $block_size;
     $this->block_size_y = $block_size;
-
   } // set_image
 
   //**************************************************************************************//
