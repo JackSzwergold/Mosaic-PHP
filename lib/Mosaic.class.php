@@ -445,25 +445,30 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Pixelate the image via JSON data.
-  function generate_image_from_json ($json_filename) {
+  function generate_image_from_json($json_filename = null) {
 
+    //************************************************************************************//
     // Load the JSON into an array.
     $pixel_array = json_decode($this->cache_manager($json_filename), TRUE);
 
+    //************************************************************************************//
     // If the pixel array is empty, bail out of this function.
     if (empty($pixel_array)) {
       return;
-    }
+    } // if
 
+    //************************************************************************************//
     // Calculate the final width & final height
     $width_pixelate = $this->width_resampled * $this->block_size_x;
     $height_pixelate = $this->height_resampled * $this->block_size_y;
 
+    //************************************************************************************//
     // Set the canvas for the processed image & resample the source image.
     $image_processed = imagecreatetruecolor($width_pixelate, $height_pixelate);
     $background_color = imagecolorallocate($image_processed, 20, 20, 20);
     imagefill($image_processed, 0, 0, IMG_COLOR_TRANSPARENT);
 
+    //************************************************************************************//
     // Process the pixel_array
     $blocks = array();
     foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
@@ -472,21 +477,23 @@ class imageMosaic {
         $box_x = ($position_x * $this->block_size_x);
         $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
         imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
-      }
-    }
+      } // foreach
+    } // foreach
 
-
+    //************************************************************************************//
     // Place a tiled overlay on the image.
     if ($this->row_flip_horizontal) {
       imageflip($image_processed, IMG_FLIP_HORIZONTAL);
-    }
+    } // if
 
+    //************************************************************************************//
     // Apply a gaussian blur.
     if (FALSE) {
       $blur_matrix = array(array(1.0, 2.0, 1.0), array(2.0, 4.0, 2.0), array(1.0, 2.0, 1.0));
       imageconvolution($image_processed, $blur_matrix, 16, 0);
-    }
+    } // if
 
+    //************************************************************************************//
     // Process the filename & save the image files.
     if ($this->generate_images) {
 
@@ -497,30 +504,34 @@ class imageMosaic {
         imagesettile($image_processed, $tiled_overlay);
         imagefilledrectangle($image_processed, 0, 0, $width_pixelate, $height_pixelate, IMG_COLOR_TILED);
         imagedestroy($tiled_overlay);
-      }
+      } // if
 
       $image_filenames = array();
       foreach ($this->image_types as $image_type) {
 
+        //********************************************************************************//
         // If the cache directory doesn’t exist, create it.
         if (!is_dir($this->cache_path[$image_type])) {
           mkdir($this->cache_path[$image_type], $this->directory_permissions, true);
         }
 
+        //********************************************************************************//
         // Process the filename & generate the image files.
         $filename = $this->create_filename($this->image_file, $image_type);
         if ($image_type == 'gif' && !file_exists($filename)) {
           // imagegif($image_processed, $filename, $this->image_quality['gif']);
           imagegif($image_processed, $filename);
-        }
+        } // if
         else if ($image_type == 'jpeg' && !file_exists($filename)) {
           imagejpeg($image_processed, $filename, $this->image_quality['jpeg']);
-        }
+        } // else if
         else if ($image_type == 'png' && !file_exists($filename)) {
           imagepng($image_processed, $filename, $this->image_quality['png']);
-        }
-      }
-    }
+        } // else if
+
+      } // foreach
+ 
+    } // if
 
     imagedestroy($image_processed);
 
