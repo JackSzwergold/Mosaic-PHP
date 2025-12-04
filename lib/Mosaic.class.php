@@ -85,20 +85,30 @@ class imageMosaic {
 
   //**************************************************************************************//
   // The set image function.
-  public function set_image($image_file, $width_resampled, $height_resampled, $block_size) {
-    $this->image_file = $image_file;
-    $this->width_resampled = $width_resampled;
-    $this->height_resampled = $height_resampled;
-    $this->block_size_x = $block_size;
-    $this->block_size_y = $block_size;
+  public function set_image($image_file = null, $width_resampled = null, $height_resampled = null, $block_size = null) {
+    if (!empty($image_file)) {
+      $this->image_file = $image_file;
+    } // if
+    if (!empty($width_resampled)) {
+      $this->width_resampled = $width_resampled;
+    } // if
+    if (!empty($height_resampled)) {
+      $this->height_resampled = $height_resampled;
+    } // if
+    if (!empty($block_size)) {
+      $this->block_size_x = $block_size;
+    } // if
+    if (!empty($block_size)) {
+      $this->block_size_y = $block_size;
+    } // if
   } // set_image
 
   //**************************************************************************************//
   // Set the generate images value.
-  function set_generate_images ($generate_images = null) {
+  function set_generate_images($generate_images = null) {
     if (!empty($generate_images)) {
       $this->generate_images = $generate_images;
-    }
+    } // if
   } // set_generate_images
 
   //**************************************************************************************//
