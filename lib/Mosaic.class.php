@@ -159,7 +159,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Process the image.
-  function process_image() {
+  public function process_image() {
 
     //************************************************************************************//
     // Check if the image actually exists.
@@ -258,7 +258,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Build the image data object.
-  function build_image_data_object($json_filename = null, $image_processed = null) {
+  private function build_image_data_object($json_filename = null, $image_processed = null) {
 
     //************************************************************************************//
     // Build the object.
@@ -274,7 +274,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Build the content object.
-  function build_content_object($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
+  public function build_content_object($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
 
     //************************************************************************************//
     // Create the data JSON object.
@@ -304,7 +304,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // JSON encoding helper.
-  function json_encode_helper($data = array(), $pretty_print = FALSE) {
+  public function json_encode_helper($data = array(), $pretty_print = FALSE) {
 
     $ret = json_encode((object) $data);
     $ret = str_replace('\/','/', $ret);
@@ -318,7 +318,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Manage caching.
-  function cache_manager($json_filename = null, $pixel_array = null) {
+  private function cache_manager($json_filename = null, $pixel_array = null) {
 
     $json_content = null;
 
@@ -373,7 +373,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Calculate the image ratio.
-  function calculate_ratio($image_source = null) {
+  private function calculate_ratio($image_source = null) {
 
     //************************************************************************************//
     // Get the image dimensions.
@@ -419,7 +419,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Resample the image.
-  function resample_image($image_source = null) {
+  private function resample_image($image_source = null) {
 
     //************************************************************************************//
     // Check if the image resource actually exists.
@@ -445,7 +445,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Pixelate the image via JSON data.
-  function generate_image_from_json($json_filename = null) {
+  private function generate_image_from_json($json_filename = null) {
 
     //************************************************************************************//
     // Load the JSON into an array.
@@ -539,7 +539,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Generate the pixel boxes.
-  function generate_pixel_boxes($rgb_array = array()) {
+  private function generate_pixel_boxes($rgb_array = array()) {
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
@@ -564,13 +564,13 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Convert RGB values to hex.
-  function rgb_to_hex($rgb_array = array()) {
+  private function rgb_to_hex($rgb_array = array()) {
     return sprintf("%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
   } // rgb_to_hex
 
   //**************************************************************************************//
   // Generate the pixels.
-  function generate_pixels($image_processed = null) {
+  private function generate_pixels($image_processed = null) {
 
     $order = 0;
     $ret = array();
@@ -623,7 +623,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the pixel boxes into a container.
-  function render_pixel_box_container($blocks = array()) {
+  private function render_pixel_box_container($blocks = array()) {
 
     $css_width = $this->width_resampled * $this->block_size_x;
     // $css_height = $this->height_resampled * $this->block_size_y;
@@ -642,7 +642,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the image straight to the browser.
-  function render_image($image_processed = null) {
+  private function render_image($image_processed = null) {
 
     // Set  the output header; in this case making it a JPEG.
     header('Content-Type: image/jpeg');
