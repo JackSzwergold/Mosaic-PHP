@@ -105,7 +105,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Set the generate images value.
-  function set_generate_images($generate_images = null) {
+  public function set_generate_images($generate_images = null) {
     if (!empty($generate_images)) {
       $this->generate_images = $generate_images;
     } // if
@@ -113,7 +113,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Set the overlay image value.
-  function set_overlay_image($overlay_image = null) {
+  public function set_overlay_image($overlay_image = null) {
     if (!empty($overlay_image)) {
       $this->overlay_image = $overlay_image;
     } // if
@@ -121,7 +121,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Set the row delimiter.
-  function set_row_delimiter($row_delimiter = null) {
+  public function set_row_delimiter($row_delimiter = null) {
     if (!empty($row_delimiter)) {
       $this->row_delimiter = $row_delimiter;
     } // if
@@ -129,7 +129,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Create the filename.
-  function create_filename($filename = null, $extension = null) {
+  private function create_filename($filename = null, $extension = null) {
 
     //***********************************************************************************//
     // Process the filename.
