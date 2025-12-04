@@ -258,7 +258,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Build the image data object.
-  function build_image_data_object ($json_filename = null, $image_processed = null) {
+  function build_image_data_object($json_filename = null, $image_processed = null) {
 
     //************************************************************************************//
     // Build the object.
@@ -274,21 +274,24 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Build the content object.
-  function build_content_object ($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
+  function build_content_object($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
 
     //************************************************************************************//
     // Create the data JSON object.
     $parent_obj = new stdClass();
 
+    //************************************************************************************//
     // Set the endpoints.
     $endpoints = array('self' => $page_base . $page_base_suffix);
     foreach ($extra_endpoints as $endpoint_key => $endpoint_value) {
       $endpoints[$endpoint_value] = BASE_URL . $endpoint_value . '/' . $page_base_suffix;
-    }
+    } // foreach
 
+    //************************************************************************************//
     // Add the endpoints to the object.
     $parent_obj->links = $endpoints;
 
+    //************************************************************************************//
     // Set the image data array to the image object.
     $child_obj = new stdClass();
     $child_obj->type = $type;
@@ -301,7 +304,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // JSON encoding helper.
-  function json_encode_helper ($data, $pretty_print = FALSE) {
+  function json_encode_helper($data = array(), $pretty_print = FALSE) {
 
     $ret = json_encode((object) $data);
     $ret = str_replace('\/','/', $ret);
@@ -315,9 +318,9 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Manage caching.
-  function cache_manager ($json_filename, $pixel_array = null) {
+  function cache_manager($json_filename = null, $pixel_array = null) {
 
-    $json_content = '';
+    $json_content = null;
 
     // If the '$json_filename' value is empty.
     if (empty($json_filename)) {
