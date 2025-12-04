@@ -373,45 +373,47 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Calculate the image ratio.
-  function calculate_ratio ($image_source) {
+  function calculate_ratio($image_source = null) {
 
+    //************************************************************************************//
     // Get the image dimensions.
     $this->width_source = imagesx($image_source);
     $this->height_source = imagesy($image_source);
 
+    //************************************************************************************//
     // Determine the orientation.
     $ratio = 1;
     if ($this->width_source > $this->height_source) {
       $this->orientation = 'landscape';
-    }
+    } // if
     else if ($this->width_source < $this->height_source) {
       $this->orientation = 'portrait';
-    }
+    } // else if
     else {
       $this->orientation = 'square';
-    }
+    } // else
 
     if ($this->orientation == 'landscape') {
       $ratio = $this->height_source / $this->width_source;
       $ratio_grow = $this->width_source / $this->height_source;
-    }
+    } // if
     else if ($this->orientation == 'portrait') {
       $ratio = $this->width_source / $this->height_source;
       $ratio_grow = $this->height_source / $this->width_source;
-    }
+    } // else if
 
     if ($this->orientation == 'landscape') {
       $this->width_resampled = floor($this->width_resampled * 1);
       $this->height_resampled = floor($this->height_resampled * $ratio);
-    }
+    } // if
     else if ($this->orientation == 'portrait') {
       $this->width_resampled = floor($this->width_resampled * 1);
       $this->height_resampled = floor($this->height_resampled * $ratio_grow);
-    }
+    } // else if
     else {
       $this->width_resampled = floor($this->width_resampled * $ratio);
       $this->height_resampled = floor($this->height_resampled * $ratio);
-    }
+    } // else
 
   } // calculate_ratio
 
