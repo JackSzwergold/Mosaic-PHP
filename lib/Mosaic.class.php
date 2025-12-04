@@ -274,8 +274,9 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Build the content object.
-  function build_content_object ($content_object_array, $page_base, $page_base_suffix, $extra_endpoints, $type = 'undefined') {
+  function build_content_object ($content_object_array = array(), $page_base = null, $page_base_suffix = null, $extra_endpoints = array(), $type = 'undefined') {
 
+    //************************************************************************************//
     // Create the data JSON object.
     $parent_obj = new stdClass();
 
