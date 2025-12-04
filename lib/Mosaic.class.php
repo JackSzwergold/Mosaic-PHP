@@ -623,7 +623,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the pixel boxes into a container.
-  function render_pixel_box_container ($blocks) {
+  function render_pixel_box_container($blocks = array()) {
 
     $css_width = $this->width_resampled * $this->block_size_x;
     // $css_height = $this->height_resampled * $this->block_size_y;
@@ -642,7 +642,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the image straight to the browser.
-  function render_image ($image_processed) {
+  function render_image($image_processed = null) {
 
     // Set  the output header; in this case making it a JPEG.
     header('Content-Type: image/jpeg');
