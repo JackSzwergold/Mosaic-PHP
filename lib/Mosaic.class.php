@@ -322,18 +322,22 @@ class imageMosaic {
 
     $json_content = null;
 
+    //************************************************************************************//
     // If the '$json_filename' value is empty.
     if (empty($json_filename)) {
       return $json_content;
     }
 
+    //************************************************************************************//
     // Set the basic time values.
     $modified_time = file_exists($json_filename) ? filemtime($json_filename) : 0;
     $current_time = time();
 
+    //************************************************************************************//
     // Calculate the time difference in minutes.
     $diff_time_minutes = (($current_time - $modified_time) / 60);
 
+    //************************************************************************************//
     // Set the boolean for file expired.
     $file_expired = ($diff_time_minutes > $this->cache_expiration_in_minutes);
 
@@ -342,23 +346,26 @@ class imageMosaic {
       // If the cache directory doesn’t exist, create it.
       if (!is_dir($this->cache_path['json'])) {
         mkdir($this->cache_path['json'], $this->directory_permissions, true);
-      }
+      } // if
 
+      //**********************************************************************************//
       // Process the JSON content.
       $json_content = $this->json_encode_helper($pixel_array, FALSE);
 
+      //**********************************************************************************//
       // Cache the pixel blocks to a JSON file.
       $file_handle = fopen($json_filename, 'w');
       fwrite($file_handle, $json_content);
       fclose($file_handle);
 
-    }
+    } // if
     else if (file_exists($json_filename)) {
 
+      //**********************************************************************************//
       // Return the JSON from the file.
       $json_content = file_get_contents($json_filename);
 
-    }
+    } // else if
 
     return $json_content;
 
