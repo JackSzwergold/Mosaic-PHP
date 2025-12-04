@@ -419,19 +419,23 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Resample the image.
-  function resample_image ($image_source = null) {
+  function resample_image($image_source = null) {
 
+    //************************************************************************************//
     // Check if the image resource actually exists.
     if (empty($image_source)) {
       return;
-    }
+    } // if
 
+    //************************************************************************************//
     // Set the canvas for the processed image.
     $image_processed = imagecreatetruecolor($this->width_resampled, $this->height_resampled);
 
+    //************************************************************************************//
     // Process the image via 'imagecopyresampled'
     imagecopyresampled($image_processed, $image_source, 0, 0, 0, 0, $this->width_resampled, $this->height_resampled, $this->width_source, $this->height_source);
 
+    //************************************************************************************//
     // Get rid of the image to free up memory.
     imagedestroy($image_source);
 
