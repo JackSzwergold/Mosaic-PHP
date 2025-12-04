@@ -418,14 +418,14 @@ class imageMosaic {
 
     // Process the pixel_array
     $blocks = array();
-  foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
-    $box_y = ($position_y * $this->block_size_y);
-    foreach ($pixel_row as  $position_x => $pixel) {
-      $box_x = ($position_x * $this->block_size_x);
-      $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
-      imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+    foreach ($pixel_array['pixels'] as $position_y => $pixel_row) {
+      $box_y = ($position_y * $this->block_size_y);
+      foreach ($pixel_row as  $position_x => $pixel) {
+        $box_x = ($position_x * $this->block_size_x);
+        $color = imagecolorclosest($image_processed, $pixel['rgba']['red'], $pixel['rgba']['green'], $pixel['rgba']['blue']);
+        imagefilledrectangle($image_processed, $box_x, $box_y, ($box_x + $this->block_size_x), ($box_y + $this->block_size_y), $color);
+      }
     }
-  }
 
 
     // Place a tiled overlay on the image.
