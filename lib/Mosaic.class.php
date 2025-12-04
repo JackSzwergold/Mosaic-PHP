@@ -258,8 +258,9 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Build the image data object.
-  function build_image_data_object ($json_filename, $image_processed) {
+  function build_image_data_object ($json_filename = null, $image_processed = null) {
 
+    //************************************************************************************//
     // Build the object.
     $ret = array();
     $ret['name'] = $this->get_file_basename($json_filename);
