@@ -539,7 +539,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Generate the pixel boxes.
-  function generate_pixel_boxes ($rgb_array) {
+  function generate_pixel_boxes($rgb_array = array()) {
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
