@@ -564,20 +564,20 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Convert RGB values to hex.
-  function rgb_to_hex ($rgb_array) {
+  function rgb_to_hex($rgb_array = array()) {
     return sprintf("%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
   } // rgb_to_hex
 
   //**************************************************************************************//
   // Generate the pixels.
-  function generate_pixels ($image_processed) {
+  function generate_pixels($image_processed = null) {
 
     $order = 0;
     $ret = array();
     for ($height = 0; $height < $this->height_resampled; $height++) {
 
-     $rows = array();
-     for ($width = 0; $width <= $this->width_resampled; $width++) {
+      $rows = array();
+      for ($width = 0; $width <= $this->width_resampled; $width++) {
 
         $color_index = @imagecolorat($image_processed, $width, $height);
 
@@ -591,29 +591,29 @@ class imageMosaic {
           $rgb_array['red'] = intval($red);
           $rgb_array['green'] = intval($green);
           $rgb_array['blue'] = intval($blue);
-        }
+        } // if
         else {
           $rgb_array = imagecolorsforindex($image_processed, $color_index);
-        }
+        } // else
 
         if ($width != $this->width_resampled) {
           // $rows[] = array('x' => $width, 'y' => $height, 'width' => $this->block_size_x, 'height' => $this->block_size_y, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
           $rows[] = array('x' => $width, 'y' => $height, 'order' => $order, 'hex' => $this->rgb_to_hex($rgb_array), 'rgba' => $rgb_array);
           $order++;
-        }
+        } // if
         else {
           // $rows[] = $rgb_array;
-        }
+        } // else
 
         if ($width == $this->width_resampled) {
           $ret[] = $rows;
-        }
-
+        } // if
 
       } // $width loop.
 
     } // $height loop.
 
+    //************************************************************************************//
     // Get rid of the image to free up memory.
     imagedestroy($image_processed);
 
