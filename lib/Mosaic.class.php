@@ -90,7 +90,7 @@ class imageMosaic {
 
   } // set_image
 
-
+  //**************************************************************************************//
   // Set the generate images value.
   function set_generate_images ($generate_images = null) {
     if (!empty($generate_images)) {
@@ -98,7 +98,7 @@ class imageMosaic {
     }
   } // set_generate_images
 
-
+  //**************************************************************************************//
   // Set the overlay image value.
   function set_overlay_image ($overlay_image = null) {
     if (!empty($overlay_image)) {
@@ -106,7 +106,7 @@ class imageMosaic {
     }
   } // set_overlay_image
 
-
+  //**************************************************************************************//
   // Set the row delimiter.
   function set_row_delimiter ($row_delimiter = null) {
     if (!empty($row_delimiter)) {
@@ -114,7 +114,7 @@ class imageMosaic {
     }
   } // set_row_delimiter
 
-
+  //**************************************************************************************//
   // Create the filename.
   function create_filename ($filename = '', $extension = '') {
 
@@ -137,7 +137,7 @@ class imageMosaic {
 
   } // create_filename
 
-
+  //**************************************************************************************//
   // Get image file basename.
   function get_file_basename ($filename = '') {
 
@@ -145,7 +145,7 @@ class imageMosaic {
 
   } // get_file_basename
 
-
+  //**************************************************************************************//
   // Process the image.
   function process_image () {
 
@@ -226,7 +226,7 @@ class imageMosaic {
 
   } // process_image
 
-
+  //**************************************************************************************//
   // Build the image data object.
   function build_image_data_object ($json_filename, $image_processed) {
 
@@ -241,7 +241,7 @@ class imageMosaic {
 
   } // build_image_data_object
 
-
+  //**************************************************************************************//
   // Build the content object.
   function build_content_object ($content_object_array, $page_base, $page_base_suffix, $extra_endpoints, $type = 'undefined') {
 
@@ -267,7 +267,7 @@ class imageMosaic {
 
   } // build_content_object
 
-
+  //**************************************************************************************//
   // JSON encoding helper.
   function json_encode_helper ($data, $pretty_print = FALSE) {
 
@@ -281,7 +281,7 @@ class imageMosaic {
 
   } // json_encode_helper
 
-
+  //**************************************************************************************//
   // Manage caching.
   function cache_manager ($json_filename, $pixel_array = null) {
 
@@ -329,7 +329,7 @@ class imageMosaic {
 
   } // cache_manager
 
-
+  //**************************************************************************************//
   // Calculate the image ratio.
   function calculate_ratio ($image_source) {
 
@@ -373,7 +373,7 @@ class imageMosaic {
 
   } // calculate_ratio
 
-
+  //**************************************************************************************//
   // Resample the image.
   function resample_image ($image_source = null) {
 
@@ -395,7 +395,7 @@ class imageMosaic {
 
   } // resample_image
 
-
+  //**************************************************************************************//
   // Pixelate the image via JSON data.
   function generate_image_from_json ($json_filename) {
 
@@ -478,7 +478,7 @@ class imageMosaic {
 
   } // generate_image_from_json
 
-
+  //**************************************************************************************//
   // Generate the pixel boxes.
   function generate_pixel_boxes ($rgb_array) {
 
@@ -503,13 +503,13 @@ class imageMosaic {
 
   } // generate_pixel_boxes
 
-
-  // Convert RGB values to .
+  //**************************************************************************************//
+  // Convert RGB values to hex.
   function rgb_to_hex ($rgb_array) {
     return sprintf("%02X%02X%02X", $rgb_array['red'], $rgb_array['green'], $rgb_array['blue']);
   } // rgb_to_hex
 
-
+  //**************************************************************************************//
   // Generate the pixels.
   function generate_pixels ($image_processed) {
 
@@ -562,7 +562,7 @@ class imageMosaic {
 
   } // generate_pixels
 
-
+  //**************************************************************************************//
   // Render the pixel boxes into a container.
   function render_pixel_box_container ($blocks) {
 
@@ -581,7 +581,7 @@ class imageMosaic {
 
   } // render_pixel_box_container
 
-
+  //**************************************************************************************//
   // Render the image straight to the browser.
   function render_image ($image_processed) {
 
@@ -592,7 +592,6 @@ class imageMosaic {
     imagejpeg($image_processed, null, 60);
 
   } // renderImage
-
 
 } // imageMosaic
 
