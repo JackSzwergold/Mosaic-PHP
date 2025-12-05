@@ -80,8 +80,6 @@ class frontendDisplay {
 
   private $ad_banner = NULL;
 
-  private $page_markdown_file = NULL;
-
   public function __construct() {
 
     if (!defined('BASE_PATH')) {
@@ -212,14 +210,7 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
-  // Set the page content markdown file.
-  function setPageContentMarkdown($md_file = null) {
-    $this->page_markdown_file = $md_file;
-  } // setPageContentMarkdown
-
-
-  //**************************************************************************************//
-  // Set the page content markdown file.
+  // Set the page content JSON content.
   function setPageJSONContent($json_content = null) {
     $this->json_content = $json_content;
   } // setPageJSONContent
@@ -356,7 +347,7 @@ class frontendDisplay {
   function buildCoreContent() {
 
     //**************************************************************************************//
-    // Set the HTML content or load the markdown content as HTML content.
+    // Set the HTML content.
 
     if (!empty($this->html_content)) {
       $this->html_content = $this->html_content;
