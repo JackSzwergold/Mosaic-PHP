@@ -96,13 +96,13 @@ class requestFiltering {
     global $VALID_CONTROLLERS;
 
     $url_parts = array();
-	foreach ($VALID_CONTROLLERS as $controller) {
-	  if (array_key_exists($controller, $params) && !empty($params[$controller]) && $params[$controller] != 'index') {
-		$url_parts[$controller] = rawurlencode($params[$controller]);
-	  }
-	}
+  foreach ($VALID_CONTROLLERS as $controller) {
+    if (array_key_exists($controller, $params) && !empty($params[$controller]) && $params[$controller] != 'index') {
+    $url_parts[$controller] = rawurlencode($params[$controller]);
+    }
+  }
 
-	return $url_parts;
+  return $url_parts;
 
   } // process_url_parts
 
@@ -114,8 +114,8 @@ class requestFiltering {
     $controller = $SITE_DEFAULT_CONTROLLER;
 
     if (!empty($url_parts)) {
-	  if (array_key_exists('parent', $url_parts) && !empty($url_parts['parent'])) {
-	    $controller = $url_parts['parent'];
+    if (array_key_exists('parent', $url_parts) && !empty($url_parts['parent'])) {
+      $controller = $url_parts['parent'];
       }
     }
 
@@ -130,7 +130,7 @@ class requestFiltering {
     $page_base = BASE_URL;
 
     if (!empty($controller)) {
-	  $page_base = BASE_URL . $controller . '/';
+    $page_base = BASE_URL . $controller . '/';
     }
 
     return $page_base;
