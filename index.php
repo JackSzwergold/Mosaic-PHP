@@ -24,7 +24,6 @@
 
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
-
 require_once 'conf/conf.inc.php';
 require_once BASE_FILEPATH . '/common/functions.inc.php';
 require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
@@ -43,8 +42,6 @@ $page_query_string_append = $requestFilteringClass->process_query_string_append(
 $url_parts = $requestFilteringClass->process_url_parts($params);
 $controller = $requestFilteringClass->process_controllers($url_parts);
 $page_base = $requestFilteringClass->process_page_base($controller);
-
-
 
 //**************************************************************************************//
 // Now deal with the front end display helper class related stuff.
