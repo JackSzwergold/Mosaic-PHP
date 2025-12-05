@@ -46,7 +46,7 @@ set :content_data_path, "#{fetch(:root_deploy_path)}/content"
 set :parent_site_path, 'szwergold.com'
 
 # The path where projects get deployed.
-set :projects_path, "projects_base"
+set :projects_path, "projects"
 
 namespace :deploy do
 
