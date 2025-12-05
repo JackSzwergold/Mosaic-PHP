@@ -24,11 +24,11 @@
 
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
-require_once 'conf/conf.inc.php';
-require_once BASE_FILEPATH . '/common/functions.inc.php';
-require_once BASE_FILEPATH . '/lib/frontendDisplay.class.php';
-require_once BASE_FILEPATH . '/lib/frontendDisplayHelper.class.php';
-require_once BASE_FILEPATH . '/lib/requestFiltering.class.php';
+require_once('conf/conf.inc.php');
+require_once(BASE_FILEPATH . '/common/functions.inc.php');
+require_once(BASE_FILEPATH . '/lib/frontendDisplay.class.php');
+require_once(BASE_FILEPATH . '/lib/frontendDisplayHelper.class.php');
+require_once(BASE_FILEPATH . '/lib/requestFiltering.class.php');
 
 //**************************************************************************************//
 // Manage the request filering stuff.
