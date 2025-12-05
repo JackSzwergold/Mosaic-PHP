@@ -49,7 +49,7 @@ class frontendDisplay {
 
   private $base = NULL;
   private $page_depth = 0;
-  private $markdown_parts = array();
+  private $param_parts = array();
 
   private $view_mode = NULL;
   private $view_div = NULL;
@@ -281,10 +281,10 @@ class frontendDisplay {
 
 
   //**************************************************************************************//
-  // Set the page depth and markdown part.
-  function setPageURLParts($markdown_parts = array()) {
-    $this->page_depth = count($markdown_parts);
-    $this->markdown_parts = $markdown_parts;
+  // Set the page depth and param parts.
+  function setPageURLParts($param_parts = array()) {
+    $this->page_depth = count($param_parts);
+    $this->param_parts = $param_parts;
   } // setPageURLParts
 
 
@@ -621,8 +621,8 @@ class frontendDisplay {
 
     $li_items_l = array();
     if ($this->page_depth > 0) {
-      $markdown_sliced = array_slice(array_values($this->markdown_parts), 0, -1);
-      $back_url = BASE_PATH . join('/', $markdown_sliced);
+      $params_sliced = array_slice(array_values($this->param_parts), 0, -1);
+      $back_url = BASE_PATH . join('/', $params_sliced);
       $li_items_l[] = '<li id="back">'
                     . sprintf('<a href="%s" title="back">«</a>', $back_url)
                     . '</li>'
