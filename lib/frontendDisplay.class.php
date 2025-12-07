@@ -129,12 +129,6 @@ class frontendDisplay {
   } // setPageFBAdmins
 
   //**************************************************************************************//
-  // Set the page html content.
-  function setPageContent($html_content = null) {
-    $this->html_content = $html_content;
-  } // setPageContent
-
-  //**************************************************************************************//
   // Set the JavaScript stuff.
   function setJavaScriptItems($javascripts = array()) {
     $this->javascripts = $javascripts;

@@ -56,7 +56,7 @@ $VIEW_MODE = $frontendDisplayHelperClass->VIEW_MODE;
 // Init the front end display class and set other things.
 $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
-$frontendDisplayClass->setPageContent($html_content);
+$frontendDisplayClass->html_content = $html_content;
 $frontendDisplayClass->setLinkItems($LINK_ITEMS);
 
 //**************************************************************************************//
