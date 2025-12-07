@@ -148,6 +148,7 @@ class frontendDisplay {
             ;
     }
 
+    //************************************************************************************//
     // Set the wrapper divs.
     $div_opening = $div_closing = '';
     if (!empty($this->page_div_wrappper_array)) {
