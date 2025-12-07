@@ -96,7 +96,7 @@ class frontendDisplay {
 
       //**********************************************************************************//
       // Set the HTML content class.
-      $this->html_content = join('', $css_array) . $body;
+      $this->html_content = $body;
 
     } // if
 
