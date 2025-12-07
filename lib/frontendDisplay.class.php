@@ -33,11 +33,11 @@ class frontendDisplay {
   private $JSON_MODE = FALSE;
 
   private $content;
-  private $html_content;
+  public $html_content;
   private $json_content;
 
-  private $content_type = 'text/html';
-  private $charset = 'utf-8';
+  public $content_type = 'text/html';
+  public $charset = 'utf-8';
   private $doctype = 'html5';
   private $favicons = array();
 
@@ -298,7 +298,7 @@ class frontendDisplay {
     if (!$this->JSON_MODE) {
       $this->buildHTMLContent();
     } // if
-    $this->renderContent($response_header);
+    // $this->renderContent($response_header);
   } // initHTMLContent
 
   //**************************************************************************************//

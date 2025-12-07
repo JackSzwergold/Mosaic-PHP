@@ -93,4 +93,12 @@ $frontendDisplayClass->initCoreContent();
 // Init and display the final content.
 $frontendDisplayClass->initHTMLContent();
 
+//**************************************************************************************//
+// Init and display the final content.
+$content_type = 'text/html';
+$charset = 'utf-8';
+header(sprintf('Content-Type: %s; charset=%s', $content_type, $charset));
+echo $frontendDisplayClass->html_content;
+exit();
+
 ?>
