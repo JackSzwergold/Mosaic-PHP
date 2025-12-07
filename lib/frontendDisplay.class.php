@@ -324,38 +324,8 @@ class frontendDisplay {
       // $favicon_array = $this->setHeaderLinkArray($this->favicons);
 
       //**********************************************************************************//
-      // Set the HTML/XHTML doctype.
-      // $doctype = $this->setDoctype();
-
-      //**********************************************************************************//
-      // Set the JavaScript.
-      // $javascript_array = $this->setJavaScriptArray();
-
-      //**********************************************************************************//
       // Set the CSS.
       $css_array = $this->setHeaderLinkArray($this->link_items);
-
-      //**********************************************************************************//
-      // Set the body header.
-      // $header = '';
-      // if (!empty($this->header_content)) {
-      //   $header =
-      //       '<div class="Header">'
-      //     . $this->header_content
-      //     . '</div>'
-      //     ;
-      // } // if
-
-      //**********************************************************************************//
-      // Set the body footer.
-      // $footer = '';
-      // if (!empty($this->footer_content)) {
-      //   $footer =
-      //       '<div class="Footer">'
-      //     . $this->footer_content
-      //     . '</div>'
-      //     ;
-      // } // if
 
       //**********************************************************************************//
       // Set the view wrapper.
@@ -397,41 +367,6 @@ class frontendDisplay {
     } // if
 
   } // buildHTMLContent
-
-  //**************************************************************************************//
-  // Set the doctype.
-  function setDoctype() {
-
-    $ret = '';
-
-    if ($this->doctype == 'xhtml') {
-      $ret =
-          '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
-        . '<html xmlns="http://www.w3.org/1999/xhtml">'
-        ;
-    } // if
-    else if ($this->doctype == 'html5') {
-      $ret =
-          '<!DOCTYPE html>'
-        . '<html lang="en">'
-        ;
-    } // else if
-
-    return $ret;
-
-   } // setDoctype
-
-
-  //**************************************************************************************//
-  // Set the JavaScript stuff.
-  function setJavaScriptArray() {
-    $ret = array();
-    foreach ($this->javascripts as $javascript) {
-      $ret[] = sprintf('<script src="' . BASE_URL . '%s" defer="defer"></script>', $javascript);
-    } // foreach
-    return $ret;
-  } // setJavaScriptArray
-
 
   //**************************************************************************************//
   // Set the header link stuff.
@@ -671,37 +606,6 @@ class frontendDisplay {
     return $ret;
 
   } // setWrapper
-
-  //**************************************************************************************//
-  // Function to send content to output.
-  private function renderContent ($response_header = null) {
-    global $VALID_CONTENT_TYPES, $VALID_CHARSETS, $DEBUG_OUTPUT_JSON;
-
-    // If we are in debugging mode, just dump the content array & exit.
-    if ($this->JSON_MODE && !empty($this->json_content)) {
-      $json_content = $this->json_encode ? json_encode($this->json_content) : $this->json_content;
-      header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
-      if ($this->json_via_header) {
-        header('X-JSON:' . $json_content);
-      }
-      else {
-        header($response_header);
-        echo $json_content;
-      }
-      exit();
-    }
-    else if ($this->DEBUG_MODE && !empty($this->html_content)) {
-      header('Content-Type: text/plain; charset=utf-8');
-      echo $this->html_content;
-      exit();
-    }
-    else {
-      header(sprintf('Content-Type: %s; charset=%s', $this->content_type, $this->charset));
-      echo $this->html_content;
-      exit();
-    }
-
-  } // renderContent
 
 } // frontendDisplay
 
