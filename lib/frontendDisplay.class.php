@@ -99,24 +99,6 @@ class frontendDisplay {
   } // setPageURL
 
   //**************************************************************************************//
-  // Set the page copyright.
-  function setPageCopyright($page_copyright = null) {
-    $this->page_copyright = $page_copyright;
-  } // setPageCopyright
-
-  //**************************************************************************************//
-  // Set the page license.
-  function setPageLicense($page_license = null) {
-    $this->page_license = $page_license;
-  } // setPageLicense
-
-  //**************************************************************************************//
-  // Set the page description.
-  function setPageDescription($page_description = null) {
-    $this->page_description = $page_description;
-  } // setPageDescription
-
-  //**************************************************************************************//
   // Set the page image.
   function setPageImage($page_image = null) {
     $this->page_image = $page_image;
@@ -153,31 +135,6 @@ class frontendDisplay {
   } // setPageContent
 
   //**************************************************************************************//
-  // Set the page DIVs.
-  function setPageDivs($page_div_wrappper_array = array()) {
-    $this->page_div_wrappper_array = $page_div_wrappper_array;
-  } // setPageDivs
-
-  //**************************************************************************************//
-  // Set the page DIV wrapper.
-  function setPageDivWrapper($page_div_wrapper_class = null, $page_div_wrapper_id = null) {
-    $this->page_div_wrapper_class = $page_div_wrapper_class;
-    $this->page_div_wrapper_id = $page_div_wrapper_id;
-  } // setPageDivWrapper
-
-  //**************************************************************************************//
-  // Set the page viewport.
-  function setPageViewport($page_viewport = null) {
-    $this->page_viewport = $page_viewport;
-  } // setPageViewport
-
-  //**************************************************************************************//
-  // Set the page robots.
-  function setPageRobots($page_robots = null) {
-    $this->page_robots = $page_robots;
-  } // setPageRobots
-
-  //**************************************************************************************//
   // Set the JavaScript stuff.
   function setJavaScriptItems($javascripts = array()) {
     $this->javascripts = $javascripts;
@@ -188,30 +145,6 @@ class frontendDisplay {
   function setLinkItems($link_items = array()) {
     $this->link_items = $link_items;
   } // setLinkItems
-
-  //**************************************************************************************//
-  // Set the Favicon stuff.
-  function setFaviconItems($favicons = array()) {
-    $this->favicons = $favicons;
-  } // setFaviconItems
-
-  //**************************************************************************************//
-  // Set the HTML base.
-  function setPageBase($page_base = null) {
-    $this->base = $page_base;
-  } // setPageBase
-
-  //**************************************************************************************//
-  // Set the social media info.
-  function setSocialMediaInfo($social_media_info = null) {
-    $this->social_media_info = $social_media_info;
-  } // setSocialMediaInfo
-
-  //**************************************************************************************//
-  // Set the ad banner stuff.
-  function setAdBanner($ad_banner = null) {
-    $this->ad_banner = $ad_banner;
-  } // setAdBanner
 
   //**************************************************************************************//
   // Set the body header.
@@ -498,15 +431,6 @@ class frontendDisplay {
     return $ret;
 
   } // setNavigation
-
-  //**************************************************************************************//
-  // Set the ad banner stuff.
-  function setAdBannerFinal() {
-    return '<div class="Ad">'
-         . sprintf($this->ad_banner, $this->page_keyword)
-         . '</div>'
-         ;
-  } // setAdBannerFinal
 
   //**************************************************************************************//
   // Set the wrapper.

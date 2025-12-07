@@ -47,14 +47,11 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 // Now deal with the front end display helper class related stuff.
 $frontendDisplayHelperClass = new frontendDisplayHelper();
 $frontendDisplayHelperClass->setController($controller);
-$frontendDisplayHelperClass->setPageBase($page_base);
 $frontendDisplayHelperClass->setPageBaseSuffix($page_query_string_append);
 $frontendDisplayHelperClass->setCount(array_key_exists('count', $params) ? $params['count'] : 1);
 $frontendDisplayHelperClass->initContent($DEBUG_MODE);
 
 $VIEW_MODE = $frontendDisplayHelperClass->getViewMode();
-// $page_title = $frontendDisplayHelperClass->getPageTitle();
-// $url_parts = $frontendDisplayHelperClass->getURLParts();
 $html_content = $frontendDisplayHelperClass->getHTMLContent();
 $json_content = $frontendDisplayHelperClass->getJSONContent();
 
@@ -62,20 +59,9 @@ $json_content = $frontendDisplayHelperClass->getJSONContent();
 // Init the front end display class and set other things.
 $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
-// $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
-// $frontendDisplayClass->setPageLicense($SITE_LICENSE);
-// $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 $frontendDisplayClass->setPageContent($html_content);
-// $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
-// $frontendDisplayClass->setPageDivWrapper($PAGE_DIV_WRAPPER);
-// $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
-// $frontendDisplayClass->setPageRobots($SITE_ROBOTS);
 $frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
 $frontendDisplayClass->setLinkItems($LINK_ITEMS);
-// $frontendDisplayClass->setFaviconItems($FAVICONS);
-// $frontendDisplayClass->setPageBase($page_base . $page_query_string_append);
-// $frontendDisplayClass->setSocialMediaInfo($SOCIAL_MEDIA_INFO);
-// $frontendDisplayClass->setAdBanner($AMAZON_RECOMMENDATION);
 
 //**************************************************************************************//
 // Init the core content and set the header and footer items.
