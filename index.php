@@ -57,7 +57,7 @@ $VIEW_MODE = $frontendDisplayHelperClass->VIEW_MODE;
 $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
 $frontendDisplayClass->html_content = $html_content;
-$frontendDisplayClass->setLinkItems($LINK_ITEMS);
+$frontendDisplayClass->link_items = $LINK_ITEMS;
 
 //**************************************************************************************//
 // Init the core content and set the header and footer items.
