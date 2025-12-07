@@ -18,9 +18,8 @@
  *
  */
 
-//**************************************************************************************//
+//****************************************************************************************//
 // The beginnings of a content creation class.
-
 class requestFiltering {
 
   //**************************************************************************************//
@@ -28,6 +27,7 @@ class requestFiltering {
   function process_parameters () {
     global $VALID_GET_PARAMETERS;
 
+    //************************************************************************************//
     // Roll through the GET parameters and validate them.
     $params = array();
     foreach($VALID_GET_PARAMETERS as $key => $value) {
@@ -35,25 +35,25 @@ class requestFiltering {
         if (in_array($value, $VALID_GET_PARAMETERS)) {
           if ($value == 'parent') {
             $params[$value] = preg_replace('/[^A-Za-z-_]/s', '', trim($_GET[$value]));
-          }
+          } // if
           else if ($value == '_debug') {
             $params[$value] = TRUE;
-          }
+          } // else if
           else if ($value == 'json') {
             $params[$value] = TRUE;
-          }
+          } // else if
           else if ($value == 'offset') {
             $params[$value] = intval($_GET[$value]);
-          }
+          } // else if
           else if ($value == 'count') {
             $params[$value] = intval($_GET[$value]);
-          }
+          } // else if
           else {
             $params[$value] = trim($_GET[$value]);
-          }
-        }
-      }
-    }
+          } // else
+        } // if
+      } // if
+    } // foreach
 
     return $params;
 
@@ -62,17 +62,13 @@ class requestFiltering {
   //**************************************************************************************//
   // Process the debug mode.
   function process_debug_mode ($params = array()) {
-
     return array_key_exists('_debug', $params);
-
   } // process_debug_mode
 
   //**************************************************************************************//
   // Process the JSON mode.
   function process_json_mode ($params = array()) {
-
     return array_key_exists('json', $params);
-
   } // process_json_mode
 
   //**************************************************************************************//
@@ -83,8 +79,8 @@ class requestFiltering {
     foreach ($modes as $mode_key => $mode_value) {
       if ($mode_key && $mode_value) {
         $ret[$mode_key] = TRUE;
-      }
-    }
+      } // if
+    } // foreach
 
     return !empty($ret) ? '?' . implode('&', array_keys($ret)) : null;
 
@@ -96,13 +92,13 @@ class requestFiltering {
     global $VALID_CONTROLLERS;
 
     $url_parts = array();
-  foreach ($VALID_CONTROLLERS as $controller) {
-    if (array_key_exists($controller, $params) && !empty($params[$controller]) && $params[$controller] != 'index') {
-    $url_parts[$controller] = rawurlencode($params[$controller]);
-    }
-  }
+    foreach ($VALID_CONTROLLERS as $controller) {
+      if (array_key_exists($controller, $params) && !empty($params[$controller]) && $params[$controller] != 'index') {
+        $url_parts[$controller] = rawurlencode($params[$controller]);
+      } // if
+    } // foreach
 
-  return $url_parts;
+    return $url_parts;
 
   } // process_url_parts
 
@@ -114,10 +110,10 @@ class requestFiltering {
     $controller = $SITE_DEFAULT_CONTROLLER;
 
     if (!empty($url_parts)) {
-    if (array_key_exists('parent', $url_parts) && !empty($url_parts['parent'])) {
-      $controller = $url_parts['parent'];
-      }
-    }
+      if (array_key_exists('parent', $url_parts) && !empty($url_parts['parent'])) {
+        $controller = $url_parts['parent'];
+      } // if
+    } // if
 
     return $controller;
 
@@ -130,8 +126,8 @@ class requestFiltering {
     $page_base = BASE_URL;
 
     if (!empty($controller)) {
-    $page_base = BASE_URL . $controller . '/';
-    }
+      $page_base = BASE_URL . $controller . '/';
+    } // if
 
     return $page_base;
 
