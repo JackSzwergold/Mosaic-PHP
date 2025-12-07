@@ -74,7 +74,7 @@ $substitution_map['[[BASE_URL]]'] = BASE_URL;
 $substitution_map['[[BASE_URI]]'] = BASE_URI;
 $substitution_map['[[NONCE]]'] = $NONCE;
 $substitution_map['[[YEAR]]'] = date('Y');
-$substitution_map['[[CONTENT]]'] = $frontendDisplayClass->html_content;
+$substitution_map['[[HTML_CONTENT]]'] = $frontendDisplayClass->html_content;
 
 /******************************************************************************/
 // Load the full page HTML template.

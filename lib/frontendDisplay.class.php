@@ -120,7 +120,7 @@ class frontendDisplay {
         $parts[] = $key . '="' . $value . '"';
       } // foreach
       // $ret[$array_type] = sprintf('<!-- %s link_items -->', $type);
-      $ret[$array_type] = sprintf('<link %s />', join(' ', $parts));
+      $ret[$array_type] = sprintf('<link %s>', join(' ', $parts));
     } // foreach
     return $ret;
   } // setHeaderLinkArray
