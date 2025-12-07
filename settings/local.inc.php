@@ -19,16 +19,6 @@
  */
 
 /**************************************************************************************************/
-// Define localized defaults.
-
-// Set the base URL path.
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
-  define('BASE_PATH', '/Mosaic-PHP/');
-}
-else {
-  define('BASE_PATH', '/projects_base/mosaic/');
-}
-
 // Site descriptive info.
 $SITE_TITLE = 'Mosaic';
 $SITE_DESCRIPTION = 'A dynamically generated image mosaic using PHP, the GD graphics library, HTML &amp; CSS.';
@@ -43,6 +33,7 @@ $SITE_FB_ADMINS = '504768652';
 $SITE_KEYWORD = 'lexicon';
 $SITE_DEFAULT_CONTROLLER = 'small';
 
+/**************************************************************************************************/
 // Favicon info.
 $FAVICONS = array();
 $FAVICONS['standard']['rel'] = 'icon';
@@ -60,6 +51,7 @@ $FAVICONS['ipad']['rel'] = 'apple-touch-icon-precomposed';
 $FAVICONS['ipad']['sizes'] = '72x72';
 $FAVICONS['ipad']['href'] = 'favicons/apple-touch-icon-72x72-precomposed.png';
 
+/**************************************************************************************************/
 // Social media info.
 $SOCIAL_MEDIA_INFO = array();
 $SOCIAL_MEDIA_INFO['instagram']['short_name'] = 'Instagram';
@@ -67,21 +59,26 @@ $SOCIAL_MEDIA_INFO['instagram']['emoji'] = '📸';
 $SOCIAL_MEDIA_INFO['instagram']['url'] = 'https://www.instagram.com/jackszwergold/';
 $SOCIAL_MEDIA_INFO['instagram']['description'] = 'Check me out on Instagram.';
 
+/**************************************************************************************************/
 // Amazon recommendation banner.
 $AMAZON_RECOMMENDATION = '';
 
+/**************************************************************************************************/
 // Set the page DIVs array.
 $PAGE_DIVS_ARRAY = array();
 $PAGE_DIVS_ARRAY[] = 'Wrapper';
 $PAGE_DIVS_ARRAY[] = 'Core';
 $PAGE_DIVS_ARRAY[] = 'Grid';
 
+/**************************************************************************************************/
 // Set the page DIV wrapper.
 $PAGE_DIV_WRAPPER = 'PixelBoxWrapper';
 
+/**************************************************************************************************/
 // Set the JavaScript array.
 $JAVASCRIPTS_ITEMS = array();
 
+/**************************************************************************************************/
 // Set the link items array.
 $LINK_ITEMS = array();
 $LINK_ITEMS['style_css']['rel'] = 'stylesheet';
@@ -90,6 +87,7 @@ $LINK_ITEMS['style_css']['href'] = 'css/style.css';
 $LINK_ITEMS['author']['rel'] = 'author';
 $LINK_ITEMS['author']['href'] = 'https://plus.google.com/+JackSzwergold';
 
+/**************************************************************************************************/
 // Set the controller and parameter stuff.
 $VALID_CONTROLLERS = array('parent', 'child', 'grandchild', 'greatgrandchild');
 $DISPLAY_CONTROLLERS = array('parent');
