@@ -61,29 +61,29 @@ $json_content = $frontendDisplayHelperClass->getJSONContent();
 //**************************************************************************************//
 // Init the front end display class and set other things.
 $frontendDisplayClass = new frontendDisplay();
-$frontendDisplayClass->setPageJSONContent($json_content);
-$frontendDisplayClass->setJSONMode($JSON_MODE);
-$frontendDisplayClass->setDebugMode($DEBUG_MODE);
-$frontendDisplayClass->setContentType(($JSON_MODE ? 'application/json' : 'text/html'));
+// $frontendDisplayClass->setPageJSONContent($json_content);
+// $frontendDisplayClass->setJSONMode($JSON_MODE);
+// $frontendDisplayClass->setDebugMode($DEBUG_MODE);
+// $frontendDisplayClass->setContentType(($JSON_MODE ? 'application/json' : 'text/html'));
 $frontendDisplayClass->setCharset('utf-8');
-$frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
-$frontendDisplayClass->setPageTitle($SITE_TITLE);
-$frontendDisplayClass->setPageURL($SITE_URL);
-$frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
-$frontendDisplayClass->setPageLicense($SITE_LICENSE);
-$frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
+// $frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
+// $frontendDisplayClass->setPageTitle($SITE_TITLE);
+// $frontendDisplayClass->setPageURL($SITE_URL);
+// $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
+// $frontendDisplayClass->setPageLicense($SITE_LICENSE);
+// $frontendDisplayClass->setPageDescription($SITE_DESCRIPTION);
 $frontendDisplayClass->setPageContent($html_content);
-$frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
-$frontendDisplayClass->setPageDivWrapper($PAGE_DIV_WRAPPER);
-$frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
-$frontendDisplayClass->setPageRobots($SITE_ROBOTS);
-$frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
-$frontendDisplayClass->setLinkItems($LINK_ITEMS);
-$frontendDisplayClass->setFaviconItems($FAVICONS);
-$frontendDisplayClass->setPageBase($page_base . $page_query_string_append);
-$frontendDisplayClass->setPageURLParts($params);
-$frontendDisplayClass->setSocialMediaInfo($SOCIAL_MEDIA_INFO);
-$frontendDisplayClass->setAdBanner($AMAZON_RECOMMENDATION);
+// $frontendDisplayClass->setPageDivs($PAGE_DIVS_ARRAY);
+// $frontendDisplayClass->setPageDivWrapper($PAGE_DIV_WRAPPER);
+// $frontendDisplayClass->setPageViewport($SITE_VIEWPORT);
+// $frontendDisplayClass->setPageRobots($SITE_ROBOTS);
+// $frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
+// $frontendDisplayClass->setLinkItems($LINK_ITEMS);
+// $frontendDisplayClass->setFaviconItems($FAVICONS);
+// $frontendDisplayClass->setPageBase($page_base . $page_query_string_append);
+// $frontendDisplayClass->setPageURLParts($params);
+// $frontendDisplayClass->setSocialMediaInfo($SOCIAL_MEDIA_INFO);
+// $frontendDisplayClass->setAdBanner($AMAZON_RECOMMENDATION);
 
 //**************************************************************************************//
 // Init the core content and set the header and footer items.
