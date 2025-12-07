@@ -83,47 +83,7 @@ class frontendDisplay {
   //**************************************************************************************//
   // Set the constructor.
   public function __construct() {
-    if (!defined('BASE_PATH')) {
-      define('BASE_PATH', '/');
-    } // if
-    if (!defined('BASE_URL')) {
-      define('BASE_URL', '');
-    } // if
   } // __construct
-
-  //**************************************************************************************//
-  // Set the debug mode.
-  function setDebugMode($DEBUG_MODE = null) {
-    if (!empty($DEBUG_MODE)) {
-      $this->DEBUG_MODE = $DEBUG_MODE;
-    } // if
-  } // setDebugMode
-
-  //**************************************************************************************//
-  // Set the JSON mode.
-  function setJSONMode($JSON_MODE = null) {
-    if (!empty($JSON_MODE)) {
-      $this->JSON_MODE = $JSON_MODE;
-    } // if
-  } // setJSONMode
-
-  //**************************************************************************************//
-  // Set the character set.
-  function setContentType($content_type = null) {
-    global $VALID_CONTENT_TYPES;
-    if (!empty($content_type) && in_array($content_type, $VALID_CONTENT_TYPES)) {
-      $this->content_type = $content_type;
-    } // if
-  } // setContentType
-
-  //**************************************************************************************//
-  // Set the character set.
-  function setCharset($charset = null) {
-    global $VALID_CHARSETS;
-    if (!empty($charset) && in_array(strtolower($charset), $VALID_CHARSETS)) {
-      $this->charset = $charset;
-    } // if
-  } // setCharset
 
   //**************************************************************************************//
   // Set the page mode.
@@ -149,12 +109,6 @@ class frontendDisplay {
   function setPageLicense($page_license = null) {
     $this->page_license = $page_license;
   } // setPageLicense
-
-  //**************************************************************************************//
-  // Set the page title.
-  function setPageTitle($page_title = null) {
-    $this->page_title = $page_title;
-  } // setPageTitle
 
   //**************************************************************************************//
   // Set the page description.
@@ -191,12 +145,6 @@ class frontendDisplay {
   function setPageFBAdmins($page_fb_admins = null) {
     $this->page_fb_admins = $page_fb_admins;
   } // setPageFBAdmins
-
-  //**************************************************************************************//
-  // Set the page content JSON content.
-  function setPageJSONContent($json_content = null) {
-    $this->json_content = $json_content;
-  } // setPageJSONContent
 
   //**************************************************************************************//
   // Set the page html content.
@@ -252,13 +200,6 @@ class frontendDisplay {
   function setPageBase($page_base = null) {
     $this->base = $page_base;
   } // setPageBase
-
-  //**************************************************************************************//
-  // Set the page depth and param parts.
-  function setPageURLParts($param_parts = array()) {
-    $this->page_depth = count($param_parts);
-    $this->param_parts = $param_parts;
-  } // setPageURLParts
 
   //**************************************************************************************//
   // Set the social media info.
