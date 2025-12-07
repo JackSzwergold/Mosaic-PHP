@@ -317,46 +317,45 @@ class frontendDisplay {
 
       //**********************************************************************************//
       // Set the meta tags
-      $meta_content_array = $this->setMetaTags($this->page_description, $this->page_viewport, $this->page_robots);
+      // $meta_content_array = $this->setMetaTags($this->page_description, $this->page_viewport, $this->page_robots);
 
       //**********************************************************************************//
       // Set the favicons.
-      $favicon_array = $this->setHeaderLinkArray($this->favicons);
+      // $favicon_array = $this->setHeaderLinkArray($this->favicons);
 
       //**********************************************************************************//
       // Set the HTML/XHTML doctype.
-      $doctype = $this->setDoctype();
+      // $doctype = $this->setDoctype();
 
       //**********************************************************************************//
       // Set the JavaScript.
-      $javascript_array = $this->setJavaScriptArray();
+      // $javascript_array = $this->setJavaScriptArray();
 
       //**********************************************************************************//
       // Set the CSS.
-
       $css_array = $this->setHeaderLinkArray($this->link_items);
 
       //**********************************************************************************//
       // Set the body header.
-      $header = '';
-      if (!empty($this->header_content)) {
-        $header =
-            '<div class="Header">'
-          . $this->header_content
-          . '</div>'
-          ;
-      } // if
+      // $header = '';
+      // if (!empty($this->header_content)) {
+      //   $header =
+      //       '<div class="Header">'
+      //     . $this->header_content
+      //     . '</div>'
+      //     ;
+      // } // if
 
       //**********************************************************************************//
       // Set the body footer.
-      $footer = '';
-      if (!empty($this->footer_content)) {
-        $footer =
-            '<div class="Footer">'
-          . $this->footer_content
-          . '</div>'
-          ;
-      } // if
+      // $footer = '';
+      // if (!empty($this->footer_content)) {
+      //   $footer =
+      //       '<div class="Footer">'
+      //     . $this->footer_content
+      //     . '</div>'
+      //     ;
+      // } // if
 
       //**********************************************************************************//
       // Set the view wrapper.
@@ -373,27 +372,27 @@ class frontendDisplay {
 
       //**********************************************************************************//
       // Set the final HTML content.
-      $ret =
-          $doctype
-        . '<head>'
-        . '<title>' . $this->page_title . '</title>'
-        . join('', $meta_content_array)
-        . join('', $css_array)
-        . join('', $favicon_array)
-        . join('', $javascript_array)
-        . (!empty($this->base) ? '<base href="' . $this->base . '" />' : '')
-        . '</head>'
-        . '<body>'
-        . $header
-        . $body
-        . $footer
-        . '</body>'
-        . '</html>'
-        ;
+      // $ret =
+      //     $doctype
+      //   . '<head>'
+      //   . '<title>' . $this->page_title . '</title>'
+      //   . join('', $meta_content_array)
+      //   . join('', $css_array)
+      //   . join('', $favicon_array)
+      //   . join('', $javascript_array)
+      //   . (!empty($this->base) ? '<base href="' . $this->base . '" />' : '')
+      //   . '</head>'
+      //   . '<body>'
+      //   . $header
+      //   . $body
+      //   . $footer
+      //   . '</body>'
+      //   . '</html>'
+      //   ;
 
       //**********************************************************************************//
       // Set the HTML content class.
-      $this->html_content = $ret;
+      $this->html_content = join('', $css_array) . $body;
 
     } // if
 
