@@ -53,7 +53,6 @@ $frontendDisplayHelperClass->initContent($DEBUG_MODE);
 
 $VIEW_MODE = $frontendDisplayHelperClass->getViewMode();
 $html_content = $frontendDisplayHelperClass->getHTMLContent();
-$json_content = $frontendDisplayHelperClass->getJSONContent();
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
