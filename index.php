@@ -73,8 +73,8 @@ $substitution_map = array();
 $substitution_map['[[BASE_URL]]'] = BASE_URL;
 $substitution_map['[[BASE_URI]]'] = BASE_URI;
 $substitution_map['[[NONCE]]'] = $NONCE;
+$substitution_map['[[YEAR]]'] = date('Y');
 $substitution_map['[[CONTENT]]'] = $frontendDisplayClass->html_content;
-
 
 /******************************************************************************/
 // Load the full page HTML template.
@@ -89,8 +89,8 @@ $full_page_html = strtr($full_page_html, $substitution_map);
 $content_type = 'text/html';
 $charset = 'utf-8';
 header(sprintf('Content-Type: %s; charset=%s', $content_type, $charset));
-// echo $full_page_html;
-echo $frontendDisplayClass->html_content;
+echo $full_page_html;
+// echo $frontendDisplayClass->html_content;
 exit();
 
 ?>
