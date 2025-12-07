@@ -29,7 +29,7 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 // The beginnings of a front end display helper class.
 class frontendDisplayHelper {
 
-  private $controller = '';
+  public $controller = '';
   private $page_base = '';
   private $page_base_suffix = '';
   private $page_title = '';
@@ -39,15 +39,6 @@ class frontendDisplayHelper {
   private $VIEW_MODE = null;
   private $DEBUG_MODE = FALSE;
   private $html_content = '';
-  private $json_content = '';
-
-  //**************************************************************************************//
-  // Set the selected controller.
-  public function setController ($value) {
-    if (!empty($value)) {
-      $this->controller = $value;
-    } // if
-  } // setController
 
   //**************************************************************************************//
   // Set the page base.
@@ -244,7 +235,7 @@ class frontendDisplayHelper {
 
     //**************************************************************************************//
     // Init the image item and related json array.
-    $image_item_array = $image_json_array = array();
+    $image_item_array = array();
 
     //**************************************************************************************//
     // Init the counter value.
@@ -264,12 +255,6 @@ class frontendDisplayHelper {
           . '</div><!-- .Padding -->'
           . '</li>'
           ;
-      } // if
-
-      //************************************************************************************//
-      // Set the image json array value.
-      if ($count < $mode_options[$this->VIEW_MODE]['json_display']) {
-        $image_json_array[$file] = $image['json'];
       } // if
 
       //************************************************************************************//
