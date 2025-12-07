@@ -244,8 +244,8 @@ class frontendDisplayHelper {
 
     //**************************************************************************************//
     // Set the return value.
-    // return $ret;
-    $this->html_content = $ret;
+    return $ret;
+    // $this->html_content = $ret;
 
   } // renderContent
 

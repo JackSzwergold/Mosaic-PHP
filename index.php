@@ -49,17 +49,14 @@ $frontendDisplayHelperClass = new frontendDisplayHelper();
 $frontendDisplayHelperClass->controller = $controller;
 $frontendDisplayHelperClass->page_base = $page_query_string_append;
 $frontendDisplayHelperClass->count = array_key_exists('count', $params) ? $params['count'] : 1;
-$frontendDisplayHelperClass->renderContent($DEBUG_MODE);
-
+$html_content = $frontendDisplayHelperClass->renderContent($DEBUG_MODE);
 $VIEW_MODE = $frontendDisplayHelperClass->VIEW_MODE;
-$html_content = $frontendDisplayHelperClass->html_content;
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
 $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
 $frontendDisplayClass->setPageContent($html_content);
-$frontendDisplayClass->setJavaScriptItems($JAVASCRIPTS_ITEMS);
 $frontendDisplayClass->setLinkItems($LINK_ITEMS);
 
 //**************************************************************************************//
@@ -69,7 +66,6 @@ $frontendDisplayClass->initCoreContent();
 //**************************************************************************************//
 // Init and display the final content.
 $frontendDisplayClass->initHTMLContent();
-
 
 // /******************************************************************************/
 // // Handle the substitution map stuff.
