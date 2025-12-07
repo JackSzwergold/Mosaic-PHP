@@ -82,7 +82,7 @@ class frontendDisplayHelper {
 
   //**************************************************************************************//
   // Init the content.
-  public function initContent($DEBUG_MODE = FALSE) {
+  public function renderContent($DEBUG_MODE = FALSE) {
 
    	//************************************************************************************//
   	// Set the view mode.
@@ -235,14 +235,19 @@ class frontendDisplayHelper {
     } // foreach
 
     //**************************************************************************************//
-    // Set the body content.
-    $this->html_content = 
+    // Set the return value.
+    $ret = 
         '<ul>'
       .  implode('', $image_item_array)
       . '</ul>'
       ;
 
-  } // initContent
+    //**************************************************************************************//
+    // Set the return value.
+    // return $ret;
+    $this->html_content = $ret;
+
+  } // renderContent
 
 } // frontendDisplayHelper
 

@@ -49,7 +49,7 @@ $frontendDisplayHelperClass = new frontendDisplayHelper();
 $frontendDisplayHelperClass->controller = $controller;
 $frontendDisplayHelperClass->page_base = $page_query_string_append;
 $frontendDisplayHelperClass->count = array_key_exists('count', $params) ? $params['count'] : 1;
-$frontendDisplayHelperClass->initContent($DEBUG_MODE);
+$frontendDisplayHelperClass->renderContent($DEBUG_MODE);
 
 $VIEW_MODE = $frontendDisplayHelperClass->VIEW_MODE;
 $html_content = $frontendDisplayHelperClass->html_content;
