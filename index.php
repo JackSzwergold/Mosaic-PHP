@@ -66,7 +66,7 @@ $frontendDisplayClass = new frontendDisplay();
 // $frontendDisplayClass->setDebugMode($DEBUG_MODE);
 // $frontendDisplayClass->setContentType(($JSON_MODE ? 'application/json' : 'text/html'));
 $frontendDisplayClass->setCharset('utf-8');
-// $frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
+$frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
 // $frontendDisplayClass->setPageTitle($SITE_TITLE);
 // $frontendDisplayClass->setPageURL($SITE_URL);
 // $frontendDisplayClass->setPageCopyright($SITE_COPYRIGHT);
