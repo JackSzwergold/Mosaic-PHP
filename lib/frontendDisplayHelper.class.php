@@ -30,15 +30,15 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 class frontendDisplayHelper {
 
   public $controller = '';
-  private $page_base = '';
-  private $page_base_suffix = '';
-  private $page_title = '';
-  private $count = 1;
+  public $page_base = '';
+  public $page_base_suffix = '';
+  public $page_title = '';
+  public $count = 1;
 
-  private $url_parts = array();
-  private $VIEW_MODE = null;
-  private $DEBUG_MODE = FALSE;
-  private $html_content = '';
+  public $url_parts = array();
+  public $VIEW_MODE = null;
+  public $DEBUG_MODE = FALSE;
+  public $html_content = '';
 
   //**************************************************************************************//
   // Set the page base.
@@ -57,41 +57,11 @@ class frontendDisplayHelper {
   } // setPageBaseSuffix
 
   //**************************************************************************************//
-  // Set the count.
-  public function setCount ($value) {
-    if (!empty($value)) {
-      $this->count = $value;
-    } // if
-  } // setCount
-
-  //**************************************************************************************//
-  //**************************************************************************************//
-  //**************************************************************************************//
   // Get the view mode.
   public function getViewMode () {
     return $this->VIEW_MODE;
   } // getViewMode
 
-  //**************************************************************************************//
-  // Get the page title.
-  public function getPageTitle () {
-    return $this->page_title;
-  } // getPageTitle
-
-  //**************************************************************************************//
-  // Get the URL parts.
-  public function getURLParts () {
-    return $this->url_parts;
-  } // getURLParts
-
-  //**************************************************************************************//
-  // Get the HTML content.
-  public function getHTMLContent () {
-    return $this->html_content;
-  } // getHTMLContent
-
-  //**************************************************************************************//
-  //**************************************************************************************//
   //**************************************************************************************//
   // Filter the view mode.
   private function filterViewMode ($mode = null, $mode_options = null) {
@@ -110,8 +80,9 @@ class frontendDisplayHelper {
 
   } // filterViewMode
 
-
-  public function initContent ($DEBUG_MODE = FALSE) {
+  //**************************************************************************************//
+  // Init the content.
+  public function initContent($DEBUG_MODE = FALSE) {
 
    	//************************************************************************************//
   	// Set the view mode.

@@ -47,12 +47,12 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 // Now deal with the front end display helper class related stuff.
 $frontendDisplayHelperClass = new frontendDisplayHelper();
 $frontendDisplayHelperClass->controller = $controller;
-$frontendDisplayHelperClass->setPageBaseSuffix($page_query_string_append);
-$frontendDisplayHelperClass->setCount(array_key_exists('count', $params) ? $params['count'] : 1);
+$frontendDisplayHelperClass->page_base = $page_query_string_append;
+$frontendDisplayHelperClass->count = array_key_exists('count', $params) ? $params['count'] : 1;
 $frontendDisplayHelperClass->initContent($DEBUG_MODE);
 
-$VIEW_MODE = $frontendDisplayHelperClass->getViewMode();
-$html_content = $frontendDisplayHelperClass->getHTMLContent();
+$VIEW_MODE = $frontendDisplayHelperClass->VIEW_MODE;
+$html_content = $frontendDisplayHelperClass->html_content;
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
