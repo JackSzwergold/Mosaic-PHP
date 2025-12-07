@@ -378,11 +378,11 @@ class frontendDisplay {
           $doctype
         . '<head>'
         . '<title>' . $this->page_title . '</title>'
+        . (!empty($this->base) ? '<base href="' . $this->base . '">' : '')
         . join('', $meta_content_array)
         . join('', $css_array)
         . join('', $favicon_array)
         . join('', $javascript_array)
-        . (!empty($this->base) ? '<base href="' . $this->base . '" />' : '')
         . '</head>'
         . '<body>'
         . $header
@@ -451,7 +451,7 @@ class frontendDisplay {
         $parts[] = $key . '="' . $value . '"';
       } // foreach
       // $ret[$array_type] = sprintf('<!-- %s link_items -->', $type);
-      $ret[$array_type] = sprintf('<link %s />', join(' ', $parts));
+      $ret[$array_type] = sprintf('<link %s>', join(' ', $parts));
     } // foreach
     return $ret;
   } // setHeaderLinkArray
@@ -540,17 +540,17 @@ class frontendDisplay {
 
     // Roll through the '$meta_http_equivs'
     foreach ($meta_http_equivs as $http_equiv_key => $http_equiv_value) {
-      $ret[] = sprintf('<meta http-equiv="%s" content="%s" />', $http_equiv_key, $http_equiv_value);
+      $ret[] = sprintf('<meta http-equiv="%s" content="%s">', $http_equiv_key, $http_equiv_value);
     }
 
     // Roll through the '$meta_names'
     foreach ($meta_names as $name_key => $name_value) {
-      $ret[] = sprintf('<meta name="%s" content="%s" />', $name_key, $name_value);
+      $ret[] = sprintf('<meta name="%s" content="%s">', $name_key, $name_value);
     }
 
     // Roll through the '$meta_properties'
     foreach ($meta_properties as $property_key => $property_value) {
-      $ret[] = sprintf('<meta property="%s" content="%s" />', $property_key, $property_value);
+      $ret[] = sprintf('<meta property="%s" content="%s">', $property_key, $property_value);
     }
 
     return $ret;
