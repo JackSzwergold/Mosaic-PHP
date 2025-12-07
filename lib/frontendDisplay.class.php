@@ -58,12 +58,6 @@ class frontendDisplay {
   } // initCoreContent
 
   //**************************************************************************************//
-  // Init the content.
-  function initHTMLContent($response_header = null) {
-    $this->buildHTMLContent();
-  } // initHTMLContent
-
-  //**************************************************************************************//
   // Build the core content.
   function buildCoreContent() {
     if (!empty($this->html_content)) {
@@ -96,7 +90,7 @@ class frontendDisplay {
 
       //**********************************************************************************//
       // Set the HTML content class.
-      $this->html_content = $body;
+      return $body;
 
     } // if
 
