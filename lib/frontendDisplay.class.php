@@ -309,7 +309,6 @@ class frontendDisplay {
     } // if
   } // buildCoreContent
 
-
   //**************************************************************************************//
   // Build the HTML content.
   function buildHTMLContent() {
@@ -399,7 +398,6 @@ class frontendDisplay {
     } // if
 
   } // buildHTMLContent
-
 
   //**************************************************************************************//
   // Set the doctype.
