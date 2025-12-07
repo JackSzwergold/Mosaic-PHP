@@ -39,7 +39,7 @@ class frontendDisplay {
   private $content_type = 'text/html';
   private $charset = 'utf-8';
   private $doctype = 'html5';
-  private $favicons = FALSE;
+  private $favicons = array();
 
   private $json_encode = FALSE;
   private $json_via_header = FALSE;
@@ -440,6 +440,9 @@ class frontendDisplay {
   // Set the header link stuff.
   function setHeaderLinkArray($array = array()) {
     $ret = array();
+    if (empty($array)) {
+      return $ret;
+    } // if
     foreach ($array as $array_type => $array_parts) {
       $parts = array();
       foreach ($array_parts as $key => $value) {
