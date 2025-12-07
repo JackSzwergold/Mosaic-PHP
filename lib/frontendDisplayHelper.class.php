@@ -24,7 +24,6 @@
 // Require the basics.
 require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 
-
 //**************************************************************************************//
 // The beginnings of a front end display helper class.
 class frontendDisplayHelper {
@@ -39,46 +38,6 @@ class frontendDisplayHelper {
   public $VIEW_MODE = null;
   public $DEBUG_MODE = FALSE;
   public $html_content = '';
-
-  //**************************************************************************************//
-  // Set the page base.
-  public function setPageBase ($value) {
-    if (!empty($value)) {
-      $this->page_base = $value;
-    } // if
-  } // setPageBase
-
-  //**************************************************************************************//
-  // Set the page base suffix.
-  public function setPageBaseSuffix ($value) {
-    if (!empty($value)) {
-      $this->page_base_suffix = $value;
-    } // if
-  } // setPageBaseSuffix
-
-  //**************************************************************************************//
-  // Get the view mode.
-  public function getViewMode () {
-    return $this->VIEW_MODE;
-  } // getViewMode
-
-  //**************************************************************************************//
-  // Filter the view mode.
-  private function filterViewMode ($mode = null, $mode_options = null) {
-    global $SITE_DEFAULT_CONTROLLER;
-
-    if (!empty($mode) && $mode == 'random') {
-      $mode_keys = array_keys($mode_options);
-      shuffle($mode_keys);
-      $mode = $mode_keys[0];
-    } // if
-    else if (!empty($mode) && !array_key_exists($mode, $mode_options)) {
-      $mode = $SITE_DEFAULT_CONTROLLER;
-    } // else if
-
-    return $mode;
-
-  } // filterViewMode
 
   //**************************************************************************************//
   // Init the content.
@@ -248,6 +207,24 @@ class frontendDisplayHelper {
     // $this->html_content = $ret;
 
   } // renderContent
+
+  //**************************************************************************************//
+  // Filter the view mode.
+  private function filterViewMode ($mode = null, $mode_options = null) {
+    global $SITE_DEFAULT_CONTROLLER;
+
+    if (!empty($mode) && $mode == 'random') {
+      $mode_keys = array_keys($mode_options);
+      shuffle($mode_keys);
+      $mode = $mode_keys[0];
+    } // if
+    else if (!empty($mode) && !array_key_exists($mode, $mode_options)) {
+      $mode = $SITE_DEFAULT_CONTROLLER;
+    } // else if
+
+    return $mode;
+
+  } // filterViewMode
 
 } // frontendDisplayHelper
 
