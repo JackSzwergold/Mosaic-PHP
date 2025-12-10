@@ -49,14 +49,16 @@ $mosaicHelper = new mosaicHelper();
 $mosaicHelper->controller = $controller;
 $mosaicHelper->page_base = $page_query_string_append;
 $mosaicHelper->count = array_key_exists('count', $params) ? $params['count'] : 1;
-$html_content = $mosaicHelper->renderContent($DEBUG_MODE);
-$VIEW_MODE = $mosaicHelper->VIEW_MODE;
+
+//**************************************************************************************//
+// Render the mosaic HTML content.
+$mosaid_html_content = $mosaicHelper->renderContent($DEBUG_MODE);
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
 $frontendDisplayClass = new frontendDisplay();
-$frontendDisplayClass->setViewMode($VIEW_MODE, TRUE);
-$frontendDisplayClass->html_content = $html_content;
+$frontendDisplayClass->setViewMode($mosaicHelper->VIEW_MODE, TRUE);
+$frontendDisplayClass->html_content = $mosaid_html_content;
 $frontendDisplayClass->link_items = $LINK_ITEMS;
 
 //**************************************************************************************//
