@@ -52,13 +52,13 @@ $mosaicHelper->count = array_key_exists('count', $params) ? $params['count'] : 1
 
 //**************************************************************************************//
 // Render the mosaic HTML content.
-$mosaid_html_content = $mosaicHelper->renderContent($DEBUG_MODE);
+$mosaic_html_content = $mosaicHelper->renderContent($DEBUG_MODE);
 
 //**************************************************************************************//
 // Init the front end display class and set other things.
 $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setViewMode($mosaicHelper->VIEW_MODE, TRUE);
-$frontendDisplayClass->html_content = $mosaid_html_content;
+$frontendDisplayClass->html_content = $mosaic_html_content;
 $frontendDisplayClass->link_items = $LINK_ITEMS;
 
 //**************************************************************************************//
