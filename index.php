@@ -67,7 +67,6 @@ $content_type = 'text/html';
 $charset = 'utf-8';
 header(sprintf('Content-Type: %s; charset=%s', $content_type, $charset));
 echo $full_page_html;
-// echo $frontendDisplayClass->html_content;
 exit();
 
 ?>
