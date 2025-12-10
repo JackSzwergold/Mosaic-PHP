@@ -26,7 +26,6 @@
 // Require the basic configuration settings & functions.
 require_once('settings/conf.inc.php');
 require_once(BASE_FILEPATH . '/common/functions.inc.php');
-require_once(BASE_FILEPATH . '/lib/frontendDisplay.class.php');
 require_once(BASE_FILEPATH . '/lib/mosaicHelper.class.php');
 require_once(BASE_FILEPATH . '/lib/requestFiltering.class.php');
 
@@ -48,19 +47,7 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 $mosaicHelper = new mosaicHelper();
 $mosaicHelper->controller = $controller;
 $mosaicHelper->page_base = $page_query_string_append;
-
-//**************************************************************************************//
-// Render the mosaic HTML content.
 $mosaic_html_content = $mosaicHelper->renderContent($DEBUG_MODE);
-
-//**************************************************************************************//
-// Init the front end display class and set other things.
-$frontendDisplayClass = new frontendDisplay();
-$frontendDisplayClass->setViewMode($mosaicHelper->VIEW_MODE, TRUE);
-$frontendDisplayClass->html_content = $mosaic_html_content;
-$frontendDisplayClass->link_items = $LINK_ITEMS;
-$frontendDisplayClass->initCoreContent();
-$html_content = $frontendDisplayClass->buildHTMLContent();
 
 /******************************************************************************/
 // Handle the substitution map stuff.
@@ -69,7 +56,8 @@ $substitution_map['[[BASE_URL]]'] = BASE_URL;
 $substitution_map['[[BASE_URI]]'] = BASE_URI;
 $substitution_map['[[NONCE]]'] = $NONCE;
 $substitution_map['[[YEAR]]'] = date('Y');
-$substitution_map['[[HTML_CONTENT]]'] = $html_content;
+$substitution_map['[[VIEW_MODE]]'] = $mosaicHelper->VIEW_MODE;
+$substitution_map['[[HTML_CONTENT]]'] = $mosaic_html_content;
 
 /******************************************************************************/
 // Load the full page HTML template.
