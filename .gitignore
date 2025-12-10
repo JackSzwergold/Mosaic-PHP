@@ -1,2 +1,17 @@
+# Ignore OS specific cruft.
 .DS_Store
-/cache*/*
+Thumbs.db
+
+# Ignore the local config stuff.
+# settings/local.php
+
+# Ignoring MySQL database dumps in the 'development_dbs'.
+development_dbs/*/*.sql.gz
+development_dbs/*/*.sql
+development_dbs/*.sql.gz
+development_dbs/*.sql
+
+# Ignoring cached items in the 'cache/' directory.
+cache/data/*.json
+cache/data/*.xml
+cache/media/*

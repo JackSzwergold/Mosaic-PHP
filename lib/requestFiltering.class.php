@@ -60,18 +60,6 @@ class requestFiltering {
   } // process_parameters
 
   //**************************************************************************************//
-  // Process the debug mode.
-  function process_debug_mode ($params = array()) {
-    return array_key_exists('_debug', $params);
-  } // process_debug_mode
-
-  //**************************************************************************************//
-  // Process the JSON mode.
-  function process_json_mode ($params = array()) {
-    return array_key_exists('json', $params);
-  } // process_json_mode
-
-  //**************************************************************************************//
   // Process the query string append.
   function process_query_string_append ($modes = array()) {
 

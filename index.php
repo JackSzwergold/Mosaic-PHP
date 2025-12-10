@@ -34,19 +34,13 @@ require_once(BASE_FILEPATH . '/lib/requestFiltering.class.php');
 $requestFilteringClass = new requestFiltering();
 $params = $requestFilteringClass->process_parameters();
 
-$JSON_MODE = $requestFilteringClass->process_json_mode($params);
-$DEBUG_MODE = $requestFilteringClass->process_debug_mode($params);
-$page_query_string_append = $requestFilteringClass->process_query_string_append(array('json' => $JSON_MODE, '_debug' => $DEBUG_MODE));
-
 $url_parts = $requestFilteringClass->process_url_parts($params);
 $controller = $requestFilteringClass->process_controllers($url_parts);
-$page_base = $requestFilteringClass->process_page_base($controller);
 
 //**************************************************************************************//
 // Now deal with the mosaid helper class related stuff.
 $mosaicHelper = new mosaicHelper();
 $mosaicHelper->controller = $controller;
-$mosaicHelper->page_base = $page_query_string_append;
 $mosaic_html_content = $mosaicHelper->renderContent($DEBUG_MODE);
 
 /******************************************************************************/

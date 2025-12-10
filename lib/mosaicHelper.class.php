@@ -29,14 +29,10 @@ require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 class mosaicHelper {
 
   public $controller = '';
-  public $page_base = '';
-  public $page_base_suffix = '';
-  public $page_title = '';
-
   public $url_parts = array();
+
   public $VIEW_MODE = null;
   public $DEBUG_MODE = FALSE;
-  public $html_content = '';
 
   //**************************************************************************************//
   // Init the content.
