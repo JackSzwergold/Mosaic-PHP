@@ -44,7 +44,7 @@ $controller = $requestFilteringClass->process_controllers($url_parts);
 $page_base = $requestFilteringClass->process_page_base($controller);
 
 //**************************************************************************************//
-// Now deal with the front end display helper class related stuff.
+// Now deal with the mosaid helper class related stuff.
 $mosaicHelper = new mosaicHelper();
 $mosaicHelper->controller = $controller;
 $mosaicHelper->page_base = $page_query_string_append;
