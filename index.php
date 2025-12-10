@@ -60,13 +60,7 @@ $frontendDisplayClass = new frontendDisplay();
 $frontendDisplayClass->setViewMode($mosaicHelper->VIEW_MODE, TRUE);
 $frontendDisplayClass->html_content = $mosaic_html_content;
 $frontendDisplayClass->link_items = $LINK_ITEMS;
-
-//**************************************************************************************//
-// Init the core content and set the header and footer items.
 $frontendDisplayClass->initCoreContent();
-
-//**************************************************************************************//
-// Init and display the final content.
 $html_content = $frontendDisplayClass->buildHTMLContent();
 
 /******************************************************************************/
