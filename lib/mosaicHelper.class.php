@@ -32,7 +32,6 @@ class mosaicHelper {
   public $page_base = '';
   public $page_base_suffix = '';
   public $page_title = '';
-  public $count = 1;
 
   public $url_parts = array();
   public $VIEW_MODE = null;

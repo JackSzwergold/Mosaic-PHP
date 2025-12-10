@@ -48,7 +48,6 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 $mosaicHelper = new mosaicHelper();
 $mosaicHelper->controller = $controller;
 $mosaicHelper->page_base = $page_query_string_append;
-$mosaicHelper->count = array_key_exists('count', $params) ? $params['count'] : 1;
 
 //**************************************************************************************//
 // Render the mosaic HTML content.
