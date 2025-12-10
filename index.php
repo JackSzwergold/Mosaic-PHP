@@ -27,7 +27,7 @@
 require_once('settings/conf.inc.php');
 require_once(BASE_FILEPATH . '/common/functions.inc.php');
 require_once(BASE_FILEPATH . '/lib/frontendDisplay.class.php');
-require_once(BASE_FILEPATH . '/lib/frontendDisplayHelper.class.php');
+require_once(BASE_FILEPATH . '/lib/mosaicHelper.class.php');
 require_once(BASE_FILEPATH . '/lib/requestFiltering.class.php');
 
 //**************************************************************************************//
@@ -45,12 +45,12 @@ $page_base = $requestFilteringClass->process_page_base($controller);
 
 //**************************************************************************************//
 // Now deal with the front end display helper class related stuff.
-$frontendDisplayHelperClass = new frontendDisplayHelper();
-$frontendDisplayHelperClass->controller = $controller;
-$frontendDisplayHelperClass->page_base = $page_query_string_append;
-$frontendDisplayHelperClass->count = array_key_exists('count', $params) ? $params['count'] : 1;
-$html_content = $frontendDisplayHelperClass->renderContent($DEBUG_MODE);
-$VIEW_MODE = $frontendDisplayHelperClass->VIEW_MODE;
+$mosaicHelper = new mosaicHelper();
+$mosaicHelper->controller = $controller;
+$mosaicHelper->page_base = $page_query_string_append;
+$mosaicHelper->count = array_key_exists('count', $params) ? $params['count'] : 1;
+$html_content = $mosaicHelper->renderContent($DEBUG_MODE);
+$VIEW_MODE = $mosaicHelper->VIEW_MODE;
 
 //**************************************************************************************//
 // Init the front end display class and set other things.

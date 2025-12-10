@@ -25,8 +25,8 @@
 require_once BASE_FILEPATH . '/lib/Mosaic.class.php';
 
 //**************************************************************************************//
-// The beginnings of a front end display helper class.
-class frontendDisplayHelper {
+// The mosaic helper class.
+class mosaicHelper {
 
   public $controller = '';
   public $page_base = '';
@@ -225,6 +225,6 @@ class frontendDisplayHelper {
 
   } // filterViewMode
 
-} // frontendDisplayHelper
+} // mosaicHelper
 
 ?>
