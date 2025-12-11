@@ -159,7 +159,7 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Process the image.
-  public function process_image() {
+  function process_image () {
 
     //************************************************************************************//
     // Check if the image actually exists.
@@ -244,13 +244,13 @@ class imageMosaic {
     // If the blocks value isn’t empty, set that value in the output.
     if (!empty($blocks)) {
       $ret['blocks'] = $this->render_pixel_box_container($blocks);
-    } // if
+    }
 
     //************************************************************************************//
     // If the JSON value isn’t empty, set that value in the output.
     if (!empty($raw_json)) {
       $ret['json'] = $raw_json;
-    } // if
+    }
 
     return $ret;
 
@@ -539,7 +539,8 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Generate the pixel boxes.
-  private function generate_pixel_boxes($rgb_array = array()) {
+  // TODO: This is oddly different between this version and the main mosaic version.
+  public function generate_pixel_boxes ($rgb_array = array()) {
 
     $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
 
@@ -623,7 +624,8 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the pixel boxes into a container.
-  private function render_pixel_box_container($blocks = array()) {
+  // TODO: This is oddly different between this version and the main mosaic version.
+  public function render_pixel_box_container($blocks = array()) {
 
     $css_width = $this->width_resampled * $this->block_size_x;
     // $css_height = $this->height_resampled * $this->block_size_y;
