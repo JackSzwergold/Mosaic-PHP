@@ -38,7 +38,7 @@ $url_parts = $requestFilteringClass->process_url_parts($params);
 $controller = $requestFilteringClass->process_controllers($url_parts);
 
 //**************************************************************************************//
-// Now deal with the mosaid helper class related stuff.
+// Now deal with the mosaic helper class related stuff.
 $mosaicHelper = new mosaicHelper();
 $mosaicHelper->controller = $controller;
 $mosaic_html_content = $mosaicHelper->renderContent($DEBUG_MODE);

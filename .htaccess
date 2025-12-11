@@ -12,9 +12,6 @@ Header add Access-Control-Allow-Methods "GET"
   # 2022-10-18: Setting the X-Frame-Options "SAMEORIGIN" header to prevent iframe embeds.
   Header always set X-Frame-Options "SAMEORIGIN"
 
-  # 2022-11-07: Setting the Content-Security-Policy header.
-  Header always set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' http: https: data: ws:; worker-src 'none'; manifest-src 'none'; base-uri 'none'; report-to 'none';"
-
   # 2022-11-08: Setting the X-Content-Type-Options header.
   Header always set X-Content-Type-Options "nosniff"
 
