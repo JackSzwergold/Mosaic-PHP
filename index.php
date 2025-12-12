@@ -24,7 +24,7 @@
 
 //**************************************************************************************//
 // Require the basic configuration settings & functions.
-require_once('settings/conf.inc.php');
+require_once('settings/conf.php');
 require_once(BASE_FILEPATH . '/common/functions.inc.php');
 require_once(BASE_FILEPATH . '/lib/mosaicHelper.class.php');
 require_once(BASE_FILEPATH . '/lib/requestFiltering.class.php');
