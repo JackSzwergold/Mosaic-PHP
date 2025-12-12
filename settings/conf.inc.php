@@ -27,11 +27,6 @@ $NONCE = bin2hex(openssl_random_pseudo_bytes(32));
 $TEMPLATE_FRAMEWORK = 'bootstrap-5.3';
 
 /**************************************************************************************************/
-// Define the defaults.
-$VALID_CONTENT_TYPES = array('application/vnd.api+json', 'application/json','text/plain','text/html');
-$VALID_CHARSETS = array('utf-8','iso-8859-1','cp-1252');
-
-/**************************************************************************************************/
 // Site descriptive info.
 $SITE_DEFAULT_CONTROLLER = 'small';
 
