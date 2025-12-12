@@ -23,7 +23,6 @@ $NONCE = bin2hex(openssl_random_pseudo_bytes(32));
 
 /******************************************************************************/
 // Set the HTML templating options.
-// $TEMPLATE_FRAMEWORK = 'bootstrap-4.6';
 $TEMPLATE_FRAMEWORK = 'bootstrap-5.3';
 
 /**************************************************************************************************/
