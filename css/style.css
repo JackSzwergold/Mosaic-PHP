@@ -1,56 +1,13 @@
-*
-{
-	margin: 0;
-	padding: 0;
-}
-
-html { font-size: 9pt; }
-
-body
-{
-	z-index: 0;
-	position: relative;
-	font-family: Arial, "Arial Unicode MS", Helvetica, Verdana, sans-serif;
-	font-size: 100%;
-	line-height: 1.2em;
-	text-align: center;
-	-webkit-text-size-adjust: 100%;
-}
-
-html, body
+html
 {
 	width: 100%;
 	height: 100%;
-	color: #000;
-	background-color: #fff;
 }
 
 /**************************************************************************************************/
-a, a:visited, a:hover, a:active
-{
-	text-decoration: none;
-	color: #000;
-}
-
-ul, li { list-style: none; }
-:focus { -moz-outline-style: none; }
-a { outline: none; }
-
-hr
-{
-	border: 0;
-	height: 1px;
-	margin: 0.75em 0 1.5em 0;
-	background-color: #000;
-	clear: both;
-}
-
-/**************************************************************************************************/
-.Padding,
-.PixelBoxWrapper,
-.PixelBox,
-.PixelBoxContainer,
-ul, li
+.PixelBox
+/*,
+ul, li*/
 {
 	position: relative;
 	float: left;
@@ -58,63 +15,11 @@ ul, li
 }
 
 /**************************************************************************************************/
-.Wrapper
-{
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	align-content: center;
-	width: calc(100% - 20px);
-	height: calc(100% - 20px);
-	margin: 0;
-	padding: 10px;
-}
-
-/**************************************************************************************************/
-.microView,
-.tinyView,
-.smallView,
-.largeView,
-.megaView
-{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	align-content: center;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-/**************************************************************************************************/
-.Core { text-align: left; }
-
-/**************************************************************************************************/
-.microView .Core { width: 336px; }
-.tinyView .Core { width: 510px; }
-.smallView .Core { width: 714px; }
-.largeView .Core { width: 472px; }
-.megaView .Core { width: 732px; }
-
-/**************************************************************************************************/
-.Core .Grid { }
-.Core .Grid ul li .Padding { padding: 0 3px 6px 3px; }
-
-/**************************************************************************************************/
 .PixelBox
 {
-	margin: 0;
-	padding: 0;
-	border: 0;
 	height: 10px;
 	width: 10px;
-	font-size: 0;
-	line-height: 0;
+
 	/* background-image: url('brick.png'); */
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGZJREFUeNp8jwEKwDAIAzVz3f9f3HUSIZN1wtGWJlHdzJw8dZBzMRYXzwH7rinkG5LmPwaLBUTomw4enMlEDPK6B1O7MGSxFAc3m619bV6GFI42D/hZ3dJQiV0IEWbqLhEyY3ILMAC+wAfRv/+3UQAAAABJRU5ErkJggg==');
 	background-position: center center;

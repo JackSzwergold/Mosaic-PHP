@@ -174,10 +174,8 @@ class mosaicHelper {
       // Set the image item array value.
       if ($count < $mode_options[$this->VIEW_MODE]['block_display']) {
         $image_item_array[$file] =
-            '<li>'
-          . '<div class="Padding">'
+            '<li class="list-group-item m-0 p-0 border-0">'
           . $image['blocks']
-          . '</div><!-- .Padding -->'
           . '</li>'
           ;
       } // if
@@ -191,7 +189,7 @@ class mosaicHelper {
     //**************************************************************************************//
     // Set the return value.
     $ret = 
-        '<ul>'
+        '<ul class="list-group list-group-horizontal m-0 p-0 border-0">'
       .  implode('', $image_item_array)
       . '</ul>'
       ;

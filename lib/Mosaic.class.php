@@ -539,20 +539,20 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Generate the pixel boxes.
-  // TODO: This is oddly different between this version and the main mosaic version.
   public function generate_pixel_boxes ($rgb_array = array()) {
 
-    $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
+    // $block_dimensions = sprintf('height: %spx; width: %spx;', $this->block_size_x, $this->block_size_y);
+    $block_dimensions = null;
 
     if (FALSE) {
       $rgb_final = sprintf('rgb(%s)', implode(',', $rgb_array['rgba']));
       $block_rgb = sprintf('background-color: %s;', $rgb_final);
-      $block_style = $block_dimensions . ' ' . $block_rgb;
+      $block_style = trim($block_dimensions . ' ' . $block_rgb);
     }
     else {
       $hex_final = $this->rgb_to_hex($rgb_array['rgba']);
       $block_hex = sprintf('background-color: #%s;',  $hex_final);
-      $block_style = $block_dimensions . ' ' . $block_hex;
+      $block_style = trim($block_dimensions . ' ' . $block_hex);
     }
 
     $ret = sprintf('<div class="PixelBox" style="%s">', $block_style)
@@ -624,7 +624,6 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the pixel boxes into a container.
-  // TODO: This is oddly different between this version and the main mosaic version.
   public function render_pixel_box_container($blocks = array()) {
 
     $css_width = $this->width_resampled * $this->block_size_x;
