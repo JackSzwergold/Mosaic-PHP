@@ -624,7 +624,6 @@ class imageMosaic {
 
   //**************************************************************************************//
   // Render the pixel boxes into a container.
-  // TODO: This is oddly different between this version and the main mosaic version.
   public function render_pixel_box_container($blocks = array()) {
 
     $css_width = $this->width_resampled * $this->block_size_x;
